@@ -16,7 +16,6 @@ function App() {
 
   useEffect(() => {
     dispatch(restoreUser())
-      .then((res) => res && dispatch(getUserServers()))
       .then(() => setIsLoaded(true));
   }, [dispatch]);
 
@@ -35,11 +34,9 @@ function App() {
           <div className='application-container'>
             <Route path='/channels'>
               <Navbar />
-              <Route path='/channels/:serverId'>
-                <Sidebar />
-                <Route path='/channels/:serverId/:channelId'>
-                  <MessagingArea />
-                </Route>
+              <Sidebar />
+              <Route path='/channels/:serverId/:channelId'>
+                {/* TO DO add MessagingArea */}
               </Route>
             </Route>
           </div>

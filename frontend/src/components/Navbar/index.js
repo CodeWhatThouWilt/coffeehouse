@@ -1,10 +1,17 @@
 import './Navbar.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getUserServers } from '../../store/servers';
 
 const Navbar = () => {
+    const dispatch = useDispatch();
     const servers = useSelector(state => state.serversState);
     const serversArr = Object.values(servers);
+
+    useEffect(() => {
+        dispatch(getUserServers());
+    },[dispatch]);
 
     return (
         <nav className='navbar-container'>

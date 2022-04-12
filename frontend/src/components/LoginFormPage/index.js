@@ -12,13 +12,14 @@ function LoginFormPage() {
   const [errors, setErrors] = useState([]);
 
   if (sessionUser) return (
-    <Redirect to="/"/>
+    <Redirect to="/channels"/>
   );
 
   const handleSubmit = e => {
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({credential, password}))
+      .then(() => <Redirect to='/channels' />)
       .catch(async (res) => { //if there is an error, then skip the res.ok and get the response
         const data = await res.json(); //parse the data again because we skipped the res.ok
         if (data && data.errors) setErrors(data.errors); //set the new Errors
