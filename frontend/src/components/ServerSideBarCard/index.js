@@ -1,10 +1,10 @@
 import './ServerSideBarCard.css';
 
-const ServerSideBarCard = () => {
+const ServerSidebarCard = () => {
 
     return (
         <div>ServerSideBarCard Component</div>
     );
 };
 
-export default ServerSideBarCard;
+export default ServerSidebarCard;

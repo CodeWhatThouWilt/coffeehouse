@@ -5,7 +5,7 @@ import LoginFormPage from './components/LoginFormPage';
 import Navigation from './components/Navigation';
 import SignupFormPage from './components/SignupFormPage';
 import { restoreUser } from './store/session';
-import ServerSideBar from './components/ServerSideBar';
+import ServerSidebar from './components/ServerSidebar';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route path='/'>
-            <ServerSideBar />
+            <ServerSidebar />
           </Route>
         </Switch>
       )}

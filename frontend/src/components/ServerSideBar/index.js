@@ -1,7 +1,9 @@
-import './ServerSideBar.css'
+import './ServerSidebar.css';
+import ServerSidebarCard from '../ServerSideBarCard';
 
-const ServerSideBar = () => {
+const ServerSidebar = () => {
 
+    
     return (
         <div className='server-side-bar-container'>
 
@@ -9,4 +11,4 @@ const ServerSideBar = () => {
     );
 };
 
-export default ServerSideBar;
+export default ServerSidebar;
