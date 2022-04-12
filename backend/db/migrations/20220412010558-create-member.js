@@ -16,7 +16,7 @@ module.exports = {
       serverId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: "Users" }
+        references: { model: "Servers" }
       },
       createdAt: {
         allowNull: false,
