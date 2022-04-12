@@ -19,7 +19,7 @@ module.exports = {
         unique: true
       },
       username: {
-        type: Sequelize.STRING(256),
+        type: Sequelize.STRING(32),
         allowNull: false,
         unique: true
       },
