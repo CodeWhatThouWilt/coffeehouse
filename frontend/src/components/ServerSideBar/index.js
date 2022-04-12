@@ -9,7 +9,7 @@ const ServerSidebar = () => {
     return (
         <div className='server-side-bar-container'>
             {serversArr.map(server => (
-                <ServerSidebarCard server={server} />
+                <ServerSidebarCard server={server} key={server.id} />
             ))}
         </div>
     );

@@ -1,9 +1,11 @@
 import './ServerSidebarCard.css';
 
-const ServerSidebarCard = () => {
-
+const ServerSidebarCard = ({server}) => {
+    console.log(server.iconURL)
     return (
-        <div>ServerSideBarCard Component</div>
+        <div>
+            <img src={server.iconURL} alt='icon' />
+        </div>
     );
 };
 
