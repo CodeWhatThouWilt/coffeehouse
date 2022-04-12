@@ -22,6 +22,7 @@ export const restoreUser = () => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data.user));
+    return true
   }
   return response;
 }

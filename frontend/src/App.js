@@ -15,12 +15,13 @@ function App() {
 
   useEffect(() => {
     dispatch(restoreUser())
-    .then(() => getUserServers())
+    .then((res) => res && dispatch(getUserServers()))
     .then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
     <>
+    {/* <Navigation isLoaded={isLoaded} /> */}
       {isLoaded && (
         <Switch>
           <Route path="/login">

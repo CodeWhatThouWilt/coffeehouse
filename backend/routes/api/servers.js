@@ -5,10 +5,10 @@ const { Server } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 
-router.get('/', requireAuth, asyncHandler((req, res) => {
+router.get('/', requireAuth, asyncHandler(async(req, res) => {
     const userId = req.user.id;
 
-    const servers = Server.findAll({
+    const servers = await Server.findAll({
         where: {
             ownerId: userId
         }

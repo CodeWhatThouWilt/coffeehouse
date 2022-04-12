@@ -11,11 +11,11 @@ const getServers = (servers) => {
 };
 
 export const getUserServers = () => async(dispatch) => {
+    console.log('here')
     const res = await csrfFetch('/api/servers');
 
     if (res.ok) {
         const servers = await res.json();
-        console.log(servers)
         dispatch(getServers(servers));
     };
 };
@@ -31,6 +31,9 @@ const serversReducer = (state = initialState, action) => {
         case GET_SERVERS:
             newState = action.servers;
             return newState;
+        
+        default:
+            return state;
     };
 };
 
