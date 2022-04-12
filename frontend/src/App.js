@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import {useDispatch} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
 import LoginFormPage from './components/LoginFormPage';
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation-no';
 import SignupFormPage from './components/SignupFormPage';
 import { restoreUser } from './store/session';
 import { getUserServers } from './store/servers';
 
-import ServerSidebar from './components/ServerSidebar';
+import UserApplication from './components/UserApplication';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route path='/'>
-            <ServerSidebar />
+            <UserApplication />
           </Route>
         </Switch>
       )}
