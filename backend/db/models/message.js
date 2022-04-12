@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.STRING
   }, {});
   Message.associate = function(models) {
-    // associations can be defined here
+    Message.belongsTo(models.Channel, { foreignKey: 'channelId' })
   };
   return Message;
 };

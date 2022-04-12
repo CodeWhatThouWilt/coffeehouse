@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     ownerId: DataTypes.INTEGER
   }, {});
   Server.associate = function(models) {
-    
+    Server.belongsTo(models.User, { foreignKey: 'ownerId'})
   };
   return Server;
 };
