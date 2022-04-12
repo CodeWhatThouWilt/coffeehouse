@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 const SidebarUserPanel = () => {
     const sessionUser = useSelector(state => state.sessionState.user);
-    console.log(sessionUser)
 
     return (
         <div className='sidebar-user-panel-container'>

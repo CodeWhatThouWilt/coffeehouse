@@ -4,19 +4,29 @@ import { useSelector } from 'react-redux';
 
 const SideBarChannelPanel = () => {
     const { serverId } = useParams();
-    const server = useSelector(state => state.serversState);
-    const channels = server[serverId].channels;
-    const channelsArr = Object.values(channels);
+    const servers = useSelector(state => state.serversState);
+    console.log(servers)
+    const server = servers[serverId];
+    let channels;
+    let channelsArr;
+    if (server) {
+        channels = server.channels;
+        channelsArr = Object.values(channels);
+    }
 
-    return (
+    return server && (
         <div className='sb-channel-panel-container'>
             <div>
-                Server
-                {/* TO DO server dropdown menu */}
+                <div>
+                    {server.name}
+                </div>
+                <div>
+                    DD
+                </div>
             </div>
             <div>
                 {channelsArr.map(channel => (
-                    <div>{channel.name}</div>
+                    <div key={channel.id} >{channel.name}</div>
                 ))}
             </div>
         </div>

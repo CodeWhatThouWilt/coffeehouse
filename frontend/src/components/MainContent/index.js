@@ -5,7 +5,17 @@ const MainContent = () => {
     return (
         // <Route path='/channels/:serverId/:channelId'>
         //       </Route>
-        <div>MainContent</div>
+        <div>
+            <div className='main-content-top-bar'>
+                <div>
+                    Selected Channel
+                </div>
+            </div>
+            <div>
+                Messaging Area
+            </div>
+            <div>Member Area</div>
+        </div>
     );
 };
 

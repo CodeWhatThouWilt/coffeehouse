@@ -1,0 +1,32 @@
+.create-server-form-container {
+    height: 404px;
+    width: 440px;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.create-server-top-text-container {
+    padding: 24px 24px 0px;
+}
+
+.create-server-top-text-header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+
+}
+
+.create-server-top-text {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 8px;
+    font-weight: 400;
+}
+
+.create-server-upload-icons {
+    height: 80px;
+    width: 80px;
+    border: 2px black dashed;
+    border-radius: 50%;
+}
+

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
 import Navbar from './components/Navbar';
+import UserApplication from './components/UserApplication';
 import { restoreUser } from './store/session';
 import MainContent from './components/MainContent';
 import Sidebar from './components/Sidebar';
@@ -30,13 +31,9 @@ function App() {
             <SignupFormPage />
           </Route>
 
-          <div className='application-container'>
-            <Route path='/channels'>
-              <Navbar />
-              <Sidebar />
-              <MainContent />
-            </Route>
-          </div>
+          <Route path='/channels'>
+            <UserApplication />
+          </Route>
 
         </Switch>
       )}
