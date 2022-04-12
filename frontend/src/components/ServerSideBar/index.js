@@ -1,9 +1,9 @@
 import './ServerSidebar.css';
-import ServerSidebarCard from '../ServerSideBarCard';
+import ServerSidebarCard from '../ServerSidebarCard';
 
 const ServerSidebar = () => {
 
-    
+
     return (
         <div className='server-side-bar-container'>
 

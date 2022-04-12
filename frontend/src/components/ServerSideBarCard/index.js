@@ -1,4 +1,4 @@
-import './ServerSideBarCard.css';
+import './ServerSidebarCard.css';
 
 const ServerSidebarCard = () => {
 

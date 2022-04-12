@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf"; //used to fetch a CRSF token. App must send req header called X-SRF-TOKEN w/ the vale fetch
+import { csrfFetch } from "./csrf";
 
 export const SET_USER = "session/setUser";
 export const REMOVE_USER = "session/removeUser";

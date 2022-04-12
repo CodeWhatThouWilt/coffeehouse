@@ -5,6 +5,8 @@ import LoginFormPage from './components/LoginFormPage';
 import Navigation from './components/Navigation';
 import SignupFormPage from './components/SignupFormPage';
 import { restoreUser } from './store/session';
+import { getUserServers } from './store/servers';
+
 import ServerSidebar from './components/ServerSidebar';
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
 
   useEffect(() => {
     dispatch(restoreUser())
+    .then(() => getUserServers())
     .then(() => setIsLoaded(true));
   }, [dispatch]);
 
