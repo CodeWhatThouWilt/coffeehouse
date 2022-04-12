@@ -5,11 +5,12 @@ import LoginFormPage from './components/LoginFormPage';
 import Navigation from './components/Navigation';
 import SignupFormPage from './components/SignupFormPage';
 import { restoreUser } from './store/session';
+import ServerSideBar from './components/ServerSideBar';
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   useEffect(() => {
     dispatch(restoreUser())
     .then(() => setIsLoaded(true));
@@ -17,7 +18,6 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
           <Route path="/login">
@@ -25,6 +25,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path='/'>
+            <ServerSideBar />
           </Route>
         </Switch>
       )}
