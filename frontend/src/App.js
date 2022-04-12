@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import {useDispatch} from 'react-redux';
-import {Route, Switch} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
 import Navbar from './components/Navbar';
 import { restoreUser } from './store/session';
 import { getUserServers } from './store/servers';
 import Sidebar from './components/Sidebar';
+import MessagingArea from './components/MessagingArea';
 
 
 function App() {
@@ -15,13 +16,13 @@ function App() {
 
   useEffect(() => {
     dispatch(restoreUser())
-    .then((res) => res && dispatch(getUserServers()))
-    .then(() => setIsLoaded(true));
+      .then((res) => res && dispatch(getUserServers()))
+      .then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
     <>
-    {/* <Navigation isLoaded={isLoaded} /> */}
+      {/* <Navigation isLoaded={isLoaded} /> */}
       {isLoaded && (
         <Switch>
           <Route path="/login">
@@ -31,16 +32,18 @@ function App() {
             <SignupFormPage />
           </Route>
 
-          <Route path='/channels'>
-            <Navbar />
-            <Route path=':serverId'>
-              <Sidebar />
-              <Route path=':channelId'>
-                {/* TO DO message component here */}
+          <div className='application-container'>
+            <Route path='/channels'>
+              <Navbar />
+              <Route path='/channels/:serverId'>
+                <Sidebar />
+                <Route path='/channels/:serverId/:channelId'>
+                  <MessagingArea />
+                </Route>
               </Route>
-
             </Route>
-          </Route>
+          </div>
+
         </Switch>
       )}
     </>

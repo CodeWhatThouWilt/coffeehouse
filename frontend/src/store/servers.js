@@ -11,7 +11,6 @@ const getServers = (servers) => {
 };
 
 export const getUserServers = () => async(dispatch) => {
-    console.log('here')
     const res = await csrfFetch('/api/servers');
 
     if (res.ok) {

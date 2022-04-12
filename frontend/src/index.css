@@ -4,3 +4,10 @@ body {
     width: 100vw;
     margin: 0;
 }
+
+.application-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
