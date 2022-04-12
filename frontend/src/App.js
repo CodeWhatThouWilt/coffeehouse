@@ -5,9 +5,8 @@ import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
 import Navbar from './components/Navbar';
 import { restoreUser } from './store/session';
-import { getUserServers } from './store/servers';
+import MainContent from './components/MainContent';
 import Sidebar from './components/Sidebar';
-import MessagingArea from './components/MessagingArea';
 
 
 function App() {
@@ -35,9 +34,7 @@ function App() {
             <Route path='/channels'>
               <Navbar />
               <Sidebar />
-              <Route path='/channels/:serverId/:channelId'>
-                {/* TO DO add MessagingArea */}
-              </Route>
+              <MainContent />
             </Route>
           </div>
 

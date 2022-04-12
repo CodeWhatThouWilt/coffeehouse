@@ -9,7 +9,7 @@ const SideBarChannelPanel = () => {
     const channelsArr = Object.values(channels);
 
     return (
-        <div>
+        <div className='sb-channel-panel-container'>
             <div>
                 Server
                 {/* TO DO server dropdown menu */}
