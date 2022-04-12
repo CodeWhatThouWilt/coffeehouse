@@ -16,9 +16,6 @@ if (process.env.NODE_ENV !== 'production') {
   window.csrfFetch = csrfFetch; //attach custom csrfFetch func ont window when n development
   window.store = store;
   window.sessionActions = sessionActions;
-  window.store.dispatch(window.sessionActions.restoreUser()); //tests restoreUser thunk
-  window.store.dispatch(window.sessionActions.logout()); //tests logout thunk
-  window.store.dispatch({ type: 'hello' });
 }
 
 function Root() {

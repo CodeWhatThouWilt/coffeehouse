@@ -28,14 +28,12 @@ const validateSignup = [
 
 // Sign up
 router.post('/', validateSignup, asyncHandler(async (req, res) => {
-    const { email, password, username } = req.body; //getting the info from the body
+    const { email, password, username } = req.body;
     const user = await User.signup({ email, username, password }); 
 
     await setTokenCookie(res, user); //returns a JSON response w/ the user info
 
-    return res.json({ //return the json response w/ user info
-      user //if creation of the user is unsucessful, sequelize validation error will be pasesd onto next error-handling middleware
-    });
+    return res.json({user});
   })
 );
 
