@@ -5,6 +5,11 @@ const CreateServerForm = () => {
     const [image, setImage] = useState('');
     const [name, setName] = useState('');
 
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log('form data', image, name)
+    }
+
     return (
         <div className='create-server-form-container'>
             <div className='create-server-top-text-container'>
@@ -16,7 +21,7 @@ const CreateServerForm = () => {
                     You can always change it later.
                 </div>
             </div>
-            <div className='create-server-form-area'>
+            <form className='create-server-form-area' id='server-form'>
                 <div className='create-server-upload-icon-container'>
                     <label htmlFor='image'>
                         {!image &&
@@ -55,8 +60,15 @@ const CreateServerForm = () => {
                         value={name}
                         maxLength={100}
                         onChange={e => setName(e.target.value)}
-                        className='create-server-name-input'
                     />
+                </div>
+            </form>
+            <div className='create-server-button-container'>
+                <div className='create-server-back-button'>
+                    Back
+                </div>
+                <div className='create-server-submit-button' form='server-form'>
+                    Create
                 </div>
             </div>
         </div >

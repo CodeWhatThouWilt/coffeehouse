@@ -21,6 +21,7 @@
     font-size: 16px;
     margin-top: 8px;
     font-weight: 400;
+    color: #4f5660;
 }
 
 .create-server-form-area {
@@ -43,8 +44,9 @@
 .create-server-upload-icons {
     height: 80px;
     width: 80px;
-    border: 2px black dashed;
+    border: 2px #4f5660 dashed;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .create-server-uploaded-image {
@@ -52,6 +54,7 @@
     width: 80px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .create-server-blue-circle {
@@ -77,7 +80,7 @@
     justify-content: center;
     align-items: center;
     color: #4f5660;
-    padding-bottom: 5px;
+    padding: 0px 0px 10px 0px;
 }
 
 .create-server-camera-icon {
@@ -93,4 +96,26 @@
     height: 64px;
     width: 408px;
     margin: 24px 0px 0px;
+}
+
+.create-server-name-input-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4f5660;
+    line-height: 16px;
+    margin: 0px 0px 8px
+}
+
+.create-server-name-input-container input {
+    width: 388px;
+    height: 16px;
+    background-color: #e3e5e8;
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+}
+
+.create-server-name-input-container input:focus {
+    outline: none;
 }
