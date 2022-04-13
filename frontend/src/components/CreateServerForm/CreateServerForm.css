@@ -141,11 +141,25 @@
     cursor: pointer;
 }
 
-.create-server-submit-button {
+.create-server-submit-button-enabled {
     height: 38px;
     width: 96px;
     color: white;
     background-color: #5865f2;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.create-server-submit-button-disabled {
+    height: 38px;
+    width: 96px;
+    color: white;
+    background-color: #5865f2c3;
     font-size: 14px;
     font-weight: 500;
     border-radius: 3px;

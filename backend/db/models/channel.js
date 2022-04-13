@@ -4,6 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     serverId: DataTypes.INTEGER
   }, {});
+
+  // Channel.prototype.normalizeData = () => {
+
+  // }
+
   Channel.associate = function(models) {
     Channel.belongsTo(models.Server, { foreignKey: 'serverId' });
     Channel.hasMany(models.Message, { foreignKey: 'channelId', onDelete: 'cascase', hooks: true });

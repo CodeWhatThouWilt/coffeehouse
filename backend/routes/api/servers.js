@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const { Server, Channel } = require('../../db/models');
+const { Server, Channel, Member } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
@@ -33,8 +33,8 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
         currentServer.dataValues.channels = normalizedChannels;
     });
     return res.json(normalizedServers);
-
 }));
+
 
 const validateServer = [
     check('form')
@@ -53,12 +53,44 @@ const validateServer = [
     handleValidationErrors
 ];
 
+
 router.post('/', requireAuth, singleMulterUpload('image'), validateServer, asyncHandler(async (req, res) => {
     const { name } = req.body;
     const imageFile = req.file;
+    const userId = req.user.id;
     // if file undefined skip aws process
-    console.log(imageFile);
 
+    let server;
+    if (imageFile) {
+        const iconURL = await singlePublicFileUpload(req.file);
+        server = await Server.create({
+            name,
+            iconURL
+        });
+    } else {
+        server = await Server.create({
+            name,
+            ownerId: userId,
+            iconURL: null
+        });
+    };
+
+    const channel = await Channel.create({
+        serverId: server.id,
+        name: 'general'
+    });
+
+    const member = await Member.create({
+        serverId: server.id,
+        userId
+    })
+
+    const normalizedServer = {};
+    normalizedServer[server.id] = server;
+    normalizedServer[server.id].Members[member.id] = member;
+    // normalizedServer[server.id].channels[channel.id] = channel;
+    console.log("###########", normalizedServer);
+    return res.json(normalizedServer)
 }));
 
 

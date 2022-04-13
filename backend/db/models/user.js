@@ -87,9 +87,10 @@ module.exports = (sequelize, DataTypes) => {
     return await User.scope('currentUser').findByPk(user.id); //return created user using cuurrentUserscope
   };
 
+
   User.associate = function (models) {
     User.hasMany(models.Server, { foreignKey: 'ownerId', onDelete: 'cascade', hooks: true });
+    User.hasMany(models.Member, { foreignKey: 'userId', onDelete: 'cascade', hooks: true });
   };
-
   return User;
 };

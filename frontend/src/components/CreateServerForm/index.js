@@ -4,22 +4,34 @@ import { useDispatch } from 'react-redux';
 import { createServer } from '../../store/servers';
 
 const CreateServerForm = ({ setShowModal }) => {
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState();
     const [name, setName] = useState('');
     const [errors, setErrors] = useState([])
     const dispatch = useDispatch();
 
     const submitHandler = (e) => {
         e.preventDefault();
+
+        if (name.length < 1 || name.length > 100) {
+            return;
+        };
+
         const formData = new FormData();
         formData.append('name', name);
         formData.append('image', image);
         dispatch(createServer(formData))
             .catch(async res => {
                 const data = await res.json();
-                console.log(data.errors);
                 data.errors && setErrors(data.errors);
             });
+    };
+
+    const buttonStyling = () => {
+        if (name.length < 1 || name.length > 100) {
+            return 'create-server-submit-button-disabled'
+        } else {
+            return 'create-server-submit-button-enabled'
+        }
     };
 
     return (
@@ -59,7 +71,7 @@ const CreateServerForm = ({ setShowModal }) => {
                 <input
                     id='image'
                     type='file'
-                    // accept='image/*'
+                    accept='image/*'
                     hidden={true}
                     onChange={e => setImage(e.target.files[0])}
                 />
@@ -80,11 +92,11 @@ const CreateServerForm = ({ setShowModal }) => {
                     Back
                 </div>
                 <div className='create-server-error-container'>
-                    {errors.map(error => (
-                        <div className='create-server-error'>{error}</div>
+                    {errors.map((error, index) => (
+                        <div key={index} className='create-server-error'>{error}</div>
                     ))}
                 </div>
-                <div onClick={e => submitHandler(e)} className='create-server-submit-button' form='server-form'>
+                <div onClick={e => submitHandler(e)} className={buttonStyling()} form='server-form'>
                     Create
                 </div>
             </div>
