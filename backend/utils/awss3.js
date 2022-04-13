@@ -1,4 +1,4 @@
-
+const multer = require('multer');
 
 const singlePublicFileUpload = async (file) => {
     const { originalname, mimetype, buffer } = await file;
@@ -17,6 +17,7 @@ const singlePublicFileUpload = async (file) => {
     return result.Location;
 };
 
+
 const storage = multer.memoryStorage({
     destination: function (req, file, callback) {
         callback(null, "");
@@ -26,3 +27,9 @@ const storage = multer.memoryStorage({
 
 const singleMulterUpload = (nameOfKey) =>
     multer({ storage: storage }).single(nameOfKey);
+
+
+module.exports = {
+    singlePublicFileUpload,
+    singleMulterUpload
+};

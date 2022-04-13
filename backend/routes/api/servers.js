@@ -5,7 +5,7 @@ const { Server, Channel } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
-
+const { singleMulterUpload } = require('../../utils/awss3')
 
 router.get('/', requireAuth, asyncHandler(async(req, res) => {
     const userId = req.user.id;
@@ -23,7 +23,7 @@ router.get('/', requireAuth, asyncHandler(async(req, res) => {
     servers.forEach(server => {
         normalizedServers[server.id] = server;
         const currentServer = normalizedServers[server.id];
-        const normalizedChannels = {}
+        const normalizedChannels = {};
         
         currentServer.Channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
@@ -39,13 +39,13 @@ router.get('/', requireAuth, asyncHandler(async(req, res) => {
 const validateServer = [
     check('form')
         .custom(async (value, { req }) => {
-            console.log("######", value)
+            console.log("######", req.body)
         })
-]
+];
 
-router.post('/', requireAuth, asyncHandler(async(req, res) =>{
+router.post('/', requireAuth, singleMulterUpload('image'), validateServer, asyncHandler(async(req, res) =>{
     const { form } = req.body;
-    console.log("######", form);
+    // console.log("######", req.file);
 
 
 }));

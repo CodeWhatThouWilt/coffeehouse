@@ -30,6 +30,9 @@ export const getUserServers = () => async(dispatch) => {
 export const createServer = (form) => async(dispatch) => {
     const res = await csrfFetch('/api/servers', {
         method: 'POST',
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
         body: form
     });
 
