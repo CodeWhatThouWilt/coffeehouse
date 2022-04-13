@@ -39,13 +39,18 @@ router.get('/', requireAuth, asyncHandler(async(req, res) => {
 const validateServer = [
     check('form')
         .custom(async (value, { req }) => {
-            console.log("######", req.body)
-        })
+            const fileType = req.file.mimetype;
+            console.log('###', fileType.startsWith('image/'));
+            if (!fileType.startsWith('image/')) {
+                return await Promise.reject('File needs to be an image')
+            }
+        }),
+    handleValidationErrors
 ];
 
 router.post('/', requireAuth, singleMulterUpload('image'), validateServer, asyncHandler(async(req, res) =>{
-    const { form } = req.body;
-    // console.log("######", req.file);
+    const { name } = req.body;
+    const imageFile = req.file
 
 
 }));

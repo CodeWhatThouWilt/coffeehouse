@@ -6,6 +6,7 @@ import { createServer } from '../../store/servers';
 const CreateServerForm = ({ setShowModal }) => {
     const [image, setImage] = useState('');
     const [name, setName] = useState('');
+    const [errors, setErrors] = useState([])
     const dispatch = useDispatch();
 
     const submitHandler = (e) => {
@@ -13,9 +14,12 @@ const CreateServerForm = ({ setShowModal }) => {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('image', image);
-        dispatch(createServer(formData));
-
-        console.log('form data', formData, image)
+        dispatch(createServer(formData))
+            .catch(async res => {
+                const data = await res.json();
+                console.log(data.errors);
+                data.errors && setErrors(data.errors);
+            });
     };
 
     return (
@@ -55,7 +59,7 @@ const CreateServerForm = ({ setShowModal }) => {
                 <input
                     id='image'
                     type='file'
-                    accept='image/*'
+                    // accept='image/*'
                     hidden={true}
                     onChange={e => setImage(e.target.files[0])}
                 />
@@ -74,6 +78,11 @@ const CreateServerForm = ({ setShowModal }) => {
             <div className='create-server-button-container'>
                 <div onClick={() => setShowModal(false)} className='create-server-back-button'>
                     Back
+                </div>
+                <div>
+                    {errors.map(error => (
+                        <div>{error}</div>
+                    ))}
                 </div>
                 <div onClick={e => submitHandler(e)} className='create-server-submit-button' form='server-form'>
                     Create
