@@ -83,14 +83,13 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
         userId
     })
 
-    const normalizedServer = {};
-    normalizedServer[server.id] = server;
-    normalizedServer[server.id].Members = {};
-    normalizedServer[server.id].Members[member.id] = member;
-    normalizedServer[server.id].Channels = {}
-    normalizedServer[server.id].Channels[channel.id] = channel;
-    console.log("###########", normalizedServer);
-    return res.json(normalizedServer)
+    const normalizedServer = server;
+    // normalizedServer[server.id] = server;
+    normalizedServer.dataValues.Members = {};
+    normalizedServer.dataValues.Members[member.id] = member;
+    normalizedServer.dataValues.Channels = {}
+    normalizedServer.dataValues.Channels[channel.id] = channel;
+    return res.json(normalizedServer);
 }));
 
 

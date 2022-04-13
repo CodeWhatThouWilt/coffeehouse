@@ -38,6 +38,7 @@ export const createServer = (form) => async(dispatch) => {
 
     if (res.ok) {
         const server = await res.json();
+        console.log('server', server)
         dispatch(addServer(server));
     };
     return res;
@@ -55,6 +56,10 @@ const serversReducer = (state = initialState, action) => {
             newState = action.servers;
             return newState;
         
+        case ADD_SERVER:
+            newState[action.server.id] = action.server;
+            return newState;
+
         default:
             return state;
     };
