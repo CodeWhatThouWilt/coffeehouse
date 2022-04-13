@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { createServer } from '../../store/servers';
 
 const CreateServerForm = ({ setShowModal }) => {
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
     const [name, setName] = useState('');
     const [errors, setErrors] = useState([])
     const dispatch = useDispatch();
@@ -79,9 +79,9 @@ const CreateServerForm = ({ setShowModal }) => {
                 <div onClick={() => setShowModal(false)} className='create-server-back-button'>
                     Back
                 </div>
-                <div>
+                <div className='create-server-error-container'>
                     {errors.map(error => (
-                        <div>{error}</div>
+                        <div className='create-server-error'>{error}</div>
                     ))}
                 </div>
                 <div onClick={e => submitHandler(e)} className='create-server-submit-button' form='server-form'>
