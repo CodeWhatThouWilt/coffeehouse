@@ -10,7 +10,7 @@ const SideBarChannelPanel = () => {
     let channels;
     let channelsArr;
     if (server) {
-        channels = server.channels;
+        channels = server.Channels;
         channelsArr = Object.values(channels);
     }
 

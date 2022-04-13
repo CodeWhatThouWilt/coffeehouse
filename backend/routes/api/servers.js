@@ -28,9 +28,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
         currentServer.Channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
         });
-        currentServer.channels = normalizedChannels;
-        delete currentServer.dataValues.Channels;
-        currentServer.dataValues.channels = normalizedChannels;
+        currentServer.dataValues.Channels = normalizedChannels;
     });
     return res.json(normalizedServers);
 }));
@@ -87,8 +85,10 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
 
     const normalizedServer = {};
     normalizedServer[server.id] = server;
+    normalizedServer[server.id].Members = {};
     normalizedServer[server.id].Members[member.id] = member;
-    // normalizedServer[server.id].channels[channel.id] = channel;
+    normalizedServer[server.id].Channels = {}
+    normalizedServer[server.id].Channels[channel.id] = channel;
     console.log("###########", normalizedServer);
     return res.json(normalizedServer)
 }));

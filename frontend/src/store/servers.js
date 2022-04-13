@@ -37,7 +37,7 @@ export const createServer = (form) => async(dispatch) => {
     });
 
     if (res.ok) {
-        const server = res.json();
+        const server = await res.json();
         dispatch(addServer(server));
     };
     return res;
