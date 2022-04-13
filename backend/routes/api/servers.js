@@ -35,5 +35,7 @@ router.get('/', requireAuth, asyncHandler(async(req, res) => {
 
 }));
 
+router.post('/', requireAuth, asyncHandler())
+
 
 module.exports = router;

@@ -13,6 +13,7 @@ const routes = require('./routes'); //connects all the routes
 
 app.use(morgan('dev')); //for logging info about req and res
 app.use(cookieParser()); //for parsing cookies
+app.use(express.urlencoded({ extended: false })); // parses incoming requests with urlencoded payloads
 app.use(express.json()); //for parsing JSON bodies of req with content-type of application/json
 
 if (!isProduction) {
