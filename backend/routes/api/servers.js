@@ -3,6 +3,8 @@ const router = express.Router();
 const asyncHandler = require('express-async-handler');
 const { Server, Channel } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require('express-validator');
 
 
 router.get('/', requireAuth, asyncHandler(async(req, res) => {
@@ -23,7 +25,6 @@ router.get('/', requireAuth, asyncHandler(async(req, res) => {
         const currentServer = normalizedServers[server.id];
         const normalizedChannels = {}
         
-
         currentServer.Channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
         });
@@ -35,7 +36,19 @@ router.get('/', requireAuth, asyncHandler(async(req, res) => {
 
 }));
 
-router.post('/', requireAuth, asyncHandler())
+const validateServer = [
+    check('form')
+        .custom(async (value, { req }) => {
+            console.log("######", value)
+        })
+]
+
+router.post('/', requireAuth, asyncHandler(async(req, res) =>{
+    const { form } = req.body;
+    console.log("######", form);
+
+
+}));
 
 
 module.exports = router;

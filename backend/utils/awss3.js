@@ -13,6 +13,16 @@ const singlePublicFileUpload = async (file) => {
     };
     const result = await s3.upload(uploadParams).promise();
 
-    // save the name of the file in your bucket as the key in your database to retrieve for later
+    // return is the image url
     return result.Location;
 };
+
+const storage = multer.memoryStorage({
+    destination: function (req, file, callback) {
+        callback(null, "");
+    },
+});
+
+
+const singleMulterUpload = (nameOfKey) =>
+    multer({ storage: storage }).single(nameOfKey);

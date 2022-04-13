@@ -1,14 +1,22 @@
 import './CreateServerForm.css';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createServer } from '../../store/servers';
 
 const CreateServerForm = ({ setShowModal }) => {
     const [image, setImage] = useState('');
     const [name, setName] = useState('');
+    const dispatch = useDispatch();
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log('form data', image, name)
-    }
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('image', image);
+        dispatch(createServer(formData));
+
+        console.log('form data', formData, image)
+    };
 
     return (
         <div className='create-server-form-container'>
@@ -21,7 +29,7 @@ const CreateServerForm = ({ setShowModal }) => {
                     You can always change it later.
                 </div>
             </div>
-            <form className='create-server-form-area' id='server-form'>
+            <form onSubmit={e => submitHandler(e)} className='create-server-form-area' id='server-form'>
                 <div className='create-server-upload-icon-container'>
                     <label htmlFor='image'>
                         {!image &&
@@ -67,7 +75,7 @@ const CreateServerForm = ({ setShowModal }) => {
                 <div onClick={() => setShowModal(false)} className='create-server-back-button'>
                     Back
                 </div>
-                <div className='create-server-submit-button' type='button' form='server-form'>
+                <div onClick={e => submitHandler(e)} className='create-server-submit-button' form='server-form'>
                     Create
                 </div>
             </div>
