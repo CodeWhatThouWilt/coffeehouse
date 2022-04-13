@@ -23,6 +23,23 @@
     font-weight: 400;
 }
 
+.create-server-form-area {
+    height: 200px;
+    width: 408px;
+    margin: 16px 0px;
+    display: flex;
+    padding: 0px 16px;
+    flex-direction: column;
+}
+
+.create-server-upload-icon-container {
+    height: 84px;
+    width: 408px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .create-server-upload-icons {
     height: 80px;
     width: 80px;
@@ -30,3 +47,50 @@
     border-radius: 50%;
 }
 
+.create-server-uploaded-image {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.create-server-blue-circle {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background-color: #5865f2;
+    margin-left: auto;
+    color: white;
+    display: flex;
+}
+
+.create-server-blue-circle-plus {
+    margin: auto;
+    color: white;
+    padding-bottom: 5px;
+    font-size: 20px;
+}
+
+.create-server-camera-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #4f5660;
+    padding-bottom: 5px;
+}
+
+.create-server-camera-icon {
+    font-size: 20px;
+}
+
+.create-server-upload-text {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.create-server-name-input-container {
+    height: 64px;
+    width: 408px;
+    margin: 24px 0px 0px;
+}
