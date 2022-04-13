@@ -1,5 +1,8 @@
 const multer = require('multer');
 const path = require("path");
+const AWS = require("aws-sdk");
+
+const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
 
 const singlePublicFileUpload = async (file) => {
@@ -7,7 +10,7 @@ const singlePublicFileUpload = async (file) => {
     // name of the file in your S3 bucket will be the date in ms plus the extension name
     const Key = new Date().getTime().toString() + path.extname(originalname);
     const uploadParams = {
-        Bucket: NAME_OF_BUCKET,
+        Bucket: process.env.AWS_BUCKET_NAME,
         Key,
         Body: buffer,
         ACL: "public-read",

@@ -5,7 +5,7 @@ const { Server, Channel, Member } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
-const { singleMulterUpload } = require('../../utils/awss3')
+const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss3')
 
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
@@ -40,7 +40,7 @@ const validateServer = [
             if (req.file) {
                 const fileType = req.file.mimetype;
 
-                if (!fileType.startsWith('image/')) {
+                if (!fileType.startsWith('image/') && !fileType.endsWith('gif')) {
                     return await Promise.reject('File needs to be an image')
                 };
             };
@@ -61,8 +61,10 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
     let server;
     if (imageFile) {
         const iconURL = await singlePublicFileUpload(req.file);
+        console.log('#######', iconURL)
         server = await Server.create({
             name,
+            ownerId: userId,
             iconURL
         });
     } else {
