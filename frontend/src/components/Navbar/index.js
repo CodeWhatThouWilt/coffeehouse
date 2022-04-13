@@ -29,7 +29,7 @@ const Navbar = () => {
             </nav>
             {showModal &&
                 <Modal onClose={() => setShowModal(false)}>
-                    <CreateServerForm />
+                    <CreateServerForm setShowModal={setShowModal} />
                 </Modal>
             }
         </>

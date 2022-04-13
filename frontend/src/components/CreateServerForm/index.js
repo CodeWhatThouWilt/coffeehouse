@@ -1,7 +1,7 @@
 import './CreateServerForm.css';
 import { useState } from 'react';
 
-const CreateServerForm = () => {
+const CreateServerForm = ({ setShowModal }) => {
     const [image, setImage] = useState('');
     const [name, setName] = useState('');
 
@@ -64,10 +64,10 @@ const CreateServerForm = () => {
                 </div>
             </form>
             <div className='create-server-button-container'>
-                <div className='create-server-back-button'>
+                <div onClick={() => setShowModal(false)} className='create-server-back-button'>
                     Back
                 </div>
-                <div className='create-server-submit-button' form='server-form'>
+                <div className='create-server-submit-button' type='button' form='server-form'>
                     Create
                 </div>
             </div>

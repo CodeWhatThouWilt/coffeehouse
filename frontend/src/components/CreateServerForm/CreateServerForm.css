@@ -119,3 +119,38 @@
 .create-server-name-input-container input:focus {
     outline: none;
 }
+
+.create-server-button-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    height: 38px;
+    width: 408px;
+    background-color: #f6f6f7;
+}
+
+.create-server-back-button {
+    height: 38px;
+    width: 35.89px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+}
+
+.create-server-submit-button {
+    height: 38px;
+    width: 96px;
+    color: white;
+    background-color: #5865f2;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
