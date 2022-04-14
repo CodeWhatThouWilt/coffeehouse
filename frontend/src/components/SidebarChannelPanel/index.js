@@ -2,7 +2,7 @@ import './SidebarChannelPanel.css';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const SideBarChannelPanel = () => {
+const SidebarChannelPanel = () => {
     const { serverId } = useParams();
     const servers = useSelector(state => state.serversState);
     console.log(servers)
@@ -25,4 +25,4 @@ const SideBarChannelPanel = () => {
     );
 };
 
-export default SideBarChannelPanel;
+export default SidebarChannelPanel;
