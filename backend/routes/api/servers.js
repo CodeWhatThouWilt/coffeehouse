@@ -61,7 +61,6 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
     let server;
     if (imageFile) {
         const iconURL = await singlePublicFileUpload(req.file);
-        console.log('#######', iconURL)
         server = await Server.create({
             name,
             ownerId: userId,
@@ -92,6 +91,68 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
     normalizedServer.dataValues.Channels = {}
     normalizedServer.dataValues.Channels[channel.id] = channel;
     return res.json(normalizedServer);
+}));
+
+
+router.put('/:serverId(\\d+)', requireAuth,
+    singleMulterUpload('image'), validateServer, asyncHandler(async (req, res) => {
+        const serverId = req.params;
+        const { name } = req.body;
+        const imageFile = req.file;
+        const userId = req.user.id;
+        // if file undefined skip aws process
+        const server = await Server.getById(serverId);
+        console.log(imageFile);
+
+        // if (imageFile) {
+        //     const iconURL = await singlePublicFileUpload(req.file);
+        //     server = await Server.create({
+        //         name,
+        //         ownerId: userId,
+        //         iconURL
+        //     });
+        // } else {
+        //     server = await Server.create({
+        //         name,
+        //         ownerId: userId,
+        //         iconURL: null
+        //     });
+        // };
+
+        // const channel = await Channel.create({
+        //     serverId: server.id,
+        //     name: 'general'
+        // });
+
+        // const member = await Member.create({
+        //     serverId: server.id,
+        //     userId
+        // })
+
+        // const normalizedServer = server;
+        // // normalizedServer[server.id] = server;
+        // normalizedServer.dataValues.Members = {};
+        // normalizedServer.dataValues.Members[member.id] = member;
+        // normalizedServer.dataValues.Channels = {}
+        // normalizedServer.dataValues.Channels[channel.id] = channel;
+        // return res.json(normalizedServer);
+    }));
+
+
+router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
+    const { serverId } = req.params;
+    const userId = req.user.id;
+    const server = await Server.getById(serverId);
+    if (server.ownerId === userId) {
+        await server.destroy();
+        return res.json(serverId);
+    };
+
+    const err = new Error('Unauthorized');
+    err.title = 'Unauthorized';
+    err.errors = ['Unauthorized'];
+    err.status = 401;
+    return next(err);
 }));
 
 
