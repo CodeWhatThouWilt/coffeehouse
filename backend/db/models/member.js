@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Member.belongsTo(models.User, { foreignKey: 'userId'});
     Member.belongsTo(models.Server, { foreignKey: 'serverId'});
+
   };
   return Member;
 };

@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     iconURL: DataTypes.STRING
   }, {});
   Server.associate = function(models) {
-    Server.belongsTo(models.User, { foreignKey: 'ownerId', onDelete: 'cascade', hooks: true });
+    Server.belongsTo(models.User, { foreignKey: 'ownerId'});
     Server.hasMany(models.Channel, { foreignKey: 'serverId', onDelete: 'cascade', hooks: true });
     Server.hasMany(models.Member, {foreignKey: 'serverId', onDelete: 'cascade', hooks: true});
   };

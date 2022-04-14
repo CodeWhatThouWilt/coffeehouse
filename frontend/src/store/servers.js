@@ -79,6 +79,7 @@ export const deleteServer = (serverId) => async(dispatch) => {
     const res = await csrfFetch(`/api/servers/${serverId}`, {
         method: "DELETE"
     });
+    
 
     if (res.ok) {
         const serverId = await res.json();

@@ -101,7 +101,7 @@ router.put('/:serverId(\\d+)', requireAuth,
         const imageFile = req.file;
         const userId = req.user.id;
         // if file undefined skip aws process
-        const server = await Server.getById(serverId);
+        const server = await Server.findByPk(serverId);
         console.log(imageFile);
 
         // if (imageFile) {
@@ -142,7 +142,7 @@ router.put('/:serverId(\\d+)', requireAuth,
 router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
     const { serverId } = req.params;
     const userId = req.user.id;
-    const server = await Server.getById(serverId);
+    const server = await Server.findByPk(serverId);
     if (server.ownerId === userId) {
         await server.destroy();
         return res.json(serverId);
