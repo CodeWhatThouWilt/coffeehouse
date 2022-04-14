@@ -100,7 +100,7 @@
     color: white;
     font-size: 14px;
     font-weight: 400;
-    border: 1px solid rgb(118, 118, 118);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 3px;
     padding: 1px 11.5px;
     margin-top: 8px;
@@ -109,5 +109,32 @@
 }
 
 .server-settings-upload-image-button:hover {
-    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+    background-color: rgba(255, 255, 255, 0.15);
+    border: none ;
+}
+
+.server-settings-server-name-container {
+    width: 320px;
+    height: 102px;
+    margin: 0px 0px 20px 10px;
+}
+
+.server-settings-server-name-tag {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #B9BBBE;
+}
+
+.server-settings-server-name-container input {
+    width: 300px;
+    height: 20px;
+    color: rgb(220, 221, 222);
+    padding: 10px;
+    background-color: #202225;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    font-family: 400;
 }

@@ -48,7 +48,10 @@ const ServerSettingsOverview = ({ server }) => {
                         onChange={e => setServerIcon(e.target.files[0])}
                     />
                 </div>
-                <div>
+                <div className='server-settings-server-name-container' >
+                    <div className='server-settings-server-name-tag'>
+                        SERVER NAME
+                    </div>
                     <input
                         value={newServerName}
                         onChange={e => setNewServerName(e.target.value)}
