@@ -1,0 +1,29 @@
+.navbar-container {
+    height: 100vh;
+    width: 72px;
+    background-color: #202225;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0px;
+    gap: 10px;
+}
+
+.navbar-server-icon {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.navbar-new-server-icon {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    background-color: #36393f;
+    color: #3ba55d;
+    font-size: 38px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
