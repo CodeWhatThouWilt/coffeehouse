@@ -17,14 +17,6 @@ const SideBarChannelPanel = () => {
     return server && (
         <div className='sb-channel-panel-container'>
             <div>
-                <div>
-                    {server.name}
-                </div>
-                <div>
-                    DD
-                </div>
-            </div>
-            <div>
                 {channelsArr.map(channel => (
                     <div key={channel.id} >{channel.name}</div>
                 ))}
