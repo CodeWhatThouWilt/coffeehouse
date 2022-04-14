@@ -8,6 +8,7 @@ import UserApplication from './components/UserApplication';
 import { restoreUser } from './store/session';
 import MainContent from './components/MainContent';
 import Sidebar from './components/Sidebar';
+import { Redirect } from 'react-router-dom';
 
 
 function App() {
@@ -33,6 +34,10 @@ function App() {
 
           <Route path='/channels'>
             <UserApplication />
+          </Route>
+
+          <Route path="/">
+            <Redirect to='/login' />
           </Route>
 
         </Switch>
