@@ -7,6 +7,8 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss3')
 
+const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icons/coffeehouse-default-server+(512+%C3%97+512+px).svg'
+
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
 
@@ -70,7 +72,7 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
         server = await Server.create({
             name,
             ownerId: userId,
-            iconURL: null
+            iconURL: defaultServerIcon
         });
     };
 

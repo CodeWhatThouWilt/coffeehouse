@@ -51,10 +51,11 @@ const SidebarServerPanel = () => {
                     </div>
                 }
             </div>
-            
-            <Modal onClose={() => setShowModal(false)}>
-                <ServerSettings setShowModal={setShowModal} />
-            </Modal>
+            {/* {showModal && */}
+                <Modal onClose={() => setShowModal(false)}>
+                    <ServerSettings setShowModal={setShowModal} />
+                </Modal>
+            {/* } */}
         </>
     );
 };

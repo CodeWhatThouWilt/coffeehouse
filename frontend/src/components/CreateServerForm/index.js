@@ -20,6 +20,7 @@ const CreateServerForm = ({ setShowModal }) => {
         formData.append('name', name);
         formData.append('image', image);
         dispatch(createServer(formData))
+            .then(() => setShowModal(false))
             .catch(async res => {
                 const data = await res.json();
                 data.errors && setErrors(data.errors);

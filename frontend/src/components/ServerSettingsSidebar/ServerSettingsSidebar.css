@@ -1,5 +1,8 @@
 .server-settings-sidebar-container {
-    width: 226px;
+    min-width: 226px;
+    width: 28%;
+    display: flex;
+    justify-content: flex-end;
     height: 100vh;
     background-color: #2f3136;
 }
