@@ -22,14 +22,14 @@ const SidebarChannelPanel = () => {
 
     return server && (
         <>
-            <div className='sb-channel-panel-container'>
-                <div>
-                    <div>TEXT CHANNELS</div>
-                    <div onClick={() => setShowModal(true)}>
+            <div className='channel-panel-container'>
+                <div className='channel-panel-category-header-container'>
+                    <div className='channel-panel-category-header'>TEXT CHANNELS</div>
+                    <div onClick={() => setShowModal(true)} className='add-channel-icon'>
                         <i className="fa-solid fa-plus"></i>
                     </div>
                 </div>
-                <div>
+                <div className='channel-panel-channel-list'>
                     {channelsArr.map(channel => (
                         <SidebarChannel key={channel.id} channel={channel} />
                     ))}

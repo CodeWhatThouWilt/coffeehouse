@@ -11,14 +11,17 @@ const SidebarChannel = ({ channel }) => {
 
     return (
         <>
-            <div>
-                <Link to={`/channels/${serverId}/${channel.id}`}>
-                    <div key={channel.id} >{channel.name}</div>
+            <nav className='channel-container'>
+                <Link to={`/channels/${serverId}/${channel.id}`} className='channel-link'>
+                    <div className='channel-name-container'>
+                        <i className="fa-solid fa-hashtag edit-channel-icon"></i>
+                        <div key={channel.id} >{channel.name}</div>
+                    </div>
                 </Link>
                 <div onClick={() => setShowModal(true)}>
                     <i className="fa-solid fa-gear"></i>
                 </div>
-            </div>
+            </nav>
             {showModal &&
                 <Modal onClose={() => setShowModal(false)}>
                     <ChannelSettings channel={channel} setShowModal={setShowModal} />

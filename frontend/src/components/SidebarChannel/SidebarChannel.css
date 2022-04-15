@@ -1,0 +1,23 @@
+.channel-container {
+    height: 34px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    align-items: center;
+}
+
+.channel-container a {
+    text-decoration: none;
+    width: 100%;
+}
+
+
+.channel-name-container {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+}
+
+.edit-channel-icon {
+    cursor: pointer;
+}
