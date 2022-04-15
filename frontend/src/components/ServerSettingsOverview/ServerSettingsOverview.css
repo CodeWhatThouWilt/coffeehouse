@@ -138,3 +138,60 @@
     font-size: 16px;
     font-family: 400;
 }
+
+.server-settings-confirm-changes-container {
+    position: absolute;
+    bottom: 50px;
+    width: 674px;
+    height: 32px;
+    padding: 10px 10px 10px 16px;
+    background-color: rgba(32, 34, 37, 0.9);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.server-settings-confirm-changes-text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: white;
+    margin-right: 10px;
+}
+
+.server-settings-confirm-changes-buttons-container {
+    display: flex;
+}
+
+.server-settings-confirm-changes-reset {
+    width: 60px;
+    height: 28px;
+    padding: 2px 0px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    margin-left: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.server-settings-confirm-changes-save {
+    width: 113px;
+    height: 32px;
+    /* padding: 2px 16px; */
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    color: white;
+    background-color: rgb(45, 125, 70);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    cursor: pointer;
+}

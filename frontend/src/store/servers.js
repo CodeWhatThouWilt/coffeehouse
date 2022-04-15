@@ -5,6 +5,7 @@ const GET_SERVERS = 'servers/getServers';
 const ADD_SERVER = 'servers/addServer';
 const UPDATE_SERVER = 'servers/updateServer';
 const REMOVE_SERVER = 'servers/removeServer';
+const ADD_CHANNEL = 'servers/addChannel';
 
 const getServers = (servers) => {
     return {
@@ -31,6 +32,13 @@ const removeServer = (serverId) => {
     return {
         type: REMOVE_SERVER,
         serverId
+    };
+};
+
+const addChannel = (channel) => {
+    return {
+        type: ADD_CHANNEL,
+        channel
     };
 };
 
@@ -87,6 +95,20 @@ export const deleteServer = (serverId) => async(dispatch) => {
     };
 };
 
+export const createChannel = (form) => async(dispatch) => {
+    const { serverId } = form;
+    const res = await csrfFetch(`/api/servers/${serverId}/channels`, {
+        method: "POST",
+        body: JSON.stringify(form)
+    });
+
+    if (res.ok) {
+        const channel = await res.json();
+        dispatch(addChannel(channel));
+    };
+    return res;
+};
+
 
 const initialState = {};
 
@@ -109,6 +131,10 @@ const serversReducer = (state = initialState, action) => {
 
         case REMOVE_SERVER:
             delete newState[action.serverId];
+            return newState;
+
+        case ADD_CHANNEL:
+            newState[action.channel.serverId].Channels[action.channel.id] = action.channel;
             return newState;
 
         default:

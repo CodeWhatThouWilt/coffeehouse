@@ -158,4 +158,17 @@ router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
 }));
 
 
+const validateChannel = [
+    check('name')
+        .isLength({ min: 1, max: 100 })
+        .withMessage('Valid name length: 1-100')
+];
+
+router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel,asyncHandler(async(req, res) => {
+    const userId = req.user.id;
+    const serverId = req.params;
+    
+}));
+
+
 module.exports = router;
