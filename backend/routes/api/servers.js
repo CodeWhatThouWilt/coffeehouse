@@ -99,46 +99,21 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
 
 router.put('/:serverId(\\d+)', requireAuth,
     singleMulterUpload('image'), validateServer, asyncHandler(async (req, res) => {
-        const serverId = req.params;
-        const { name } = req.body;
+        const { serverId } = req.params;
+        const { name, image } = req.body;
         const imageFile = req.file;
         const userId = req.user.id;
-        // if file undefined skip aws process
         const server = await Server.findByPk(serverId);
-        console.log(imageFile);
 
-        // if (imageFile) {
-        //     const iconURL = await singlePublicFileUpload(req.file);
-        //     server = await Server.create({
-        //         name,
-        //         ownerId: userId,
-        //         iconURL
-        //     });
-        // } else {
-        //     server = await Server.create({
-        //         name,
-        //         ownerId: userId,
-        //         iconURL: null
-        //     });
-        // };
+        let newIcon;
+        if (imageFile) newIcon = await singlePublicFileUpload(imageFile);
+        if (image) newIcon = image;
+        server.iconURL = newIcon;
+        server.name = name;
+        
+        await server.save();
 
-        // const channel = await Channel.create({
-        //     serverId: server.id,
-        //     name: 'general'
-        // });
-
-        // const member = await Member.create({
-        //     serverId: server.id,
-        //     userId
-        // })
-
-        // const normalizedServer = server;
-        // // normalizedServer[server.id] = server;
-        // normalizedServer.dataValues.Members = {};
-        // normalizedServer.dataValues.Members[member.id] = member;
-        // normalizedServer.dataValues.Channels = {}
-        // normalizedServer.dataValues.Channels[channel.id] = channel;
-        // return res.json(normalizedServer);
+        return res.json({id: serverId, iconURL: newIcon, name: name});
     }));
 
 

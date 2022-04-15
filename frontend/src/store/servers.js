@@ -216,7 +216,8 @@ const serversReducer = (state = initialState, action) => {
             return newState;
 
         case UPDATE_SERVER:
-            newState[action.server.id] = action.server;
+            newState[action.server.id].iconURL = action.server.iconURL;
+            newState[action.server.id].name = action.server.name;
             return newState;
 
         case REMOVE_SERVER:

@@ -102,7 +102,7 @@ const ServerSettingsOverview = ({ server }) => {
                         <input
                             id='new-server-image'
                             type='file'
-                            accept='image/*'
+                            // accept='image/*'
                             hidden={true}
                             value={emptyFile}
                             onChange={e => setNewServerIcon(e.target.files[0])}
