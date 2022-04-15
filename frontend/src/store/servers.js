@@ -7,7 +7,10 @@ const UPDATE_SERVER = 'servers/updateServer';
 const REMOVE_SERVER = 'servers/removeServer';
 const ADD_CHANNEL = 'servers/addChannel';
 const UPDATE_CHANNEL = 'servers/updateChannel';
-const REMOVE_CHANNEL = 'servers/REMOVE_CHANNEL';
+const REMOVE_CHANNEL = 'servers/removeChannel';
+const GET_MESSAGES = 'servers/getMessages'
+const ADD_MESSAGE = 'servers/addMessage';
+const EDIT_MESSAGE = 'servers/editMessage';
 
 const getServers = (servers) => {
     return {
@@ -55,8 +58,29 @@ const removeChannel = (idData) => {
     return {
         type: REMOVE_CHANNEL,
         idData
-    }
-}
+    };
+};
+
+const getMessages = (messages) => {
+    return {
+        type: GET_MESSAGES,
+        messages
+    };
+};
+
+const addMessage = (message) => {
+    return {
+        type: ADD_MESSAGE,
+        message
+    };
+};
+
+const editMessage = (message) => {
+    return {
+        type: EDIT_MESSAGE,
+        message
+    };
+};
 
 export const getUserServers = () => async(dispatch) => {
     const res = await csrfFetch('/api/servers');
@@ -153,6 +177,29 @@ export const deleteChannel = (form) => async(dispatch) => {
     return res
 };
 
+export const getChannelMessages = (idData) => (dispatch) => {
+    const { serverId, channelId } = idData;
+    const res = await csrfFetch(`/api/servers/${serverId}/channels/${channelId}/messages`);
+
+    if (res.ok) {
+        const messages = res.json();
+        dispatch(getMessages(messages));
+    };
+};
+
+export const createMessage = (form) => async(dispatch) => {
+    const { serverId, channelId } = form;
+    const res = await csrfFetch(`/api/servers/${serverId}/channels/${channelId}/messages`, {
+        method: "POST",
+        body: JSON.stringify(form)
+    });
+
+    if (res.ok) {
+        const message = res.json();
+        dispatch(addMessage(message));
+    };
+};
+
 const initialState = {};
 
 const serversReducer = (state = initialState, action) => {
@@ -186,6 +233,14 @@ const serversReducer = (state = initialState, action) => {
 
         case REMOVE_CHANNEL:
             delete newState[action.idData.serverId].Channels[action.idData.channelId];
+            return newState;
+
+        case ADD_MESSAGE:
+            newState[action.message.serverId].Channels[action.mesage.channelId].Messages[action.message.id] = action.message;
+            return newState;
+
+        case EDIT_MESSAGE:
+            newState[action.message.serverId].Channels[action.mesage.channelId].Messages[action.message.id] = action.message;
             return newState;
 
         default:

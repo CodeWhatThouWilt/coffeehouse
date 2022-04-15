@@ -5,9 +5,10 @@ const { Server, Channel, Member } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
-const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss3')
+const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss3');
 
-const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icons/coffeehouse-default-server+(512+%C3%97+512+px).svg'
+const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icons/coffeehouse-default-server+(512+%C3%97+512+px).svg';
+
 
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
