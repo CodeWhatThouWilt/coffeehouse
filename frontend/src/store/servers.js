@@ -6,6 +6,8 @@ const ADD_SERVER = 'servers/addServer';
 const UPDATE_SERVER = 'servers/updateServer';
 const REMOVE_SERVER = 'servers/removeServer';
 const ADD_CHANNEL = 'servers/addChannel';
+const UPDATE_CHANNEL = 'servers/updateChannel';
+const REMOVE_CHANNEL = 'servers/REMOVE_CHANNEL';
 
 const getServers = (servers) => {
     return {
@@ -41,6 +43,20 @@ const addChannel = (channel) => {
         channel
     };
 };
+
+const updateChannel = (channel) => {
+    return {
+        type: UPDATE_CHANNEL,
+        channel
+    };
+};
+
+const removeChannel = (idData) => {
+    return {
+        type: REMOVE_CHANNEL,
+        idData
+    }
+}
 
 export const getUserServers = () => async(dispatch) => {
     const res = await csrfFetch('/api/servers');
@@ -109,6 +125,33 @@ export const createChannel = (form) => async(dispatch) => {
     return res;
 };
 
+export const editChannel = (form) => async(disptach) => {
+    const { serverId, channelId } = form;
+    const res = await csrfFetch(`/api/servers/${serverId}/channels/${channelId}`, {
+        method: "PUT",
+        body: JSON.stringify(form)
+    });
+
+    if (res.ok) {
+        const channel = await res.json();
+        disptach(updateChannel(channel));
+    };
+    return res;
+};
+
+export const deleteChannel = (form) => async(dispatch) => {
+    const { serverId, channelId } = form;
+    const res = await csrfFetch(`/api/servers/${serverId}/channels/${channelId}`, {
+        method: "DELETE",
+        body: JSON.stringify(form)
+    });
+
+    if (res.ok) {
+        const idData = await res.json();
+        dispatch(removeChannel(idData));
+    }
+    return res
+};
 
 const initialState = {};
 
@@ -134,8 +177,15 @@ const serversReducer = (state = initialState, action) => {
             return newState;
 
         case ADD_CHANNEL:
-            console.log(action.channel);
             newState[action.channel.serverId].Channels[action.channel.id] = action.channel;
+            return newState;
+
+        case UPDATE_CHANNEL:
+            newState[action.channel.serverId].Channels[action.channel.id] = action.channel;
+            return newState;
+
+        case REMOVE_CHANNEL:
+            delete newState[action.idData.serverId].Channels[action.idData.channelId];
             return newState;
 
         default:

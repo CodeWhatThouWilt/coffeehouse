@@ -9,7 +9,7 @@ const ServerSettings = () => {
     const [currentForm, setCurrentForm] = useState('overview');
     const { serverId } = useParams();
     const servers = useSelector(state => state.serversState);
-    const server = servers[serverId]
+    const server = servers[serverId];
     
     return (
         <div className='server-settings-container'>

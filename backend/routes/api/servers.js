@@ -168,9 +168,8 @@ const validateChannel = [
 
 router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel, asyncHandler(async(req, res) => {
     const userId = req.user.id;
-    const serverId = req.params.serverId;
+    const { serverId } = req.params;
     const { name } = req.body;
-    console.log("#####", serverId);
 
     const newChannel = await Channel.create({
         serverId,
@@ -179,6 +178,28 @@ router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel, asyncHand
 
     return res.json(newChannel);
 }));
+
+router.put('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, validateChannel, asyncHandler(async(req, res) => {
+    const userId = req.user.id;
+    const { serverId, channelId } = req.params;
+    const { name } = req.body;
+
+    const channel = await Channel.findByPk(channelId);
+    channel.name = name;
+    await channel.save();
+
+    return res.json(channel);
+}));
+
+router.delete('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
+    const userId = req.user.id;
+    const { channelId, serverId } = req.params;
+    
+    const channel = await Channel.findByPk(channelId);
+    await channel.destroy();
+
+    return res.json({channelId, serverId});
+}));   
 
 
 module.exports = router;

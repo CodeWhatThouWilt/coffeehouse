@@ -10,7 +10,6 @@ const ServerSettingsSidebar = () => {
     const history = useHistory();
 
     const deleteHandler = async(e) => {
-        e.preventDefault();
         dispatch(deleteServer(serverId))
         history.push('/channels');
     };
