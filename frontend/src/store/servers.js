@@ -134,6 +134,7 @@ const serversReducer = (state = initialState, action) => {
             return newState;
 
         case ADD_CHANNEL:
+            console.log(action.channel);
             newState[action.channel.serverId].Channels[action.channel.id] = action.channel;
             return newState;
 

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Modal } from '../../context/modal';
 import CreateChannelForm from '../CreateChannelForm';
+import SidebarChannel from '../SidebarChannel';
 
 const SidebarChannelPanel = () => {
     const { serverId } = useParams();
@@ -30,9 +31,7 @@ const SidebarChannelPanel = () => {
                 </div>
                 <div>
                     {channelsArr.map(channel => (
-                        <Link to={`/channels/${serverId}/${channel.id}`}>
-                            <div key={channel.id} >{channel.name}</div>
-                        </Link>
+                        <SidebarChannel channel={channel} />
                     ))}
                 </div>
             </div>

@@ -160,14 +160,24 @@ router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
 
 const validateChannel = [
     check('name')
+        .exists({ checkFalsy: true })
         .isLength({ min: 1, max: 100 })
-        .withMessage('Valid name length: 1-100')
+        .withMessage('Valid name length: 1-100'),
+    handleValidationErrors
 ];
 
-router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel,asyncHandler(async(req, res) => {
+router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel, asyncHandler(async(req, res) => {
     const userId = req.user.id;
-    const serverId = req.params;
-    
+    const serverId = req.params.serverId;
+    const { name } = req.body;
+    console.log("#####", serverId);
+
+    const newChannel = await Channel.create({
+        serverId,
+        name
+    });
+
+    return res.json(newChannel);
 }));
 
 
