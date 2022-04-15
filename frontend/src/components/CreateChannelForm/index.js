@@ -18,7 +18,7 @@ const CreateChannelForm = () => {
             <form onSubmit={() => submitHandler()} id='new-channel-form'>
                 <input
                     value={name}
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => setName(e.target.value.replace(' ', '-'))}
                 />
             </form>
             <div onClick={() => submitHandler()} form='new-channel-form'>Submit</div>

@@ -1,4 +1,6 @@
-import './MainContent.css'
+import './MainContent.css';
+import MessagingArea from '../MessagingArea';
+import MemberArea from '../MemberArea';
 
 const MainContent = () => {
 
@@ -11,10 +13,8 @@ const MainContent = () => {
                     Selected Channel
                 </div>
             </div>
-            <div>
-                Messaging Area
-            </div>
-            <div>Member Area</div>
+            <MessagingArea />
+            <MemberArea />
         </div>
     );
 };

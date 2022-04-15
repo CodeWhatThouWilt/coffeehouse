@@ -8,12 +8,31 @@ const ServerSettingsOverview = ({ server }) => {
     const dispatch = useDispatch();
     const [newServerIcon, setNewServerIcon] = useState(server.iconURL);
     const [newServerName, setNewServerName] = useState(server.name);
+    const [emptyFile, setEmptyFile] = useState('');
+    const [errors, setErrors] = useState([]);
     const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icons/coffeehouse-default-server+(512+%C3%97+512+px).svg'
-    const showIcon = newServerIcon === defaultServerIcon ? newServerIcon : URL.createObjectURL(newServerIcon);
-    
-    console.log('showicon', showIcon)
-    console.log('state change', newServerIcon);
-    
+    const showIcon = newServerIcon === defaultServerIcon || newServerIcon === server.iconURL ? newServerIcon : URL.createObjectURL(newServerIcon);
+
+
+    const buttonDisabler = () => {
+        return newServerName.length > 1 && newServerName.length <= 100 ? false : true;
+    };
+
+    const submitHandler = () => {
+        // if (buttonDisabler()) return;
+        setErrors([]);
+        const formData = new FormData();
+        formData.append('image', newServerIcon);
+        formData.append('name', newServerName);
+
+
+        dispatch(editServer(formData, server.id))
+            .catch(async res => {
+                const data = await res.json();
+                data.errors && setErrors(data.errors);
+            });
+    };
+
     const checkForChanges = () => {
         const currentImage = server.iconURL;
         const currentName = server.name;
@@ -25,22 +44,27 @@ const ServerSettingsOverview = ({ server }) => {
     };
 
     const resetHandler = () => {
-        console.log("111", newServerIcon);
+        setErrors([]);
         setNewServerIcon(server.iconURL);
         setNewServerName(server.name);
-        setTimeout(() => console.log("222", newServerIcon), 5000)
-        
         return;
     };
 
-    // const submitHandler = () => {
-    //     const formData = new FormData();
-    //     formData.append('name', newServerName);
-    //     if (showIcon !== defaultServerIcon) {
-    //         formData.append('image', newServerIcon);
-    //     };
-    //     dispatch(editServer(formData))
-    // };
+    const confirmChangesStyling = () => {
+        if (errors.length) {
+            return 'server-settings-confirm-changes-container-errors';
+        } else {
+            return 'server-settings-confirm-changes-container';
+        };
+    };
+    
+    const submitButtonStyling = () => {
+        if (buttonDisabler()) {
+            return 'server-settings-confirm-changes-save-disabled';
+        } else {
+            return 'server-settings-confirm-changes-save-enabled';
+        };
+    };
 
     return (
         <>
@@ -80,6 +104,7 @@ const ServerSettingsOverview = ({ server }) => {
                             type='file'
                             accept='image/*'
                             hidden={true}
+                            value={emptyFile}
                             onChange={e => setNewServerIcon(e.target.files[0])}
                         />
                     </div>
@@ -90,11 +115,17 @@ const ServerSettingsOverview = ({ server }) => {
                         <input
                             value={newServerName}
                             onChange={e => setNewServerName(e.target.value)}
+                            maxLength={100}
                         />
                     </div>
                 </div>
                 {checkForChanges() &&
-                    <div className='server-settings-confirm-changes-container'>
+                    <div className={confirmChangesStyling()}>
+                        {errors.length > 0 &&
+                            <div className='server-settings-confirm-changes-errors-container'>
+                                <div className='server-settings-error'>{errors[0]}</div>
+                            </div>
+                        }
                         <div className='server-settings-confirm-changes-text'>
                             Careful - you have unsaved changes!
                         </div>
@@ -102,7 +133,7 @@ const ServerSettingsOverview = ({ server }) => {
                             <div onClick={() => resetHandler()} className='server-settings-confirm-changes-reset'>
                                 Reset
                             </div>
-                            <div className='server-settings-confirm-changes-save'>
+                            <div onClick={() => submitHandler()} className={submitButtonStyling()}>
                                 Save Changes
                             </div>
                         </div>

@@ -177,7 +177,7 @@ export const deleteChannel = (form) => async(dispatch) => {
     return res
 };
 
-export const getChannelMessages = (idData) => (dispatch) => {
+export const getChannelMessages = (idData) => async(dispatch) => {
     const { serverId, channelId } = idData;
     const res = await csrfFetch(`/api/servers/${serverId}/channels/${channelId}/messages`);
 

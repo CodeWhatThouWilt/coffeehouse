@@ -11,6 +11,7 @@ const CreateServerForm = ({ setShowModal }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        setErrors([]);
 
         if (name.length < 1 || name.length > 100) {
             return;

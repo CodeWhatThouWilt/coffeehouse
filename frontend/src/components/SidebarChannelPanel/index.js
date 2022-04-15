@@ -31,7 +31,7 @@ const SidebarChannelPanel = () => {
                 </div>
                 <div>
                     {channelsArr.map(channel => (
-                        <SidebarChannel channel={channel} />
+                        <SidebarChannel key={channel.id} channel={channel} />
                     ))}
                 </div>
             </div>
