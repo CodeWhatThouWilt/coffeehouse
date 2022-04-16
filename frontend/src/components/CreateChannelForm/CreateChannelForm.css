@@ -1,6 +1,103 @@
-.create-channel-form-container {
+.create-channel-container {
     width: 440px;
-    height: 520px;
+    height: 289px;
     background-color: #36393e;
     border-radius: 4px;
+}
+
+.create-channel-top-text {
+    width: 408px;
+    height: 46px;
+    padding: 16px;
+    margin: 16px 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.create-channel-top-text h1 {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+.create-channel-mid-section-container {
+    width: 416px;
+    height: 144px;
+    padding: 0px 8px 0px 16px;
+}
+
+.create-channel-channel-name-header {
+    width: 408px;
+    height: 16px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #DCDDDE;
+}
+
+.create-channel-input-container {
+    position: relative;
+}
+
+.hashtag-icon {
+    position: absolute;
+    color: white;
+    top: 12px;
+    left: 8px;
+}
+
+.create-channel-input-container input {
+    width: 370px;
+    height: 20px;
+    padding: 10px 10px 10px 28px;
+    font-size: 16px;
+    border-radius: 3px;
+    background-color: #202225;
+    border: none;
+    color: #dcddde;
+    outline: none;
+}
+
+.create-channel-error-container {
+    width: 100%;
+    height: 80px;
+}
+
+.create-channel-bottom-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 408px;
+    height: 38px;
+    padding: 16px;
+    background-color: #2f3136;
+    border-radius: 0px 0px 4px 4px;
+}
+
+.create-channel-cancel {
+    width: 64px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 16px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.create-channel-submit-button {
+    width: 122px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    background-color: #5865F2;
+    color: white;
+    border-radius: 3px;
 }
