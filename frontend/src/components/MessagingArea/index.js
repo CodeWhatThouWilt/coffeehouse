@@ -3,7 +3,7 @@ import './MessagingArea.css';
 const MessagingArea = () => {
 
     return (
-        <div>MessagingArea</div>
+        <div className='messaging-area-container'>MessagingArea</div>
     );
 };
 

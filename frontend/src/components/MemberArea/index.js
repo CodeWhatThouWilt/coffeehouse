@@ -3,7 +3,7 @@ import './MemberArea.css';
 const MemberArea = () => {
 
     return (
-        <div>MemberArea</div>
+        <div classname='member-area-container'>MemberArea</div>
     );
 };
 

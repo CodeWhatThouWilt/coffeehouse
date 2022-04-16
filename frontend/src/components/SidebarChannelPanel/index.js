@@ -17,11 +17,10 @@ const SidebarChannelPanel = () => {
     if (server) {
         channels = server.Channels;
         channelsArr = Object.values(channels);
-    }
-
+    };
 
     return server && (
-        <>
+        <form>
             <div className='channel-panel-container'>
                 <div className='channel-panel-category-header-container'>
                     <div className='channel-panel-category-header'>TEXT CHANNELS</div>
@@ -35,12 +34,12 @@ const SidebarChannelPanel = () => {
                     ))}
                 </div>
             </div>
-            {showModal &&
+            {/* {showModal && */}
                 <Modal onClose={() => setShowModal(false)}>
                     <CreateChannelForm />
                 </Modal>
-            }
-        </>
+            {/* } */}
+        </form>
     );
 };
 
