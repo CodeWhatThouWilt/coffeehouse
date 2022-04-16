@@ -63,7 +63,7 @@ app.use((err, _req, _res, next) => {
 //third err handler. formatting errors before returnin json res. return err msg, err array, and err stack trace
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
-  console.error(err);
+  console.error("ERROR:", err);
   res.json({
     title: err.title || 'Server Error',
     message: err.message,

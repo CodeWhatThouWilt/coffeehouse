@@ -137,11 +137,12 @@ export const deleteServer = (serverId) => async(dispatch) => {
 
 export const createChannel = (form) => async(dispatch) => {
     const { serverId } = form;
+    console.log("FORM", form);
     const res = await csrfFetch(`/api/servers/${serverId}/channels`, {
         method: "POST",
         body: JSON.stringify(form)
     });
-
+    console.log("RES");
     if (res.ok) {
         const channel = await res.json();
         dispatch(addChannel(channel));

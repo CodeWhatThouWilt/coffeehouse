@@ -1,6 +1,6 @@
 .channel-panel-container {
     width: 224px;
-    height: 100%;
+    height: calc(100vh - 100.5px);
     background-color: #2f3136;
     display: flex;
     flex-direction: column;
@@ -24,6 +24,6 @@
     cursor: pointer;
 }
 
-.channel-panel-channel-list {
+/* .channel-panel-channel-list {
     
-}
+} */

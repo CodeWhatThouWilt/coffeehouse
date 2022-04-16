@@ -1,0 +1,38 @@
+.no-channel-container {
+    height: 100%;
+    width: 100%;
+    background-color: #202225;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-channel-inner-container {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-channel-inner-container img {
+    width: 272px;
+    height: 222px;
+    margin-bottom: 40px;
+}
+
+.no-channel-header {
+    font-size: 17px;
+    line-height: 22px;
+    font-weight: 600;
+    color: #a3a6aa;
+    text-align: center;
+}
+
+.no-channel-text {
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 20px;
+    text-align: center;
+    color: #a3a6aa;
+}

@@ -34,11 +34,11 @@ const SidebarChannelPanel = () => {
                     ))}
                 </div>
             </div>
-            {/* {showModal && */}
+            {showModal &&
                 <Modal onClose={() => setShowModal(false)}>
-                    <CreateChannelForm />
+                    <CreateChannelForm setShowModal={setShowModal} />
                 </Modal>
-            {/* } */}
+            }
         </form>
     );
 };

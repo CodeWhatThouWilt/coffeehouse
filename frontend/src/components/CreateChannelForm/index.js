@@ -6,7 +6,7 @@ import { createChannel } from '../../store/servers';
 import unfilledRadio from '../../assets/unfilledRadio.svg';
 import filledRadio from '../../assets/filledInRadio.svg';
 
-const CreateChannelForm = ({}) => {
+const CreateChannelForm = ({ setShowModal }) => {
     const dispatch = useDispatch();
     const { serverId } = useParams();
     const [name, setName] = useState('');
@@ -14,8 +14,9 @@ const CreateChannelForm = ({}) => {
 
     const submitHandler = () => {
         dispatch(createChannel({ name, serverId }))
-        .catch(res => {
-            const data = res.json();
+        .then(() => setShowModal(false))
+        .catch(async res => {
+            const data = await res.json();
             data.errors && setErrors(data.errors);
         });
     };
@@ -42,7 +43,7 @@ const CreateChannelForm = ({}) => {
                     </div>
                     <div className='create-channel-error-container'>
                         {errors.map(error => (
-                            <div>{error}</div>
+                            <div className='create-channel-error'>{error}</div>
                         ))}
                     </div>
                 </div>

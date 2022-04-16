@@ -136,9 +136,14 @@ router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
 
 const validateChannel = [
     check('name')
-        .exists({ checkFalsy: true })
         .isLength({ min: 1, max: 100 })
-        .withMessage('Valid name length: 1-100'),
+        .withMessage('Valid name length: 1-100')
+        .custom(async(val, { req }) => {
+            const { name } = req.body
+            if (name.endsWith('-')) {
+                return await Promise.reject('Name must end with a letter')
+            };
+        }),
     handleValidationErrors
 ];
 

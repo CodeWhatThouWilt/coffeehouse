@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getUserServers } from '../../store/servers';
+import NoChannelsToDisplay from '../NoChannelsToDisplay';
 
 const UserApplication = () => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -22,7 +23,12 @@ const UserApplication = () => {
                 <Route path='/channels'>
                     <Navbar />
                     <Sidebar />
-                    <MainContent />
+                    <Route path='/channels/:serverId/:channelId'>
+                        <MainContent />
+                    </Route>
+                    <Route exact path='/channels/:serverId'>
+                        <NoChannelsToDisplay />
+                    </Route>
                 </Route>
             }
         </div>
