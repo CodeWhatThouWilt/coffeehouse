@@ -1,8 +1,22 @@
 'use strict';
 const bcrypt = require('bcryptjs');
+const { faker } = require('@faker-js/faker');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
+
+    const usersArr = [];
+    for (let i = 0; i < 100; i++) {
+      usersArr.push({
+        email: faker.internet.email(),
+        username: faker.internet.userName(),
+        profilePicture: faker.image.avatar(),
+        hashedPassword: bcrypt.hashSync(faker.internet.password())
+      })
+      
+    };
+
+
     return queryInterface.bulkInsert('Users', [
       {
         email: 'demo@demo.com',
@@ -11,18 +25,12 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password')
       },
       {
-        email: 'user1@user.io',
-        username: 'FakeUser1',
-        profilePicture: 'https://media.istockphoto.com/photos/happy-man-drinking-a-cup-of-coffee-at-a-cafe-picture-id960567928?k=20&m=960567928&s=612x612&w=0&h=0emeUh9zw9ZlFltDae9DTnnPRgjWvoa-Ke8HuZjKhSg=',
+        email: 'yake@yake.com',
+        username: 'Yake',
+        profilePicture: 'https://avatars.githubusercontent.com/u/78247317?v=4',
         hashedPassword: bcrypt.hashSync('password2')
       },
-      {
-        email: 'user2@user.io',
-        username: 'FakeUser2',
-        profilePicture: 'https://i.insider.com/5f21e74e1918246a0a65c79f?auto=webp&enable=upscale&fit=crop&quality=85&width=1200&height=900',
-        hashedPassword: bcrypt.hashSync('password3')
-      }
-    ], {});
+    ...usersArr], {});
   },
 
   down: (queryInterface, Sequelize) => {

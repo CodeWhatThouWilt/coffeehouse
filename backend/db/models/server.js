@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   Server.associate = function(models) {
     Server.belongsTo(models.User, { foreignKey: 'ownerId'});
     Server.hasMany(models.Channel, { foreignKey: 'serverId', onDelete: 'cascade', hooks: true });
-    Server.hasMany(models.Member, {foreignKey: 'serverId', onDelete: 'cascade', hooks: true});
+    Server.hasMany(models.Member, { foreignKey: 'serverId', onDelete: 'cascade', hooks: true });
+    Server.hasMany(models.Message, { foreignKey: 'serverId', onDelete: 'cascade', hooks: true });
   };
   return Server;
 };

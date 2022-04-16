@@ -6,7 +6,9 @@ const MessagingArea = () => {
     console.log(channelId);
 
     return (
-        <div className='messaging-area-container'>MessagingArea</div>
+        <div className='messaging-area-container'>
+            
+        </div>
     );
 };
 

@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      serverId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: "Servers" }
+      },
       channelId: {
         allowNull: false,
         type: Sequelize.INTEGER,

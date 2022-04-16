@@ -1,7 +1,14 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: async (queryInterface, Sequelize) => {
+
+    const serversArr = [];
+    const arr = new Array(20);
+    for await (const [i, _ignore] of arr.entries()) {
+
+    }
+
     return queryInterface.bulkInsert('Servers', [
       {
         name: "Yoffee",
