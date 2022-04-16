@@ -1,29 +1,27 @@
 'use strict';
 const { faker } = require('@faker-js/faker');
-const { Channel, Server } = require('../models');
+const { Channel, Server, Member, User } = require('../models');
 
 module.exports = {
   // id, serverId, channelId, content
   up: async (queryInterface, Sequelize) => {
 
       const messagesArr = [];
-      const arr = new Array(200);
+      const arr = new Array(2000);
 
       for await (const [i, _ignore] of arr.entries()) {
-        const servers = await Server.findAll();
-        const amountServers = servers.length;
-        const serverId = Math.ceil(Math.random() * amountServers);
-        const channels = await Channel.findAll({
+        const users = await User.findAll();
+        const usersAmount = users.length;
+        const user = Math.ceil(Math.random() * usersAmount);
+        const userServers = await Member.findAll({
           where: {
-            serverId
+            userId: user
           }
         });
-        const amountChannels = channels.length;
-        const channelId = Math.ceil(Math.random() * amountChannels);
-        const content = faker.lorem.sentence();
+        
 
         messagesArr.push({
-          id: i,
+          userId,
           serverId,
           channelId,
           content
