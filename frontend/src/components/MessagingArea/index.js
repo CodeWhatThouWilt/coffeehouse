@@ -12,7 +12,7 @@ const MessagingArea = ({ messages }) => {
         <div className='messaging-area-container'>
             <div className='messaging-area-list'>
                 {messagesArr.map(message => (
-                    <div>{message.content}</div>
+                    <div key={message.id}>{message.content}</div>
                 ))}
             </div>
             <MessageInputBar />

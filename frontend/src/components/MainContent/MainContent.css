@@ -1,9 +1,10 @@
 .main-content-container {
     height: 100vh;
-    width: 100%;
+    width: calc(100% - 312px);
+    display: flex;
+    flex-direction: column;
 }
 
 .main-content-inner-container {
-    display: flex;
-    height: calc(100vh - 48.5px);
+    flex-grow: 1;
 }

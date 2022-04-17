@@ -1,11 +1,15 @@
 
 
 .message-input-bar-container {
+    position: sticky;
+    top: 100%;
+    box-sizing: border-box;
     width: 100%;
-
+    height: 68px;
+    padding: 0px 16px;
+    margin-top: -8;
 }
 
 .message-input-bar-container input {
-    width: 100%;
-
+    
 }

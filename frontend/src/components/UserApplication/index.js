@@ -20,7 +20,7 @@ const UserApplication = () => {
     return (
         <div className='application-container'>
             {isLoaded &&
-                <Route path='/channels'>
+                <>
                     <Navbar />
                     <Sidebar />
                     <Route path='/channels/:serverId/:channelId'>
@@ -29,7 +29,7 @@ const UserApplication = () => {
                     <Route exact path='/channels/:serverId'>
                         <NoChannelsToDisplay />
                     </Route>
-                </Route>
+                </>
             }
         </div>
     );
