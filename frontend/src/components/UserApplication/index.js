@@ -15,7 +15,7 @@ const UserApplication = () => {
     useEffect(() => {
         dispatch(getUserServers())
             .then(() => setIsLoaded(true))
-    }, [dispatch])
+    }, [dispatch]);
 
     return (
         <div className='application-container'>

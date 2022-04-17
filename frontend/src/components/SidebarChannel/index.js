@@ -15,7 +15,7 @@ const SidebarChannel = ({ channel }) => {
                 <Link to={`/channels/${serverId}/${channel.id}`} className='channel-link'>
                     <div className='channel-name-container'>
                         <i className="fa-solid fa-hashtag edit-channel-icon"></i>
-                        <div key={channel.id} >{channel.name}</div>
+                        <div>{channel.name}</div>
                     </div>
                 </Link>
                 <div onClick={() => setShowModal(true)}>

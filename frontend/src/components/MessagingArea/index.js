@@ -1,9 +1,11 @@
 import './MessagingArea.css';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getChannelMessages } from '../../store/servers';
 
 const MessagingArea = () => {
-    const { channelId } = useParams();
-    console.log(channelId);
+
+    
 
     return (
         <div className='messaging-area-container'>

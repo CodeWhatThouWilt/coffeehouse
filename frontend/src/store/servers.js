@@ -61,10 +61,10 @@ const removeChannel = (idData) => {
     };
 };
 
-const getMessages = (messages) => {
+const getMessages = (payload) => {
     return {
         type: GET_MESSAGES,
-        messages
+        payload
     };
 };
 
@@ -183,8 +183,8 @@ export const getChannelMessages = (idData) => async(dispatch) => {
     const res = await csrfFetch(`/api/servers/${serverId}/channels/${channelId}/messages`);
 
     if (res.ok) {
-        const messages = res.json();
-        dispatch(getMessages(messages));
+        const payload = await res.json();
+        dispatch(getMessages(payload));
     };
 };
 
@@ -235,6 +235,11 @@ const serversReducer = (state = initialState, action) => {
 
         case REMOVE_CHANNEL:
             delete newState[action.idData.serverId].Channels[action.idData.channelId];
+            return newState;
+
+        case GET_MESSAGES:
+            console.log("#############", action.payload);
+            newState[action.payload.serverId].Channels[action.payload.channelId].Messages = action.payload.messages;
             return newState;
 
         case ADD_MESSAGE:

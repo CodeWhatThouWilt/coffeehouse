@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const { Server, Channel, Member } = require('../../db/models');
+const { Server, Channel, Member, Message } = require('../../db/models');
 const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -190,7 +190,24 @@ router.delete('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, asyncHa
     await channel.destroy();
 
     return res.json({channelId, serverId});
-}));   
+}));
+
+
+router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async(req, res) => {
+    const { channelId, serverId } = req.params;
+    const channelMessages = await Message.findAll({
+        where: {
+            channelId
+        }
+    });
+
+    const normalizedMessages = {};
+    channelMessages.forEach(message => {
+        normalizedMessages[message.id] = message;
+    });
+
+    return res.json({ serverId, channelId, messages: normalizedMessages });
+}));
 
 
 module.exports = router;
