@@ -36,7 +36,7 @@ module.exports = {
         membersObj[serverId] = {};
       };
       if (!membersObj[serverId][userId]) {
-        // membersObj[serverId][userId] = member;
+        membersObj[serverId][userId] = member;
         membersArr.push(member);
       };
     }

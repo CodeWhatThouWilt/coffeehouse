@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
 const { Server, Channel, Member } = require('../../db/models');
+const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
@@ -13,26 +14,35 @@ const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icon
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
 
-    const servers = await Server.findAll({
+    const userServers = await Member.findAll({
         where: {
-            ownerId: userId
+            userId
         },
-        include: {
-            model: Channel
-        }
+        include: [{
+            model: Server,
+            include: [{
+                model: Channel
+            }]
+        }]
     });
 
     const normalizedServers = {};
-    servers.forEach(server => {
+
+    userServers.forEach(membership => {
+        const server = membership.dataValues.Server;
         normalizedServers[server.id] = server;
+
         const currentServer = normalizedServers[server.id];
+        const channels = server.dataValues.Channels;
         const normalizedChannels = {};
 
-        currentServer.Channels.forEach(channel => {
+        channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
         });
-        currentServer.dataValues.Channels = normalizedChannels;
+        currentServer.dataValues.Channels = normalizedChannels
     });
+
+
     return res.json(normalizedServers);
 }));
 

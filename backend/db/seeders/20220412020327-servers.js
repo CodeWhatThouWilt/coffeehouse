@@ -6,7 +6,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
 
     const serversArr = [];
-    const arr = new Array(20);
+    const arr = new Array(35);
     for await (const [i, _ignore] of arr.entries()) {
         const name = faker.internet.domainWord().split('-').join(' ');
         const users = await User.findAll();
