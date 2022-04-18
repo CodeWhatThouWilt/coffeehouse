@@ -9,7 +9,8 @@ const MessageInputBar = () => {
     const dispatch = useDispatch();
     const [content, setContent] = useState();
 
-    const submitHandler = () => {
+    const submitHandler = (e) => {
+        e.preventDefault();
         dispatch(createMessage({
             serverId,
             channelId,
@@ -19,7 +20,7 @@ const MessageInputBar = () => {
 
 
     return (
-        <form className='message-input-bar-container'>
+        <form onSubmit={e => submitHandler(e)} className='message-input-bar-container'>
             <input 
             type='text'
             value={content}

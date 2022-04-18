@@ -19,6 +19,8 @@ const MainContent = () => {
     const messages = channel.Messages;
     // TO DO GET MEMBERS AND PASS IT INTO MEMBERS AREA
     console.log("#### MESSAGES: ", messages);
+    console.log("#### SERVER: ", server);
+    console.log("#### : ", channel);
 
     useEffect(() => {
         dispatch(getChannelMessages({ serverId, channelId }))

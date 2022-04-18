@@ -194,7 +194,7 @@ export const createMessage = (form) => async(dispatch) => {
     });
 
     if (res.ok) {
-        const message = res.json();
+        const message = await res.json();
         dispatch(addMessage(message));
     };
 };
@@ -240,7 +240,7 @@ const serversReducer = (state = initialState, action) => {
             return newState;
 
         case ADD_MESSAGE:
-            newState[action.message.serverId].Channels[action.mesage.channelId].Messages[action.message.id] = action.message;
+            newState[action.message.serverId].Channels[action.message.channelId].Messages[action.message.id] = action.message;
             return newState;
 
         case EDIT_MESSAGE:

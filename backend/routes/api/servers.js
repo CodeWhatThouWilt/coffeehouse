@@ -209,5 +209,20 @@ router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, a
     return res.json({ serverId, channelId, messages: normalizedMessages });
 }));
 
+router.post('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async(req, res) => {
+    const { channelId, serverId } = req.params;
+    const { content } = req.body;
+    const userId = req.user.id;
+
+    const message = await Message.create({
+        channelId,
+        serverId,
+        userId,
+        content
+    });
+
+    return res.json(message);
+}));
+
 
 module.exports = router;
