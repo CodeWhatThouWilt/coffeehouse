@@ -1,14 +1,18 @@
 const express = require('express');
 const morgan = require('morgan'); //http req middleware logger for Node.js
 const cors = require('cors'); //can be used to enable cors with various options
-const csurf = require('csurf'); //adds a cookie that is HTTP-only to any server res, adds a method on all req (req.csrfToken) that will be sent to cookie XSRF-TOKEN later. The two cookies work together to provide CSRF protection for app
+const csurf = require('csurf');
 const helmet = require('helmet');
+const { createServer } = require('http');
+const { Server } = require('socket.io');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 
-const app = express(); //initialize express
+const app = express();
+const server = createServer(app);
+
 const routes = require('./routes'); //connects all the routes
 
 app.use(morgan('dev')); //for logging info about req and res
@@ -19,7 +23,8 @@ app.use(express.json({limit: '8mb'})); //for parsing JSON bodies of req with con
 if (!isProduction) {
   // enable cors only in development
   app.use(cors());
-}
+};
+
 
 // helmet helps set a variety of headers to better secure your app
 app.use(
@@ -27,6 +32,7 @@ app.use(
     policy: "cross-origin"
   })
 );
+
 
 // Set the _csrf token and create req.csrfToken method
 app.use(
@@ -39,10 +45,45 @@ app.use(
   })
 );
 
+
+// app.use((req, res, next) => {
+//   req.io = io;
+//   return next()
+// });
+let socketCors;
+isProduction ? socketCors = 'https://coffeehouse-app.herokuapp.com/' : "*"
+const io = new Server(server, {
+  cors: {
+    origin: socketCors
+  }
+});
+
+
+io.on('connection', socket => {
+  console.log('New websocket connection...');
+
+  socket.emit('chat', 'Welcome to coffeehouse');
+
+  // Broadcasts when a user connects
+  socket.broadcast.emit('chat', 'A user has joined the chat');
+
+  // Broadcasts when client disconnects
+  socket.on('disconnect', () => {
+    io.emit('chat', 'A user has left the chat');
+  });
+
+  // listen for chat
+  socket.on('chat', (message) => {
+    console.log("############", message);
+    io.emit('chat', message)
+  });
+});
+
+
 app.use(routes);
 
-//first err handler. reg middleware. Will catch any req that don't match any of the route defined and create server error with status code 404
-app.use((_req, _res, next) => { //next invoked with  nothing means that the error handler defined after this middlware wont be invoked. If it's invoked, then error handlers defined after this middleware will be invoked
+
+app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
   err.errors = ["The requested resource couldn't be found."];
@@ -50,25 +91,26 @@ app.use((_req, _res, next) => { //next invoked with  nothing means that the erro
   next(err);
 });
 
-//sec err handler. catch sequelize errors and formatting them before sending err res
 app.use((err, _req, _res, next) => {
-  // check if error is a Sequelize error and is an instance of Validation Error:
   if (err instanceof ValidationError) {
     err.errors = err.errors.map((e) => e.message);
     err.title = 'Validation error';
-  }
+  };
   next(err);
 });
 
-//third err handler. formatting errors before returnin json res. return err msg, err array, and err stack trace
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error("ERROR:", err);
   res.json({
     title: err.title || 'Server Error',
     message: err.message,
-    errors: err.errors, //errors array
-    stack: isProduction ? null : err.stack //err stack trace (if env is in development w/ status code of err msg)
+    errors: err.errors,
+    stack: isProduction ? null : err.stack
   });
 });
-module.exports = app;
+
+module.exports = {
+  app,
+  server
+};

@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { getChannelMessages } from '../../store/servers';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { io } from 'socket.io-client';
+let socket;
 
 const MainContent = () => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -18,9 +20,6 @@ const MainContent = () => {
     const channel = server.Channels[channelId];
     const messages = channel.Messages;
     // TO DO GET MEMBERS AND PASS IT INTO MEMBERS AREA
-    console.log("#### MESSAGES: ", messages);
-    console.log("#### SERVER: ", server);
-    console.log("#### : ", channel);
 
     useEffect(() => {
         dispatch(getChannelMessages({ serverId, channelId }))
