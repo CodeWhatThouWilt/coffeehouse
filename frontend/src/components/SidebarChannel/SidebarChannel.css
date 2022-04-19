@@ -6,8 +6,8 @@
     align-items: center;
 }
 
-.channel-container a {
-    text-decoration: none;
+.channel-link {
+    cursor: pointer;
     width: 100%;
 }
 

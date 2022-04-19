@@ -1,5 +1,5 @@
 'use strict';
-const { fake } = require('@faker-js/faker');
+const { faker } = require('@faker-js/faker');
 const { Server, User } = require('../models');
 
 module.exports = {

@@ -12,7 +12,7 @@ module.exports = {
         username: faker.internet.userName(),
         profilePicture: faker.image.avatar(),
         hashedPassword: bcrypt.hashSync(faker.internet.password())
-      })
+      });
       
     };
 
