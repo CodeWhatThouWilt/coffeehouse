@@ -26,6 +26,8 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
         }]
     });
 
+    console.log("#######################:", req.io)
+
     const normalizedServers = {};
 
     userServers.forEach(membership => {
@@ -36,12 +38,23 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
         const channels = server.dataValues.Channels;
         const normalizedChannels = {};
 
+        const namespace = req.io.of(`/${server.id}`);
+
         channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
+
+            namespace.on("connection", socket => {
+                console.log("WE HAVE A CONNECTION!!!!!!!!!!!")
+                socket.join(`${channel.id}`);
+                socket.on(`${channel.id}`, (message) => {
+                    console.log("############", message);
+                    namespace.emit(`${channel.id}`, message)
+                });
+            });
         });
         currentServer.dataValues.Channels = normalizedChannels
     });
-
+    console.log("############## NAMESPACE: ", req.io);
 
     return res.json(normalizedServers);
 }));

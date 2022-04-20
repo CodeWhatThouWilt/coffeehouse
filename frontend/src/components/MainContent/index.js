@@ -21,15 +21,17 @@ const MainContent = () => {
     const messages = channel.Messages;
     // TO DO GET MEMBERS AND PASS IT INTO MEMBERS AREA
 
+    
+
     useEffect(() => {
         dispatch(getChannelMessages({ serverId, channelId }))
             .then(res => setIsLoaded(true))
-    }, [dispatch]);
+    }, [dispatch, serverId, channelId]);
 
 
     return (
         <div className='main-content-container'>
-            <MainContentTopBar channel={channel} />
+            <MainContentTopBar channel={channel} setShowMembers={setShowMembers} />
             <div className='main-content-inner-container'>
                 {isLoaded &&
                     <MessagingArea messages={messages} />

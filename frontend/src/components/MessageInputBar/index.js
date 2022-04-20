@@ -9,7 +9,6 @@ const MessageInputBar = ({ socket }) => {
     const dispatch = useDispatch();
     const [content, setContent] = useState("");
     const { user } = useSelector(state => state.sessionState);
-
     // const submitHandler = (e) => {
     //     e.preventDefault();
     //     dispatch(createMessage({
@@ -21,7 +20,7 @@ const MessageInputBar = ({ socket }) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        socket.emit("chat", { user: user.username, content });
+        socket.emit(`${channelId}`, { user: user.username, content });
         setContent("")
     };
 

@@ -10,19 +10,23 @@ let socket;
 const MessagingArea = ({ messages }) => {
     const messagesArr = Object.values(messages);
     const [channelMessages, setChannelMessages] = useState(messagesArr);
+    const { serverId, channelId } = useParams();
     
     useEffect(() => {
-        socket = io();
+        socket = io(`/${serverId}`);
 
-        socket.on("chat", chat => {
-            setChannelMessages(channelMessages => [...channelMessages, chat])
+        socket.on(`${channelId}`, chat => {
+            setChannelMessages([...channelMessages, chat]);
         });
-
+        
         return (() => {
             socket.disconnect();
         });
-    }, []);
+    }, [serverId, channelId, channelMessages]);
+    
     console.log(socket);
+    console.log("#### CHANNEL MESSAGES", channelMessages, messages);
+
     return (
         <div className='messaging-area-container'>
             <div className='messaging-area-list'>

@@ -46,10 +46,6 @@ app.use(
 );
 
 
-// app.use((req, res, next) => {
-//   req.io = io;
-//   return next()
-// });
 let socketCors;
 isProduction ? socketCors = 'https://coffeehouse-app.herokuapp.com/' : "*"
 const io = new Server(server, {
@@ -58,12 +54,16 @@ const io = new Server(server, {
   }
 });
 
+app.use((req, res, next) => {
+  req.io = io;
+  return next()
+});
+
 
 io.on('connection', socket => {
-  console.log('New websocket connection...');
-
+  const { Server } = require('./db/models');
+  
   socket.emit('chat', 'Welcome to coffeehouse');
-
   // Broadcasts when a user connects
   socket.broadcast.emit('chat', 'A user has joined the chat');
 
@@ -78,7 +78,6 @@ io.on('connection', socket => {
     io.emit('chat', message)
   });
 });
-
 
 app.use(routes);
 
