@@ -13,16 +13,16 @@ const MessagingArea = ({ messages }) => {
     const { serverId, channelId } = useParams();
     
     useEffect(() => {
-        socket = io(`/${serverId}`);
+        socket = io();
 
-        socket.on(`${channelId}`, chat => {
-            setChannelMessages([...channelMessages, chat]);
+        socket.on(channelId, chat => {
+            setChannelMessages(channelMessages => [...channelMessages, chat]);
         });
         
         return (() => {
             socket.disconnect();
         });
-    }, [serverId, channelId, channelMessages]);
+    }, [serverId, channelId]);
     
     console.log(socket);
     console.log("#### CHANNEL MESSAGES", channelMessages, messages);
@@ -30,8 +30,8 @@ const MessagingArea = ({ messages }) => {
     return (
         <div className='messaging-area-container'>
             <div className='messaging-area-list'>
-                {channelMessages.map(message => (
-                    <div key={message.id}>{message.content}</div>
+                {channelMessages.map((message, i) => (
+                    <div key={i}>{message.content}</div>
                 ))}
             </div>
             <MessageInputBar socket={socket} />

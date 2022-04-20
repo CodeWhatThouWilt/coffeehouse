@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 const { environment } = require('./config');
 const isProduction = environment === 'production';
+const { db } = require('./db/models');
 
 const app = express();
 const server = createServer(app);
@@ -46,11 +47,9 @@ app.use(
 );
 
 
-let socketCors;
-isProduction ? socketCors = 'https://coffeehouse-app.herokuapp.com/' : "*"
-const io = new Server(server, {
+const io = new Server(server, isProduction && {
   cors: {
-    origin: socketCors
+    origin: 'https://coffeehouse-app.herokuapp.com/'
   }
 });
 
@@ -61,9 +60,10 @@ app.use((req, res, next) => {
 
 
 io.on('connection', socket => {
-  const { Server } = require('./db/models');
-  
-  socket.emit('chat', 'Welcome to coffeehouse');
+  console.log("SOCKET", socket);
+
+  // socket.emit('chat', 'Welcome to coffeehouse');
+
   // Broadcasts when a user connects
   socket.broadcast.emit('chat', 'A user has joined the chat');
 
@@ -75,9 +75,14 @@ io.on('connection', socket => {
   // listen for chat
   socket.on('chat', (message) => {
     console.log("############", message);
-    io.emit('chat', message)
+    io.emit(message.room, message)
+    socket.join(message.room)
+    io.to(message.room).emit(message)
   });
 });
+
+// const namespaces = io._nsps.keys();
+
 
 app.use(routes);
 

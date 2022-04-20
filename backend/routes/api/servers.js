@@ -38,23 +38,26 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
         const channels = server.dataValues.Channels;
         const normalizedChannels = {};
 
-        const namespace = req.io.of(`/${server.id}`);
+        // const namespace = req.io.of(`/${server.id}`);
 
         channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
 
-            namespace.on("connection", socket => {
-                console.log("WE HAVE A CONNECTION!!!!!!!!!!!")
-                socket.join(`${channel.id}`);
-                socket.on(`${channel.id}`, (message) => {
-                    console.log("############", message);
-                    namespace.emit(`${channel.id}`, message)
-                });
-            });
+            // req.io.on("connection", socket => {
+                // console.log("WE HAVE A CONNECTION!!!!!!!!!!!")
+                // socket.join(`/${channel.serverId}/${channel.id}`);
+                // socket.on('disconnect', () => {
+                //     req.io.emit(`${channel.id}`, 'A user has left the chat');
+                // });
+                // socket.on(`${channel.id}`, (message) => {
+                    // console.log("############", message);
+                    // req.io.emit(`${channel.id}`, message)
+                // });
+            // });
         });
         currentServer.dataValues.Channels = normalizedChannels
     });
-    console.log("############## NAMESPACE: ", req.io);
+    // console.log("############## NAMESPACE: ", req.io);
 
     return res.json(normalizedServers);
 }));
@@ -133,14 +136,14 @@ router.put('/:serverId(\\d+)', requireAuth,
         if (image) newIcon = image;
         server.iconURL = newIcon;
         server.name = name;
-        
+
         await server.save();
 
-        return res.json({id: serverId, iconURL: newIcon, name: name});
+        return res.json({ id: serverId, iconURL: newIcon, name: name });
     }));
 
 
-router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
+router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async (req, res) => {
     const { serverId } = req.params;
     const userId = req.user.id;
     const server = await Server.findByPk(serverId);
@@ -161,7 +164,7 @@ const validateChannel = [
     check('name')
         .isLength({ min: 1, max: 100 })
         .withMessage('Valid name length: 1-100')
-        .custom(async(val, { req }) => {
+        .custom(async (val, { req }) => {
             const { name } = req.body
             if (name.endsWith('-')) {
                 return await Promise.reject('Name must end with a letter')
@@ -170,7 +173,7 @@ const validateChannel = [
     handleValidationErrors
 ];
 
-router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel, asyncHandler(async(req, res) => {
+router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel, asyncHandler(async (req, res) => {
     const userId = req.user.id;
     const { serverId } = req.params;
     const { name } = req.body;
@@ -183,7 +186,7 @@ router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel, asyncHand
     return res.json(newChannel);
 }));
 
-router.put('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, validateChannel, asyncHandler(async(req, res) => {
+router.put('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, validateChannel, asyncHandler(async (req, res) => {
     const userId = req.user.id;
     const { serverId, channelId } = req.params;
     const { name } = req.body;
@@ -195,19 +198,20 @@ router.put('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, validateCh
     return res.json(channel);
 }));
 
-router.delete('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
+router.delete('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
     const { channelId, serverId } = req.params;
-    
+
     const channel = await Channel.findByPk(channelId);
     await channel.destroy();
 
-    return res.json({channelId, serverId});
+    return res.json({ channelId, serverId });
 }));
 
 
-router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async(req, res) => {
+router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async (req, res) => {
     const { channelId, serverId } = req.params;
+
     const channelMessages = await Message.findAll({
         where: {
             channelId
@@ -222,7 +226,7 @@ router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, a
     return res.json({ serverId, channelId, messages: normalizedMessages });
 }));
 
-router.post('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async(req, res) => {
+router.post('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async (req, res) => {
     const { channelId, serverId } = req.params;
     const { content } = req.body;
     const userId = req.user.id;
