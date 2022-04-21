@@ -22,16 +22,21 @@ const MessageInputBar = ({ socket }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        socket.emit(`chat`, { user: user.username, content, room: `${channelId}` });
-        setContent("");
+        dispatch(createMessage({
+            serverId,
+            channelId,
+            content
+        }))
+            .then(res => socket.emit(`chat`, { user: user.username, content, room: `${channelId}` }))
+            .then(() => setContent(""))
     };
 
     return (
         <form onSubmit={e => submitHandler(e)} className='message-input-bar-container'>
-            <input 
-            type='text'
-            value={content}
-            onChange={e => setContent(e.target.value)}
+            <input
+                type='text'
+                value={content}
+                onChange={e => setContent(e.target.value)}
             />
         </form>
     );
