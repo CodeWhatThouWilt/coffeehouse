@@ -75,9 +75,9 @@ io.on('connection', socket => {
   // listen for chat
   socket.on('chat', (message) => {
     console.log("############", message);
-    io.emit(message.room, message)
-    socket.join(message.room)
-    io.to(message.room).emit(message)
+    io.emit(message.room, message);
+    socket.join(message.room);
+    io.to(message.room).emit(message);
   });
 });
 

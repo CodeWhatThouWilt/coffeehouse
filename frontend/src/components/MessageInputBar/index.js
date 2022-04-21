@@ -10,21 +10,21 @@ const MessageInputBar = ({ socket }) => {
     const [content, setContent] = useState("");
     const { user } = useSelector(state => state.sessionState);
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        dispatch(createMessage({
-            serverId,
-            channelId,
-            content
-        }))
-        .then(() => setContent(""))
-    };
-
     // const submitHandler = (e) => {
     //     e.preventDefault();
-    //     socket.emit(`chat`, { user: user.username, content, room: `${channelId}` });
-    //     setContent("");
+    //     dispatch(createMessage({
+    //         serverId,
+    //         channelId,
+    //         content
+    //     }))
+    //     .then(() => setContent(""))
     // };
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        socket.emit(`chat`, { user: user.username, content, room: `${channelId}` });
+        setContent("");
+    };
 
     return (
         <form onSubmit={e => submitHandler(e)} className='message-input-bar-container'>
