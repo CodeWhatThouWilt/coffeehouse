@@ -28,8 +28,12 @@ const UserApplication = () => {
             {isLoaded &&
                 <>
                     <Navbar />
-                    <Sidebar />
-                    <MainContent />
+                    {serverId &&
+                        <Sidebar />
+                    }
+                    {channelId &&
+                        <MainContent />
+                    }
                 </>
             }
         </div>
