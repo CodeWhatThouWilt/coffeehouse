@@ -1,4 +1,6 @@
 .sidebar-user-panel-container {
+    position: fixed;
+    bottom: 0px;
     display: flex;
     height: 52px;
     width: 224px;

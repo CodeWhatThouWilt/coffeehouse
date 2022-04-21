@@ -30,7 +30,7 @@ const SidebarChannelPanel = () => {
                 </div>
                 <div className='channel-panel-channel-list'>
                     {channelsArr.map(channel => (
-                        <SidebarChannel key={channel.id} channel={channel} />
+                        <SidebarChannel key={channel.id} channel={channel} server={server}/>
                     ))}
                 </div>
             </div>
