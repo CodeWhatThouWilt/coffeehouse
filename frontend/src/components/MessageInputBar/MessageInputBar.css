@@ -8,8 +8,20 @@
     height: 68px;
     padding: 0px 16px;
     margin-top: -8;
+    display: flex;
 }
 
 .message-input-bar-container input {
-    
+    width: 100%;
+    box-sizing: border-box;
+    height: 44px;
+    padding: 11px 10px;
+    margin-bottom: 24px;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    color: #dcddde;
+    background-color: #40444b;
+    border: none;
+    outline: none;
 }
