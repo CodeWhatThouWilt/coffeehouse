@@ -82,14 +82,44 @@
     text-transform: uppercase;
 }
 
+.login-bottom-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
 .register-text {
     margin-top: 4px;
     font-size: 14px;
     line-height: 16px;
     color: #72767D;
+    
 }
 
 .register-text a {
     color: #00AAf4;
     text-decoration: none;
+}
+
+.demo-user-button {
+    position: absolute;
+    height: 25px;
+    width: 75px;
+    color: white;
+    background-color: #5865f2;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 24px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    margin-bottom: 8px;
+    opacity: 0.55;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 0px;
+    bottom: -25px;
 }

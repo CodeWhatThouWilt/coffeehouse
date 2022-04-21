@@ -43,34 +43,36 @@ function LoginFormPage() {
           <div>We're so excited to see you again!</div>
         </div>
         <div className='login-form-container'>
-        <form onSubmit={handleSubmit}>
-          <ul>
-            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-          </ul>
-          <label className='auth-label'>
-            Email or username
-          </label>
+          <form onSubmit={handleSubmit}>
+            <ul>
+              {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
+            <label className='auth-label'>
+              Email or username
+            </label>
             <input
               type="text"
               value={credential}
               onChange={e => setCredential(e.target.value)}
               required
             />
-          <label className='auth-label'>
-            Password
-          </label>
+            <label className='auth-label'>
+              Password
+            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          <button type="submit">Login</button>
-          <div className='register-text'>Need an account? <Link to='/signup'>Register</Link></div>
-        </form>
-        </div>
-        <div onClick={e => demoUserHandler(e)} className='demo-user-button'>
-          demo user
+            <button type="submit">Login</button>
+            <div className='login-bottom-container'>
+              <div className='register-text'>Need an account? <Link to='/signup'>Register</Link></div>
+              <div onClick={e => demoUserHandler(e)} className='demo-user-button'>
+                demo user
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
