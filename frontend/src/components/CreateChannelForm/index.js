@@ -12,7 +12,8 @@ const CreateChannelForm = ({ setShowModal }) => {
     const [name, setName] = useState('');
     const [errors, setErrors] = useState([]);
 
-    const submitHandler = () => {
+    const submitHandler = (e) => {
+        e.preventDefault();
         dispatch(createChannel({ name, serverId }))
         .then(() => setShowModal(false))
         .catch(async res => {
@@ -22,7 +23,7 @@ const CreateChannelForm = ({ setShowModal }) => {
     };
 
     return (
-        <form onSubmit={() => submitHandler()}>
+        <form onSubmit={e => submitHandler(e)}>
             <div className='create-channel-container'>
                 <div className='create-channel-top-text'>
                     <h1>
