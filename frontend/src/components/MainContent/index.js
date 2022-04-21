@@ -33,7 +33,7 @@ const MainContent = () => {
         <div className='main-content-container'>
             <MainContentTopBar channel={channel} setShowMembers={setShowMembers} />
             <div className='main-content-inner-container'>
-                {isLoaded &&
+                {isLoaded && messages &&
                     <MessagingArea messages={messages} />
                 }
                 {showMembers &&

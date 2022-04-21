@@ -17,6 +17,8 @@ const UserApplication = () => {
             .then(() => setIsLoaded(true))
     }, [dispatch]);
 
+    
+
     return (
         <div className='application-container'>
             {isLoaded &&
