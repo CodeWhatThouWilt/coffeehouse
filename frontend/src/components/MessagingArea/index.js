@@ -14,6 +14,7 @@ const MessagingArea = ({ messages }) => {
     
     useEffect(() => {
         socket = io();
+        setChannelMessages(messagesArr);
 
         socket.on(channelId, chat => {
             setChannelMessages(channelMessages => [...channelMessages, chat]);

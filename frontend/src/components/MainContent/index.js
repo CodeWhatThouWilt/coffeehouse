@@ -13,6 +13,7 @@ const MainContent = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [showMembers, setShowMembers] = useState(false);
     const { serverId, channelId } = useParams();
+    console.log(serverId, channelId);
     const dispatch = useDispatch();
 
     const servers = useSelector(state => state.serversState);
