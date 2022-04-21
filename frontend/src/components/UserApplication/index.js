@@ -7,15 +7,19 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getUserServers } from '../../store/servers';
 import NoChannelsToDisplay from '../NoChannelsToDisplay';
+import { useParams } from 'react-router-dom';
 
 const UserApplication = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch();
+    const { serverId, channelId } = useParams();
 
     useEffect(() => {
         dispatch(getUserServers())
             .then(() => setIsLoaded(true))
     }, [dispatch]);
+
+    
 
     
 

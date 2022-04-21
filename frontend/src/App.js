@@ -32,7 +32,7 @@ function App() {
             <SignupFormPage />
           </Route>
 
-          <Route path='/channels'>
+          <Route path='/channels/:serverId?/:channelId?'>
             <UserApplication />
           </Route>
 

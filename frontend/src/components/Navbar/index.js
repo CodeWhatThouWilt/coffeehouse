@@ -1,18 +1,22 @@
 import './Navbar.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { NavLink, Redirect, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getUserServers } from '../../store/servers';
 import { Modal } from '../../context/modal';
 import CreateServerForm from '../CreateServerForm';
 
 const Navbar = () => {
-    const dispatch = useDispatch();
-    const history = useHistory();
     const servers = useSelector(state => state.serversState);
     const serversArr = Object.values(servers);
     const [showModal, setShowModal] = useState(false);
-    const { serverId, userId } = useParams();
+    const { serverId, channelId } = useParams();
+    const [currentServer, setCurrentServer] = useState(serverId);
+    const [currentChannel, setCurrentChannel] = useState(channelId);
+
+    useEffect(() => {
+        setCurrentChannel(channelId);
+        setCurrentServer(serverId);
+    }, [serverId, channelId]);
 
     const routeHandler = (serverId) => {
         const server = servers[serverId];
@@ -22,9 +26,16 @@ const Navbar = () => {
         };
     };
 
-    if (!serverId) {
+
+    if (!currentServer) {
         const firstServer = Object.values(servers)[0];
-        
+        const channels = Object.values(firstServer.Channels);
+        const firstChannel = channels[0];
+        return <Redirect to={`/channels/${firstServer.id}/${firstChannel.id}`} />
+    } else if (!currentChannel) {
+        const server = servers[currentServer];
+        const firstChannel = Object.values(server.Channels)[0]
+        return <Redirect to={`/channels/${currentServer}/${firstChannel.id}`} />
     }
 
     return (
