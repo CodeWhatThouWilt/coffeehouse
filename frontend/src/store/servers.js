@@ -11,6 +11,7 @@ const REMOVE_CHANNEL = 'servers/removeChannel';
 const GET_MESSAGES = 'servers/getMessages'
 const ADD_MESSAGE = 'servers/addMessage';
 const EDIT_MESSAGE = 'servers/editMessage';
+const GET_MEMBERS = 'servers/getMembers';
 
 const getServers = (servers) => {
     return {
@@ -79,6 +80,13 @@ const editMessage = (message) => {
     return {
         type: EDIT_MESSAGE,
         message
+    };
+};
+
+const getMembers = (payload) => {
+    return {
+        type: GET_MEMBERS,
+        payload
     };
 };
 
@@ -245,6 +253,10 @@ const serversReducer = (state = initialState, action) => {
 
         case EDIT_MESSAGE:
             newState[action.message.serverId].Channels[action.mesage.channelId].Messages[action.message.id] = action.message;
+            return newState;
+
+        case GET_MEMBERS:
+            newState[action.payload.serverId].Members = action.payload.members;
             return newState;
 
         default:
