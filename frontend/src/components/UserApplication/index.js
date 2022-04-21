@@ -19,9 +19,9 @@ const UserApplication = () => {
             .then(() => setIsLoaded(true))
     }, [dispatch]);
 
-    
 
-    
+
+
 
     return (
         <div className='application-container'>
@@ -29,12 +29,7 @@ const UserApplication = () => {
                 <>
                     <Navbar />
                     <Sidebar />
-                    <Route path='/channels/:serverId/:channelId'>
-                        <MainContent />
-                    </Route>
-                    <Route exact path='/channels/:serverId'>
-                        <NoChannelsToDisplay />
-                    </Route>
+                    <MainContent />
                 </>
             }
         </div>

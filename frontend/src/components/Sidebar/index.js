@@ -8,11 +8,9 @@ const Sidebar = () => {
 
     return (
         <div className='sidebar-container'>
-            <Route path='/channels/:serverId'>
-                <SidebarServerPanel />
-                <SidebarChannelPanel />
-            </Route>
-                <SidebarUserPanel />
+            <SidebarServerPanel />
+            <SidebarChannelPanel />
+            <SidebarUserPanel />
         </div>
     );
 };
