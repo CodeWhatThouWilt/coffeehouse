@@ -6,6 +6,11 @@ import { useState } from 'react';
 const ChannelSettingsOverview = ({ channel }) => {
     const dispatch = useDispatch();
     const [name, setName] = useState(channel.name);
+    const [errors, setErrors] = useState([]);
+
+    const buttonDisabler = () => {
+        return name.length > 1 && name.length <= 100 ? false : true;
+    };
 
     const submitHandler = () => {
         dispatch(editChannel({
@@ -15,15 +20,71 @@ const ChannelSettingsOverview = ({ channel }) => {
         }));
     };
 
+    const checkForChanges = () => {
+        const currentName = channel.name;
+        if (currentName !== name) {
+            return true
+        } else {
+            return false
+        };
+    };
+
+    const resetHandler = () => {
+        setErrors([]);
+        setName(channel.name);
+        return;
+    };
+
+    const confirmChangesStyling = () => {
+        if (errors.length) {
+            return 'server-settings-confirm-changes-container-errors';
+        } else {
+            return 'server-settings-confirm-changes-container';
+        };
+    };
+
+    const submitButtonStyling = () => {
+        if (buttonDisabler()) {
+            return 'server-settings-confirm-changes-save-disabled';
+        } else {
+            return 'server-settings-confirm-changes-save-enabled';
+        };
+    };
+
     return (
-        <div className='create-channel-form-container'>
-            <form onSubmit={() => submitHandler()} id='new-channel-form'>
-                <input
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                />
-            </form>
-            <div onClick={() => submitHandler()} form='new-channel-form'>Submit</div>
+        <div className='server-settings-form-container channel-settings-container'>
+            <div className='server-settings-form-header'>
+                <h1>Overview</h1>
+            </div>
+            <div>
+                <form onSubmit={() => submitHandler()} id='new-channel-form'>
+                    <label className='input-label'>Channel Name</label>
+                    <input
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                    />
+                </form>
+            </div>
+            {checkForChanges() &&
+                <div className={confirmChangesStyling()}>
+                    {errors.length > 0 &&
+                        <div className='server-settings-confirm-changes-errors-container'>
+                            <div className='server-settings-error'>{errors[0]}</div>
+                        </div>
+                    }
+                    <div className='server-settings-confirm-changes-text'>
+                        Careful - you have unsaved changes!
+                    </div>
+                    <div className='server-settings-confirm-changes-buttons-container'>
+                        <div onClick={() => resetHandler()} className='server-settings-confirm-changes-reset'>
+                            Reset
+                        </div>
+                        <div onClick={() => submitHandler()} className={submitButtonStyling()}>
+                            Save Changes
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     );
 };
