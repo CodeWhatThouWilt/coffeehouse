@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^6.2.0",
     "aws-sdk": "^2.1113.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
@@ -36,7 +37,6 @@
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.2.0",
     "dotenv-cli": "^5.0.0",
     "nodemon": "^2.0.15"
   }
