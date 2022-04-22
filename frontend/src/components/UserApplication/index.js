@@ -28,9 +28,7 @@ const UserApplication = () => {
             {isLoaded &&
                 <>
                     <Navbar />
-                    {serverId &&
-                        <Sidebar />
-                    }
+                    <Sidebar />
                     {channelId &&
                         <MainContent />
                     }

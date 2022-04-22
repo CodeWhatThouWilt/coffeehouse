@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChannelMessages } from '../../store/servers';
 import MessageInputBar from '../MessageInputBar';
+import Message from '../Message';
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 let socket;
@@ -29,7 +30,7 @@ const MessagingArea = ({ messages }) => {
         <div className='messaging-area-container'>
             <div className='messaging-area-list'>
                 {channelMessages.map((message, i) => (
-                    <div key={i}>{message.content}</div>
+                    <Message message={message} />
                 ))}
             </div>
             <MessageInputBar socket={socket} />

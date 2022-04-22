@@ -13,17 +13,15 @@ const MainContent = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [showMembers, setShowMembers] = useState(false);
     const { serverId, channelId } = useParams();
-    console.log(serverId, channelId);
     const dispatch = useDispatch();
 
     const servers = useSelector(state => state.serversState);
     const server = servers[serverId];
     const channel = server.Channels[channelId];
     const messages = channel.Messages;
-    // TO DO GET MEMBERS AND PASS IT INTO MEMBERS AREA
+    const members = server.Members
 
     
-
     useEffect(() => {
         dispatch(getChannelMessages({ serverId, channelId }))
             .then(res => setIsLoaded(true))
@@ -32,13 +30,13 @@ const MainContent = () => {
 
     return (
         <div className='main-content-container'>
-            <MainContentTopBar channel={channel} setShowMembers={setShowMembers} />
+            <MainContentTopBar channel={channel} setShowMembers={setShowMembers} showMembers={showMembers} />
             <div className='main-content-inner-container'>
                 {isLoaded && messages &&
                     <MessagingArea messages={messages} />
                 }
                 {showMembers &&
-                    <MemberArea />
+                    <MemberArea members={members} />
                 }
             </div>
         </div>

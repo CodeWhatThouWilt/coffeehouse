@@ -1,9 +1,18 @@
 import './MemberArea.css';
 
-const MemberArea = () => {
+const MemberArea = ({ members }) => {
+    const membersArr = Object.values(members);
 
     return (
-        <div classname='member-area-container'>MemberArea</div>
+        <div className='member-area-container'>
+            <div className='member-area-header'>Members</div>
+            {membersArr.map(member => (
+                <div className='member-area-member'>
+                    <img src={member.User.profilePicture} alt='pfp' />
+                    <div className='member-area-name'>{member.User.username}</div>
+                </div>
+            ))}
+        </div>
     );
 };
 

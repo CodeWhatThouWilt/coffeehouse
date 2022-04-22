@@ -60,7 +60,6 @@ app.use((req, res, next) => {
 
 
 io.on('connection', socket => {
-  console.log("SOCKET", socket);
 
   // socket.emit('chat', 'Welcome to coffeehouse');
 
@@ -75,9 +74,9 @@ io.on('connection', socket => {
   // listen for chat
   socket.on('chat', (message) => {
     console.log("############", message);
-    io.emit(message.room, message);
-    socket.join(message.room);
-    io.to(message.room).emit(message);
+    io.emit(message.channelId, message);
+    socket.join(message.channelId);
+    // io.to(message.channelId).emit(message);
   });
 });
 

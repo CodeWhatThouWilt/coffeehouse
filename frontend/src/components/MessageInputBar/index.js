@@ -20,7 +20,7 @@ const MessageInputBar = () => {
             channelId,
             content
         }))
-            .then(res => socket.emit(`chat`, { user: user.username, content, room: `${channelId}` }))
+            .then(res => socket.emit(`chat`, res))
             .then(() => setContent(""))
     };
 

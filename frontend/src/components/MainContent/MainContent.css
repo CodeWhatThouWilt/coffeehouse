@@ -8,4 +8,5 @@
 .main-content-inner-container {
     flex-grow: 1;
     background-color: #36393f;
+    display: flex;
 }

@@ -5,19 +5,24 @@ import SidebarServerPanel from '../SidebarServerPanel';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { getServerMembers } from '../../store/servers';
 
 const Sidebar = () => {
-    const { channelId } = useParams();
+    const { serverId, channelId } = useParams();
     const dispatch = useDispatch();
 
     useEffect(() => {
-
-    }, [])
+        dispatch(getServerMembers(serverId));
+    }, [dispatch, serverId])
 
     return (
         <div className='sidebar-container'>
-            <SidebarServerPanel />
-            <SidebarChannelPanel />
+            {serverId &&
+                <>
+                    <SidebarServerPanel />
+                    <SidebarChannelPanel />
+                </>
+            }
             <SidebarUserPanel />
         </div>
     );

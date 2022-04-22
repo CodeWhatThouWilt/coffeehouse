@@ -7,6 +7,7 @@
     border-bottom: 0.5px solid black;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .main-content-top-header-container {
@@ -23,4 +24,9 @@
     color: #8e9297;
     font-size: 20px;
     margin: 0px 10px;
+}
+
+.main-content-top-icon-tray {
+    margin-right: 15px;
+    color: #8e9297;
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const { Server, Channel, Member, Message } = require('../../db/models');
+const { Server, Channel, Member, Message, User } = require('../../db/models');
 const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -26,8 +26,6 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
         }]
     });
 
-    console.log("#######################:", req.io)
-
     const normalizedServers = {};
 
     userServers.forEach(membership => {
@@ -38,26 +36,11 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
         const channels = server.dataValues.Channels;
         const normalizedChannels = {};
 
-        // const namespace = req.io.of(`/${server.id}`);
-
         channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
-
-            // req.io.on("connection", socket => {
-                // console.log("WE HAVE A CONNECTION!!!!!!!!!!!")
-                // socket.join(`/${channel.serverId}/${channel.id}`);
-                // socket.on('disconnect', () => {
-                //     req.io.emit(`${channel.id}`, 'A user has left the chat');
-                // });
-                // socket.on(`${channel.id}`, (message) => {
-                    // console.log("############", message);
-                    // req.io.emit(`${channel.id}`, message)
-                // });
-            // });
         });
         currentServer.dataValues.Channels = normalizedChannels
     });
-    // console.log("############## NAMESPACE: ", req.io);
 
     return res.json(normalizedServers);
 }));
@@ -239,6 +222,24 @@ router.post('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, 
     });
 
     return res.json(message);
+}));
+
+router.get('/:serverId(\\d+)/members', requireAuth, asyncHandler(async(req, res) => {
+    const { serverId } = req.params;
+
+    const members = await Member.findAll({
+        where: {
+            serverId
+        },
+        include: User
+    });
+    console.log("####### MEMBERS:", members[0])
+
+    const normalizedMembers = {};
+    members.forEach(member => {
+        normalizedMembers[member.User.id] = member
+    })
+    return res.json({ serverId, members: normalizedMembers });
 }));
 
 

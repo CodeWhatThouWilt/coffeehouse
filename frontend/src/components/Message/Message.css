@@ -1,0 +1,21 @@
+
+
+.message-container {
+    position: relative;
+    margin-top: 17px;
+    height: 44px;
+    padding: 2px 48px 2px 72px;
+}
+
+.message-image-container {
+
+}
+
+.message-container img {
+    position: absolute;
+    left: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}

@@ -204,8 +204,19 @@ export const createMessage = (form) => async(dispatch) => {
     if (res.ok) {
         const message = await res.json();
         dispatch(addMessage(message));
+        return message;
     };
+    return res;
 };
+
+export const getServerMembers = (serverId) => async(dispatch) => {
+    const res = await csrfFetch(`/api/servers/${serverId}/members`);
+    
+    if (res.ok) {
+        const payload = await res.json();
+        dispatch(getMembers(payload))
+    }
+}
 
 const initialState = {};
 

@@ -1,9 +1,9 @@
 
 
 .message-input-bar-container {
-    position: sticky;
+    position: fixed;
     bottom: 0px;
-    top: 100%;
+    /* top: 100%; */
     box-sizing: border-box;
     width: 100%;
     height: 68px;
