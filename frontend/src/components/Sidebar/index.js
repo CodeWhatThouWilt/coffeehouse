@@ -3,17 +3,19 @@ import SidebarUserPanel from '../SidebarUserPanel';
 import SidebarChannelPanel from '../SidebarChannelPanel';
 import SidebarServerPanel from '../SidebarServerPanel';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getServerMembers } from '../../store/servers';
 
 const Sidebar = () => {
     const { serverId, channelId } = useParams();
+    const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getServerMembers(serverId));
-    }, [dispatch, serverId])
+    // useEffect(() => {
+    //     dispatch(getServerMembers(serverId))
+    //     .then(() => setIsLoaded(true))
+    // }, [dispatch, serverId])
 
     return (
         <div className='sidebar-container'>

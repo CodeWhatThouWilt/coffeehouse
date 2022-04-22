@@ -233,12 +233,11 @@ router.get('/:serverId(\\d+)/members', requireAuth, asyncHandler(async(req, res)
         },
         include: User
     });
-    console.log("####### MEMBERS:", members[0])
 
     const normalizedMembers = {};
     members.forEach(member => {
-        normalizedMembers[member.User.id] = member
-    })
+        normalizedMembers[member.User.id] = member;
+    });
     return res.json({ serverId, members: normalizedMembers });
 }));
 

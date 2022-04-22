@@ -13,8 +13,8 @@ const MessageInputBar = () => {
     const { user } = useSelector(state => state.sessionState);
 
     const submitHandler = (e) => {
-        socket = io();
         e.preventDefault();
+        socket = io();
         dispatch(createMessage({
             serverId,
             channelId,

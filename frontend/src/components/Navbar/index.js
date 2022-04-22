@@ -1,11 +1,14 @@
 import './Navbar.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Redirect, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Modal } from '../../context/modal';
 import CreateServerForm from '../CreateServerForm';
+import { getServerMembers } from '../../store/servers';
+
 
 const Navbar = () => {
+    const dispatch = useDispatch();
     const servers = useSelector(state => state.serversState);
     const serversArr = Object.values(servers);
     const [showModal, setShowModal] = useState(false);
