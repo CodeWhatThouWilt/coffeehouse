@@ -35,7 +35,7 @@ const MainContent = () => {
                 {isLoaded && messages && members &&
                     <MessagingArea messages={messages} />
                 }
-                {showMembers &&
+                {showMembers && isLoaded && messages && members &&
                     <MemberArea members={members} />
                 }
             </div>
