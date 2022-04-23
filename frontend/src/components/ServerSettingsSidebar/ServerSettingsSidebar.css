@@ -1,8 +1,50 @@
-.server-settings-sidebar-container {
+.settings-sidebar-container {
     min-width: 226px;
     width: 28%;
     display: flex;
     justify-content: flex-end;
     height: 100vh;
     background-color: #2f3136;
+}
+
+.settings-sidebar-nav {
+    width: 192px;
+    padding: 60px 6px 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.settings-sidebar-header {
+    width: 100%;
+    color: #96989d;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    text-transform: uppercase;
+    padding: 0px 10px 6px;
+}
+
+.settings-sidebar-item-inactive {
+    width: 172px;
+    height: 20px;
+    padding: 6px 10px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #96989d;
+}
+
+.settings-sidebar-item-active {
+    width: 172px;
+    height: 20px;
+    padding: 6px 10px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+    border-radius: 4px;
+    background-color: rgba(79, 84, 92, 0.6);
 }

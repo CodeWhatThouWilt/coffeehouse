@@ -13,7 +13,7 @@ const ServerSettings = () => {
     
     return (
         <div className='server-settings-container'>
-            <ServerSettingsSidebar setCurrentForm={setCurrentForm} />
+            <ServerSettingsSidebar server={server} setCurrentForm={setCurrentForm} />
             <ServerSettingsOverview server={server} />
         </div>
     );

@@ -39,8 +39,9 @@ const SidebarServerPanel = () => {
                 {showDropdown &&
                     <div className='sidebar-server-panel-dropdown-container'>
                         {owner === sessionUser.id &&
-                            <div onClick={() => setShowModal(true)}>
+                            <div onClick={() => setShowModal(true)} className='sidebar-server-panel-dropdown-item'>
                                 Server Settings
+                                <i className="fa-solid fa-gear" />
                             </div>
                         }
                         {owner !== sessionUser.id &&

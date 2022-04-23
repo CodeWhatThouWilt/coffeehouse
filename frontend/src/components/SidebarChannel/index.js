@@ -31,7 +31,7 @@ const SidebarChannel = ({ channel, server }) => {
                 </NavLink>
                 {sessionUser.id === server.ownerId && showSettings &&
                     <div onClick={() => setShowModal(true)}>
-                        <i className="fa-solid fa-gear"></i>
+                        <i className="fa-solid fa-gear" />
                     </div>
                 }
             </nav>
