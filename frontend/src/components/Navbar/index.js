@@ -46,7 +46,9 @@ const Navbar = () => {
             <nav className='navbar-container'>
                 {serversArr.map(server => (
                     <div className='navbar-icon-container' key={server.id} >
-                        <div></div>
+                        <div className='navbar-icon-notif-container'>
+                            <div className='navbar-icon-notif'></div>
+                        </div>
                         <NavLink to={routeHandler(server.id)}>
                             <img src={server.iconURL} alt='icon' className='navbar-server-icon' />
                         </NavLink>

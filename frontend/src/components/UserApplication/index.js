@@ -2,9 +2,9 @@ import './UserApplication.css';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import MainContent from '../MainContent';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserServers } from '../../store/servers';
 import NoChannelsToDisplay from '../NoChannelsToDisplay';
 import { useParams } from 'react-router-dom';
@@ -13,15 +13,14 @@ const UserApplication = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch();
     const { serverId, channelId } = useParams();
+    const session = useSelector(state => state.sessionState);
 
     useEffect(() => {
         dispatch(getUserServers())
             .then(() => setIsLoaded(true))
     }, [dispatch]);
 
-
-
-
+    if (!session.user) return <Redirect to='/login' />
 
     return (
         <div className='application-container'>

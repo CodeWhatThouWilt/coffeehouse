@@ -8,8 +8,10 @@
 }
 
 .channel-link {
-    cursor: pointer;
+    /* cursor: pointer; */
     width: 100%;
+    text-decoration: none;
+    color: #8e9297;
 }
 
 
