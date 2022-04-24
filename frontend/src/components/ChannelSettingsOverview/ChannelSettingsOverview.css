@@ -1,4 +1,4 @@
-.channel-settings-container form {
+.channel-settings-container .new-channel-form {
     display: flex;
     flex-direction: column;
 }

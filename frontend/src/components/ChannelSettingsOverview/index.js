@@ -12,12 +12,16 @@ const ChannelSettingsOverview = ({ channel }) => {
         return name.length > 1 && name.length <= 100 ? false : true;
     };
 
-    const submitHandler = () => {
-        dispatch(editChannel({
-            name,
-            serverId: channel.serverId,
-            channelId: channel.id
-        }));
+    const submitHandler = (e) => {
+        e.preventDefault();
+        const serverId = channel.serverId;
+        const channelId = channel.id;
+        const formData = { name, serverId, channelId };
+        dispatch(editChannel(formData))
+            .catch(async res => {
+                const data = await res.json();
+                data.errors && setErrors(data.errors);
+            });
     };
 
     const checkForChanges = () => {
@@ -51,19 +55,27 @@ const ChannelSettingsOverview = ({ channel }) => {
         };
     };
 
+    const inputHandler = (e) => {
+        const input = e.target.value;
+        const removeSpaces = input.replace(' ', '-');
+        const removeSymbols = removeSpaces.replace(/[^a-zA-Z0-9-]/, '');
+        const removeRepeatDash = removeSymbols.replace(/-{2,}?/, '-');
+        setName(removeRepeatDash.toLowerCase());
+    };
+
     return (
         <div className='server-settings-form-container channel-settings-container'>
             <div className='server-settings-form-header'>
                 <h1>Overview</h1>
             </div>
             <div>
-                <form onSubmit={() => submitHandler()} id='new-channel-form'>
+                <div onSubmit={() => submitHandler()} className='new-channel-form'>
                     <label className='input-label'>Channel Name</label>
                     <input
                         value={name}
-                        onChange={e => setName(e.target.value)}
+                        onChange={e => inputHandler(e)}
                     />
-                </form>
+                </div>
             </div>
             {checkForChanges() &&
                 <div className={confirmChangesStyling()}>
@@ -79,7 +91,7 @@ const ChannelSettingsOverview = ({ channel }) => {
                         <div onClick={() => resetHandler()} className='server-settings-confirm-changes-reset'>
                             Reset
                         </div>
-                        <div onClick={() => submitHandler()} className={submitButtonStyling()}>
+                        <div onClick={e => submitHandler(e)} className={submitButtonStyling()}>
                             Save Changes
                         </div>
                     </div>
