@@ -14,12 +14,21 @@ const CreateChannelForm = ({ setShowModal }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        setErrors([]);
         dispatch(createChannel({ name, serverId }))
         .then(() => setShowModal(false))
         .catch(async res => {
             const data = await res.json();
             data.errors && setErrors(data.errors);
         });
+    };
+
+    const inputHandler = (e) => {
+        const input = e.target.value;
+        const removeSpaces = input.replace(' ', '-');
+        const removeSymbols = removeSpaces.replace(/[^a-zA-Z0-9-]/, '');
+        const removeRepeatDash = removeSymbols.replace(/-{2,}?/,'-');
+        setName(removeRepeatDash.toLowerCase());
     };
 
     return (
@@ -32,14 +41,17 @@ const CreateChannelForm = ({ setShowModal }) => {
                 </div>
                 <div className='create-channel-mid-section-container'>
                     <div className='create-channel-channel-name-header'>
-                        CHANNEL NAME
+                        CHANNEL NAME {name.length > 100 && <div className='create-channel-text-counter'>({name.length} / 100)</div>}
                     </div>
                     <div className='create-channel-input-container'>
                         <i className="fa-solid fa-hashtag hashtag-icon" />
                         <input
                             value={name}
                             placeholder='new-channel'
-                            onChange={e => setName(e.target.value.replace(' ', '-').toLowerCase())}
+                            onChange={e => inputHandler(e)}
+                            maxLength={100}
+                            minLength={1}
+                            required
                         />
                     </div>
                     <div className='create-channel-error-container'>
@@ -49,10 +61,10 @@ const CreateChannelForm = ({ setShowModal }) => {
                     </div>
                 </div>
                 <div className='create-channel-bottom-container'>
-                    <div className='create-channel-cancel'>
+                    <div onClick={() => setShowModal(false)} className='create-channel-cancel'>
                         Cancel
                     </div>
-                    <div onClick={() => submitHandler()} className='create-channel-submit-button'>
+                    <div onClick={e => submitHandler(e)} className='create-channel-submit-button' >
                         Create Channel
                     </div>
                 </div>

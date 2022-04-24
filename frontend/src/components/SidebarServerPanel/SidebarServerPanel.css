@@ -45,7 +45,7 @@
 }
 
 .sidebar-server-panel-dropdown-item {
-    width: 100%;
+    width: 188px;
     height: 20px;
     padding: 6px 8px;
     margin: 2px 0px;
@@ -56,4 +56,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 2px;
+}
+
+.sidebar-server-panel-dropdown-item:hover {
+    background-color: rgb(60, 69, 165);
 }

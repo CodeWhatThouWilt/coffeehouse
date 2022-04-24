@@ -35,6 +35,12 @@
     line-height: 16px;
     font-weight: 500;
     color: #DCDDDE;
+    display: flex;
+}
+
+.create-channel-text-counter {
+    margin-left: 15px;
+    color: rgba(255, 0, 0, 0.558);
 }
 
 .create-channel-input-container {
@@ -88,6 +94,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
+    cursor: pointer;
 }
 
 .create-channel-submit-button {
@@ -102,4 +109,5 @@
     background-color: #5865F2;
     color: white;
     border-radius: 3px;
+    cursor: pointer;
 }

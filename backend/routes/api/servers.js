@@ -148,9 +148,26 @@ const validateChannel = [
         .isLength({ min: 1, max: 100 })
         .withMessage('Valid name length: 1-100')
         .custom(async (val, { req }) => {
-            const { name } = req.body
+            const { name } = req.body;
+            const splitName = name.split('');
+            const symbolCheck = splitName.filter((char, i) => {
+                const charCode = char.charCodeAt(0);
+                const lowerCaseCodes = charCode > 96 && charCode < 123;
+                const numbers = charCode > 47 && charCode < 58;
+                const hyphen = charCode === 45;
+                let hyphenRepeats = false;
+                if (i > 2 && hyphen) {
+                    hyphenRepeats = name.charCodeAt(i - 1) === 45;
+                };
+                console.log(hyphenRepeats);
+                return (!lowerCaseCodes && !numbers && !hyphen) || hyphenRepeats;
+            });
             if (name.endsWith('-')) {
-                return await Promise.reject('Name must end with a letter')
+                return await Promise.reject('Name must end with a letter or number');
+            } else if (name.startsWith('-')) {
+                return await Promise.reject('Name must start with a letter or number');
+            } else if (symbolCheck.length) {
+                return await Promise.reject('Name can only contain [a-z], [1-9] or "-"');
             };
         }),
     handleValidationErrors
