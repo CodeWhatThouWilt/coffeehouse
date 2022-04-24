@@ -30,16 +30,16 @@ const Navbar = () => {
     };
 
 
-    if (!currentServer) {
-        const firstServer = Object.values(servers)[0];
-        const channels = Object.values(firstServer.Channels);
-        const firstChannel = channels[0];
-        return <Redirect to={`/channels/${firstServer.id}/${firstChannel.id}`} />
-    } else if (!currentChannel) {
-        const server = servers[currentServer];
-        const firstChannel = Object.values(server.Channels)[0]
-        return <Redirect to={`/channels/${currentServer}/${firstChannel.id}`} />
-    }
+    // if (!currentServer) {
+    //     const firstServer = Object.values(servers)[0];
+    //     const channels = Object.values(firstServer.Channels);
+    //     const firstChannel = channels[0];
+    //     return <Redirect to={`/channels/${firstServer.id}/${firstChannel.id}`} />
+    // } else if (!currentChannel) {
+    //     const server = servers[currentServer];
+    //     const firstChannel = Object.values(server.Channels)[0]
+    //     return <Redirect to={`/channels/${currentServer}/${firstChannel.id}`} />
+    // }
 
     return (
         <>

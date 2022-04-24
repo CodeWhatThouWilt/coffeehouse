@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { deleteServer } from '../../store/servers';
 import { useHistory } from 'react-router-dom';
 
-const DeleteServerModal = ({ server }) => {
+const DeleteServerModal = ({ server, setShowDeleteModal }) => {
     const [serverName, setServerName] = useState('');
     const [errors, setErrors] = useState('');
     const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const DeleteServerModal = ({ server }) => {
                     }
                 </div>
                 <div className='delete-server-bottom'>
-                    <div className='delete-server-cancel'>
+                    <div onClick={() => setShowDeleteModal(false)} className='delete-server-cancel'>
                         Cancel
                     </div>
                     <button className='delete-server-submit'>

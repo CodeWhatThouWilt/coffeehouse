@@ -12,11 +12,6 @@ const Sidebar = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch(getServerMembers(serverId))
-    //     .then(() => setIsLoaded(true))
-    // }, [dispatch, serverId])
-
     return (
         <div className='sidebar-container'>
             {serverId &&

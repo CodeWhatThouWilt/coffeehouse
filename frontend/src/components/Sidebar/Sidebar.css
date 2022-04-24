@@ -1,4 +1,5 @@
 .sidebar-container {
+    min-width: 240px;
     width: 240px;
     height: 100vh;
     background-color: #2f3136;
