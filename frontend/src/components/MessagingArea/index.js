@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 let socket;
 
-const MessagingArea = ({ messages, members }) => {
+const MessagingArea = ({ messages, members, channel }) => {
     const messagesArr = Object.values(messages);
     const [channelMessages, setChannelMessages] = useState(messagesArr);
     const { serverId, channelId } = useParams();
@@ -33,7 +33,7 @@ const MessagingArea = ({ messages, members }) => {
                     <Message message={message} member={members[message.userId]} />
                 ))}
             </div>
-            <MessageInputBar socket={socket} />
+            <MessageInputBar channel={channel} />
         </div>
     );
 };

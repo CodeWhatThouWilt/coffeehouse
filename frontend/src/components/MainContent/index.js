@@ -34,7 +34,7 @@ const MainContent = () => {
             <MainContentTopBar channel={channel} setShowMembers={setShowMembers} showMembers={showMembers} />
             <div className='main-content-inner-container'>
                 {isLoaded && messages && members &&
-                    <MessagingArea messages={messages} members={members} />
+                    <MessagingArea messages={messages} members={members} channel={channel}/>
                 }
                 {showMembers && isLoaded && members &&
                     <MemberArea members={members} />

@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 let socket;
 
-const MessageInputBar = () => {
+const MessageInputBar = ({ channel }) => {
     const { serverId, channelId } = useParams();
     const dispatch = useDispatch();
     const [content, setContent] = useState("");
@@ -30,6 +30,7 @@ const MessageInputBar = () => {
                 type='text'
                 value={content}
                 onChange={e => setContent(e.target.value)}
+                placeholder={`Message ${channel.name}`}
             />
         </form>
     );
