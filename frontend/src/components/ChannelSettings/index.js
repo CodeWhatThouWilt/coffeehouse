@@ -5,6 +5,7 @@ import { editChannel } from '../../store/servers';
 import { useDispatch } from 'react-redux';
 import ChannelSettingsSidebar from '../ChannelSettingsSidebar';
 import ChannelSettingsOverview from '../ChannelSettingsOverview';
+import CloseSettings from '../CloseSettings';
 
 const ChannelSettings = ({ channel, setShowModal }) => {
     const [currentForm, setCurrentForm] = useState('overview');
@@ -19,6 +20,7 @@ const ChannelSettings = ({ channel, setShowModal }) => {
             setShowModal={setShowModal}
             />
             <ChannelSettingsOverview channel={channel} />
+            <CloseSettings setShowModal={setShowModal} />
         </div>
         
     );

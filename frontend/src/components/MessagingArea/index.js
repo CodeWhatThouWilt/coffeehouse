@@ -30,7 +30,7 @@ const MessagingArea = ({ messages, members, channel }) => {
         <div className='messaging-area-container'>
             <div className='messaging-area-list'>
                 {channelMessages.map((message, i) => (
-                    <Message message={message} member={members[message.userId]} />
+                    <Message key={message.id} message={message} member={members[message.userId]} />
                 ))}
             </div>
             <MessageInputBar channel={channel} />

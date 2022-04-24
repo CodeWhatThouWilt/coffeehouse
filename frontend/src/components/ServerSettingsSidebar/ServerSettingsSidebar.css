@@ -34,6 +34,13 @@
     font-weight: 500;
     cursor: pointer;
     color: #96989d;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.settings-sidebar-item-inactive:hover {
+    background-color: rgba(79, 84, 92, 0.4);
+    color: #dcddde;
 }
 
 .settings-sidebar-item-active {
@@ -47,4 +54,5 @@
     color: white;
     border-radius: 4px;
     background-color: rgba(79, 84, 92, 0.6);
+    margin-bottom: 2px;
 }
