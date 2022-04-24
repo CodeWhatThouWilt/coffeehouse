@@ -18,7 +18,13 @@
 .channel-name-container {
     display: flex;
     gap: 5px;
-    width: 100%;
+}
+
+.channel-name-container div {
+    width: 183px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .edit-channel-icon {
