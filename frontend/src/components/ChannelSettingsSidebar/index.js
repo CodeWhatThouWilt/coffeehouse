@@ -22,6 +22,7 @@ const ChannelSettingsSidebar = ({ channel, setShowModal }) => {
         <div className='settings-sidebar-container'>
             <nav className='settings-sidebar-nav'>
                 <div className='settings-sidebar-header'>
+                    <i className="fa-solid fa-hashtag settings-hashtag" />
                     {channel.name}
                 </div>
                 <div className='settings-sidebar-item-active'>

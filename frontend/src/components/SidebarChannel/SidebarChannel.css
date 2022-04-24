@@ -1,8 +1,10 @@
 .channel-container {
     height: 34px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding-left: 10px;
+    /* padding-left: 10px; */
+    padding: 0px 5px 0px 10px;
     align-items: center;
     color: #8e9297;
 }
@@ -21,7 +23,7 @@
 }
 
 .channel-name-container div {
-    width: 183px;
+    width: 180px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

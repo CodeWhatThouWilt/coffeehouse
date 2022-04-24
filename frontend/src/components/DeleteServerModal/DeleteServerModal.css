@@ -1,0 +1,101 @@
+
+
+.delete-server-container {
+    width: 440px;
+    min-height: 292px;
+    max-height: 316px;
+    border-radius: 4px;
+    background-color: #36393f;
+}
+
+.delete-server-header {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #fff;
+    padding: 16px;
+}
+
+.delete-server-middle {
+    padding: 0px 8px 0px 16px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.delete-server-warning {
+    border-radius: 5px;
+    width: 386px;
+    padding: 10px;
+    border: 1px;
+    margin-bottom: 20px;
+    background-color: rgb(250, 168, 26);
+    font-size: 16px;
+    line-height: 20px;
+    color: #fff;
+}
+
+.delete-server-name {
+    font-weight: bolder;
+}
+
+.delete-server-container label {
+    margin-bottom: 8px;
+    color: #b9bbbe;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.delete-server-container input {
+    width: 388px;
+    height: 20px;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: rgb(32, 34, 37);
+    border: none;
+    font-size: 16px;
+    outline: none;
+    color: #dcddde;
+}
+
+.delete-server-error {
+    margin-top: 8px;
+    color: #ed4245;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.delete-server-bottom {
+    padding: 16px;
+    height: 38px;
+    background-color: #2f3136;
+    border-radius: 0px 0px 4px 4px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.delete-server-cancel {
+    width: 64px;
+    height: 34px;
+    padding: 2px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.delete-server-submit {
+    padding: 2px 13px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    background-color: rgb(216, 60, 62);
+    border: none;
+    border-radius: 3px;
+}

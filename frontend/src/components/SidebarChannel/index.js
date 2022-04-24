@@ -25,12 +25,12 @@ const SidebarChannel = ({ channel, server }) => {
                 className='channel-container'>
                 <NavLink to={`/channels/${server.id}/${channel.id}`} className='channel-link'>
                     <div className='channel-name-container'>
-                        <i className="fa-solid fa-hashtag edit-channel-icon"></i>
+                        <i className="fa-solid fa-hashtag"></i>
                         <div>{channel.name}</div>
                     </div>
                 </NavLink>
                 {sessionUser.id === server.ownerId && showSettings &&
-                    <div onClick={() => setShowModal(true)}>
+                    <div onClick={() => setShowModal(true)} className='edit-channel-icon'>
                         <i className="fa-solid fa-gear" />
                     </div>
                 }

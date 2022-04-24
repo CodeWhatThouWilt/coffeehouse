@@ -16,13 +16,20 @@
 }
 
 .settings-sidebar-header {
-    width: 100%;
+    width: 179px;
     color: #96989d;
     font-size: 12px;
     font-weight: 700;
     line-height: 16px;
     text-transform: uppercase;
     padding: 0px 10px 6px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.settings-hashtag {
+    margin-right: 3px;
 }
 
 .settings-sidebar-item-inactive {
