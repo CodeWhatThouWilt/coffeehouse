@@ -15,7 +15,7 @@ const DeleteServerModal = ({ server, setShowDeleteModal }) => {
         setErrors([]);
         if (serverName === server.name) {
             dispatch(deleteServer(server.id))
-            .then(() => history.push('/channels'));
+            history.push('/@me')
         } else {
             setErrors("You didn't enter the server name correctly")
         };
