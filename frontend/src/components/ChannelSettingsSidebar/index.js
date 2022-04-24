@@ -19,13 +19,19 @@ const ChannelSettingsSidebar = ({ channel, setShowModal }) => {
     };
 
     return (
-        <div className='server-settings-sidebar-container'>
-            <div>
-                Overview
-            </div>
-            <div onClick={() => deleteHandler()}>
-                Delete Channel
-            </div>
+        <div className='settings-sidebar-container'>
+            <nav className='settings-sidebar-nav'>
+                <div className='settings-sidebar-header'>
+                    {channel.name}
+                </div>
+                <div className='settings-sidebar-item-active'>
+                    Overview
+                </div>
+                <div onClick={() => deleteHandler()} className='settings-sidebar-item-inactive'>
+                    Delete Channel
+                </div>
+            </nav>
+            
         </div>
     );
 };
