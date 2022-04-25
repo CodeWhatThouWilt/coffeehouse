@@ -7,6 +7,24 @@
     align-items: center;
 }
 
+.auth-home-button {
+    position: absolute;
+    text-decoration: none;
+    width: 75px;
+    height: 40px;
+    background-color: black;
+    top: 0;
+    left: 0;
+    margin-top: 15px;
+    margin-left: 15px;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 .auth-container {
     box-sizing: border-box;
     width: 480px;

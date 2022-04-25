@@ -18,6 +18,25 @@ A lightweight discord clone.
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg" style=width:50px />
 </div>
 
+### Backend technologies:
+    • Sequelize
+    • Express
+    • Postgres
+    • Node.js
+
+### Frontend technologies:
+    • React
+    • Redux
+    • HTML 5
+    • CSS
+
+### Frontend / backend / misc technologies:
+    • Javascript
+    • Socket.io
+    • Git
+    • Visual Studio Code
+
+
 
 # Features
 

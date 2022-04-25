@@ -37,6 +37,11 @@ function LoginFormPage() {
 
   return (
     <div className="auth-background" style={{ backgroundImage: `url(${background})` }}>
+      <Link to='/'>
+        <div className='auth-home-button'>
+        Home
+        </div>
+      </Link>
       <div className='auth-container'>
         <div className='login-header'>
           <h3>Welcome back!</h3>

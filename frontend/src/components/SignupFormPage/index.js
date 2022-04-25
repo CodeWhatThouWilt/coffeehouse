@@ -32,6 +32,11 @@ function SignupFormPage() {
   };
   return (
     <div className='auth-background' style={{ backgroundImage: `url(${background})` }}>
+      <Link to='/'>
+        <div className='auth-home-button'>
+          Home
+        </div>
+      </Link>
       <div className='auth-container'>
         <h3 className='signup-header'>
           Create an account
