@@ -11,5 +11,6 @@
     line-height: 20px;
     color: #fff;
     /* word-break: break-all; */
+    min-height: 60px;
     overflow-wrap: break-word;
 }

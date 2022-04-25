@@ -4,7 +4,6 @@ import { NavLink, Redirect, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Modal } from '../../context/modal';
 import CreateServerForm from '../CreateServerForm';
-import { getServerMembers } from '../../store/servers';
 
 
 const Navbar = () => {
@@ -30,7 +29,6 @@ const Navbar = () => {
             return `/channels/${serverId}`
         }
     };
-
 
     if (!currentServer) {
         <Redirect to={`/@me`} />

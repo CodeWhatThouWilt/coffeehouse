@@ -2,17 +2,21 @@ import './DeleteChannelModal.css';
 import { useDispatch } from 'react-redux';
 import { deleteChannel } from '../../store/servers';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const DeleteChannelModal = ({ channel, setShowDeleteModal }) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const servers = useSelector(state => state.serversState);
+    const server = servers[channel.serverId];
+    const channels = Object.values(server.Channels);
 
     const deleteHandler = () => {
         dispatch(deleteChannel({
             channelId: channel.id,
             serverId: channel.serverId
         }));
-        history.push(`/channels/${channel.serverId}`);
+        history.push(`/channels/${channel.serverId}/`);
     };
 
     return (

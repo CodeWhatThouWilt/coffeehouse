@@ -9,6 +9,7 @@ import { getUserServers } from '../../store/servers';
 import NoChannelsToDisplay from '../NoChannelsToDisplay';
 import SelectAServer from '../SelectAServer';
 import { useParams } from 'react-router-dom';
+import SelectAChannel from '../SelectAChannel';
 
 const UserApplication = () => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -35,7 +36,10 @@ const UserApplication = () => {
                     {channelId &&
                         <MainContent />
                     }
-                    {serverId && !channelId &&
+                    {serverId && !channelId && Object.values(channels).length > 0 &&
+                        <SelectAChannel />
+                    }
+                    {serverId && !channelId && Object.values(channels).length < 1 &&
                         <NoChannelsToDisplay />
                     }
                     {!serverId && !channelId &&
