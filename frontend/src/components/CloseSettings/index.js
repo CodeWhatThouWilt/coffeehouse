@@ -5,7 +5,6 @@ const CloseSettings = ({ setShowModal }) => {
 
     const keyPressHandler = (e) => {
         const key = e.key;
-        console.log("##############", key);
         if (key === 'Escape') {
             setShowModal(false);
         };

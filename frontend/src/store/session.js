@@ -84,7 +84,6 @@ export const changeUsername = (payload) => async(dispatch) => {
     method: 'PUT',
     body: JSON.stringify(payload)
   });
-  console.log("USERID", res);
 
   if (res.ok) {
     const username = await res.json();
@@ -109,7 +108,6 @@ const sessionReducer = (state = initialState, action) => {
       return newState;
 
     case EDIT_USERNAME:
-      console.log("Made it")
       newState.user.username = action.username;
       return newState;
 

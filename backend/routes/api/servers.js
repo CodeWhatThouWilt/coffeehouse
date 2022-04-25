@@ -159,7 +159,6 @@ const validateChannel = [
                 if (i > 2 && hyphen) {
                     hyphenRepeats = name.charCodeAt(i - 1) === 45;
                 };
-                console.log(hyphenRepeats);
                 return (!lowerCaseCodes && !numbers && !hyphen) || hyphenRepeats;
             });
             if (name.endsWith('-')) {

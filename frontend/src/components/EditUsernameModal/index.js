@@ -13,7 +13,7 @@ const EditUsernameModal = ({ sessionUser, setShowUsernameModal }) => {
         e.preventDefault();
         setErrors([]);
         const userId = sessionUser.id;
-        dispatch(changeUsername({ username, password, userId }))
+        dispatch(changeUsername({ username: username.trim() , password, userId }))
             .then(() => setShowUsernameModal(false))
             .catch(async res => {
                 const data = await res.json();
