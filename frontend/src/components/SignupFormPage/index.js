@@ -15,8 +15,8 @@ function SignupFormPage() {
   const [errors, setErrors] = useState([]);
 
   if (sessionUser) return (
-    <Redirect to="/channels" />
-  )
+    <Redirect to="/@me" />
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ function SignupFormPage() {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
-    }
+    };
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
   return (

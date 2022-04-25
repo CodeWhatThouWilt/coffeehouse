@@ -258,5 +258,12 @@ router.get('/:serverId(\\d+)/members', requireAuth, asyncHandler(async(req, res)
     return res.json({ serverId, members: normalizedMembers });
 }));
 
+router.delete('/:serverId(\\d+)/members/:memberId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
+    const { memberId, serverId } = req.params;
+    const member = await Member.findByPk(memberId);
+    await member.destroy();
+    return res.json({ serverId, memberId})
+}));
+
 
 module.exports = router;

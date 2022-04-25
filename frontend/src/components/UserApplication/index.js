@@ -15,6 +15,9 @@ const UserApplication = () => {
     const dispatch = useDispatch();
     const { serverId, channelId, } = useParams();
     const session = useSelector(state => state.sessionState);
+    const servers = useSelector(state => state.serversState);
+    const server = servers[serverId];
+    const channels = server?.Channels;
 
     useEffect(() => {
         dispatch(getUserServers())
@@ -31,6 +34,9 @@ const UserApplication = () => {
                     <Sidebar />
                     {channelId &&
                         <MainContent />
+                    }
+                    {serverId && !channelId &&
+                        <NoChannelsToDisplay />
                     }
                     {!serverId && !channelId &&
                         <SelectAServer />

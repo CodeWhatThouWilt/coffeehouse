@@ -12,6 +12,7 @@ const GET_MESSAGES = 'servers/getMessages'
 const ADD_MESSAGE = 'servers/addMessage';
 const EDIT_MESSAGE = 'servers/editMessage';
 const GET_MEMBERS = 'servers/getMembers';
+const LEAVE_SERVER = 'servers/leaveServer';
 
 const getServers = (servers) => {
     return {
@@ -86,6 +87,13 @@ const editMessage = (message) => {
 const getMembers = (payload) => {
     return {
         type: GET_MEMBERS,
+        payload
+    };
+};
+
+const leaveServer = (payload) => {
+    return {
+        type: LEAVE_SERVER,
         payload
     };
 };
@@ -218,6 +226,18 @@ export const getServerMembers = (serverId) => async(dispatch) => {
     }
 }
 
+export const exitServer = (payload) => async(dispatch) => {
+    const { serverId, memberId } = payload;
+    const res = await csrfFetch(`/api/servers/${serverId}/members/${memberId}`, {
+        method: "DELETE"
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(leaveServer(data));
+    };
+};
+
 const initialState = {};
 
 const serversReducer = (state = initialState, action) => {
@@ -268,6 +288,10 @@ const serversReducer = (state = initialState, action) => {
 
         case GET_MEMBERS:
             newState[action.payload.serverId].Members = action.payload.members;
+            return newState;
+
+        case LEAVE_SERVER:
+            delete newState[action.payload.serverId];
             return newState;
 
         default:

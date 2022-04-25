@@ -4,10 +4,12 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Modal } from '../../context/modal';
 import ServerSettings from '../ServerSettings';
+import LeaveServerModal from '../LeaveServerModal';
 
 const SidebarServerPanel = () => {
     const [showDropdown, setShowDropdown] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [showSettingsModal, setShowSettingsModal] = useState(false);
+    const [showLeaveModal, setShowLeaveModal] = useState(false);
     const { serverId } = useParams();
     const servers = useSelector(state => state.serversState);
     const sessionUser = useSelector(state => state.sessionState.user);
@@ -39,22 +41,27 @@ const SidebarServerPanel = () => {
                 {showDropdown &&
                     <div className='sidebar-server-panel-dropdown-container'>
                         {owner === sessionUser.id &&
-                            <div onClick={() => setShowModal(true)} className='sidebar-server-panel-dropdown-item'>
+                            <div onClick={() => setShowSettingsModal(true)} className='sidebar-server-panel-dropdown-item'>
                                 Server Settings
                                 <i className="fa-solid fa-gear" />
                             </div>
                         }
                         {owner !== sessionUser.id &&
-                            <div>
+                            <div onClick={() => setShowLeaveModal(true)}>
                                 Leave Server
                             </div>
                         }
                     </div>
                 }
             </div>
-            {showModal &&
-                <Modal onClose={() => setShowModal(false)}>
-                    <ServerSettings setShowModal={setShowModal} />
+            {showSettingsModal &&
+                <Modal onClose={() => setShowSettingsModal(false)}>
+                    <ServerSettings setShowModal={setShowSettingsModal} />
+                </Modal>
+            }
+            {showLeaveModal &&
+                <Modal onClose={() => setShowLeaveModal(false)} >
+                    <LeaveServerModal server={server} setShowModal={setShowLeaveModal} />
                 </Modal>
             }
         </>

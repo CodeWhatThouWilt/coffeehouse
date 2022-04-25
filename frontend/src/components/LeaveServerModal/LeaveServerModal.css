@@ -1,0 +1,16 @@
+
+
+.leave-server-container {
+    width: 440px;
+    /* min-height: 292px; */
+    max-height: 316px;
+    border-radius: 4px;
+    background-color: #36393f;
+}
+
+.leave-server-middle {
+    font-size: 16px;
+    line-height: 20px;
+    color: #dcddde;
+    padding: 0px 8px 20px 16px;
+}
