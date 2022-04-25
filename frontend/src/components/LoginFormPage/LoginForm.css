@@ -57,6 +57,7 @@
     background-color: #202225;
     border: none;
     margin-bottom: 20px;
+    outline: none;
 }
 
 .login-form-container button {
