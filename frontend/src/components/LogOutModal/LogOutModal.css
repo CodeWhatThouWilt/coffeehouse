@@ -1,0 +1,15 @@
+
+.logout-container {
+    width: 440px;
+    height: 200px;
+    border-radius: 4px;
+    background-color: #36393f;
+}
+
+.logout-middle {
+    height: 54px;
+    padding: 0px 8px 20px 16px;
+    color: #dcddde;
+    font-size: 16px;
+    line-height: 20px;
+}

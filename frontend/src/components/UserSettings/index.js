@@ -1,9 +1,16 @@
 import './UserSettings.css';
+import UserSettingsSidebar from '../UserSettingsSidebar';
+import UserSettingsMyAccount from '../UserSettingsMyAccount';
+import CloseSettings from '../CloseSettings';
 
-const UserSettings = () => {
+const UserSettings = ({ sessionUser, setShowModal }) => {
 
     return (
-        <div>UserSettings</div>
+        <div className='server-settings-container'>
+            <UserSettingsSidebar sessionUser={sessionUser}/>
+            <UserSettingsMyAccount sessionUser={sessionUser} />
+            <CloseSettings setShowModal={setShowModal} />
+        </div>
     );
 };
 
