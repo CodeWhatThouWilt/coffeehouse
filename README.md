@@ -30,7 +30,7 @@ A lightweight discord clone.
     • HTML 5
     • CSS
 
-### Frontend / backend / misc technologies:
+### Miscellaneous technologies:
     • Javascript
     • Socket.io
     • Git
