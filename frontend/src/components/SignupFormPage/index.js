@@ -22,7 +22,7 @@ function SignupFormPage() {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(signup({ email, username, password }))
+      return dispatch(signup({ email: email.trim(), username: username.trim(), password: password.trim() }))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);

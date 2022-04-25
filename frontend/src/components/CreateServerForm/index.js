@@ -20,7 +20,7 @@ const CreateServerForm = ({ setShowModal }) => {
         };
 
         const formData = new FormData();
-        formData.append('name', name);
+        formData.append('name', name.trim());
         formData.append('image', image);
         dispatch(createServer(formData))
             .then(res => history.push(`/channels/${res.id}/${Object.values(res.Channels)[0].id}`))
