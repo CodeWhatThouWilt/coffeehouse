@@ -1,0 +1,103 @@
+
+
+.my-account-info-container {
+    min-width: 415px;
+    max-width: 660px;
+    height: 396.500px;
+    background-color: #202225;
+    border-radius: 8px;
+}
+
+.my-account-banner {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background-color: #2f3136;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.my-account-profile-image-container {
+    position: absolute;
+    left: 16px;
+    top: 76px;
+    width: 80px;
+    height: 80px;
+    border: 7px solid #202225;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.my-account-user-info {
+    width: 100%;
+    box-sizing: border-box;
+    height: 72px;
+    padding: 16px 16px 0px 120px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.my-account-profile-image {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.my-account-user-info-username {
+    color: #fff;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+}
+
+.my-account-edit-user-profile-button {
+    height: 28px;
+    background-color: #5865f2;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    border-radius: 3px;
+    border: none;
+    color: white;
+}
+
+.my-account-edit-info-container {
+    height: 168.500px;
+    width: 596px;
+    padding: 16px;
+    margin: 8px 16px 16px;
+    background-color: #2f3136;
+    border-radius: 8px;
+}
+
+.my-account-edit-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.my-account-username {
+    color: white;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.my-account-edit-button {
+    border: none;
+    background-color: rgb(79, 84, 92);
+    width: 60px;
+    height: 32px;
+    padding: 2px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.my-account-email-reveal {
+    color: #00aff4;
+}
