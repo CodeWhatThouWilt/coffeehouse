@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 export const SET_USER = "session/setUser";
 export const REMOVE_USER = "session/removeUser";
+const EDIT_USERNAME = 'session/editUsername'
 
 const setUser = (user) => {
   return {
@@ -13,6 +14,13 @@ const setUser = (user) => {
 const removeUser = () => {
   return {
     type: REMOVE_USER,
+  };
+};
+
+const editUsername = (username) => {
+  return {
+    type: EDIT_USERNAME,
+    username
   };
 };
 
@@ -70,22 +78,44 @@ export const logout = () => async (dispatch) => {
   return response;
 };
 
+export const changeUsername = (payload) => async(dispatch) => {
+  const { userId } = payload;
+  const res = await csrfFetch(`/api/users/${userId}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload)
+  });
+  console.log("USERID", res);
+
+  if (res.ok) {
+    const username = await res.json();
+    dispatch(editUsername(username));
+    return username;
+  };
+  return res;
+};
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
-  let newState;
+  let newState = {...state};
+
   switch (action.type) {
     case SET_USER:
-      newState = { ...state };
       newState.user = action.user;
       return newState;
+
     case REMOVE_USER:
-      newState = { ...state };
       newState.user = null;
       return newState;
+
+    case EDIT_USERNAME:
+      console.log("Made it")
+      newState.user.username = action.username;
+      return newState;
+
     default:
-      return state;
-  }
+      return newState;
+  };
 };
 
 export default sessionReducer;

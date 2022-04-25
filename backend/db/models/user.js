@@ -54,8 +54,13 @@ module.exports = (sequelize, DataTypes) => {
     return { id, username, email, profilePicture };
   };
 
-  User.prototype.validatePassword = function (password) { //should accept password string and return true if there is a match w/ user instance's hashedpw and return false otherwise
+  User.prototype.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.hashedPassword.toString());
+  };
+
+  User.validatePw = async function (userId, password) {
+    const user = await User.scope('loginUser').findByPk(userId);
+    return user.validatePassword(password);
   };
 
   User.getCurrentUserById = async function (id) {
@@ -77,12 +82,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  User.signup = async function ({ username, email, password }) {
+  User.signup = async function ({ username, email, password, profilePicture }) {
     const hashedPassword = bcrypt.hashSync(password); //hash the pw using hashSync
     const user = await User.create({
       username,
       email,
-      hashedPassword
+      hashedPassword,
+      profilePicture
     });
     return await User.scope('currentUser').findByPk(user.id); //return created user using cuurrentUserscope
   };

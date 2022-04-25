@@ -1,0 +1,83 @@
+
+
+.edit-username-container {
+    width: 440px;
+    height: 336px;
+    background-color: #36393f;
+    border-radius: 4px;
+}
+
+.edit-username-top-container {
+    width: 408px;
+    height: 58px;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-username-header {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    color: #fff;
+    text-align: center;
+}
+
+.edit-username-subtext {
+    margin-top: 8px;
+    color: #b9bbbe;
+    text-align: center;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.edit-username-mid-container {
+    width: 416px;
+    height: 144px;
+    padding: 0px 8px 16px 16px;
+}
+
+.edit-username-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.edit-username-input-container.bottom {
+    margin-top: 16px;
+}
+
+.edit-username-input-container input {
+    width: 388px;
+    height: 20px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: #202225;
+    color: #dcddde;
+    font-size: 16px;
+    border-radius: 3px;
+    font-weight: 400;
+}
+
+.edit-username-error-container {
+    padding: 0px 16px 10px;
+}
+
+.edit-username-error {
+    color: rgba(255, 0, 0, 0.688);
+}
+
+.edit-username-submit-button {
+    width: 96px;
+    height: 38px;
+    padding: 2px 16px;
+    background-color: rgb(88, 101, 242);
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-radius: 3px;
+    color: white;
+}

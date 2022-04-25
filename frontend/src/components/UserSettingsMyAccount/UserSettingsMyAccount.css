@@ -77,12 +77,14 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 24px;
+    align-items: center;
 }
 
 .my-account-username {
     color: white;
     font-size: 16px;
     line-height: 20px;
+    overflow-x: hidden;
 }
 
 .my-account-edit-button {
@@ -96,6 +98,7 @@
     line-height: 16px;
     border-radius: 3px;
     color: #fff;
+    cursor: pointer;
 }
 
 .my-account-email-reveal {
