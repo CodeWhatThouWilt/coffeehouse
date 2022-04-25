@@ -3,7 +3,7 @@ import { exitServer } from '../../store/servers';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-const LeaveServerModal = ({ server, setShowModal }) => {
+const LeaveServerModal = ({ server, setShowLeaveModal }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const session = useSelector(state => state.sessionState);
@@ -23,10 +23,10 @@ const LeaveServerModal = ({ server, setShowModal }) => {
                 Leave '{server.name}'
             </div>
             <div className='leave-server-middle'>
-                Are you sure you want to leave <span>{server.name}</span>?
+                Are you sure you want to leave <span className='delete-server-name'>{server.name}</span>?
             </div>
             <div className='delete-server-bottom'>
-                <div oncClick={() => setShowModal(false)} className='delete-server-cancel'>
+                <div onClick={() => setShowLeaveModal(false)} className='delete-server-cancel'>
                     cancel
                 </div>
                 <button onClick={() => clickHandler()} className='delete-server-submit'>

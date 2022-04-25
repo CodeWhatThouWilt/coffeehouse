@@ -7,7 +7,7 @@ const SidebarUserPanel = () => {
     return (
         <div className='sidebar-user-panel-container'>
             <div className='sidebar-user-panel-image-container'>
-                <img src={sessionUser.profilePicture} alt='pfp' className='sidebar-user-panel-image'/>
+                <img src={sessionUser.profilePicture} alt='pfp' className='sidebar-user-panel-image' />
             </div>
             <div className='sidebar-user-panel-username-container'>
                 <div className='sidebar-user-panel-username'>
@@ -16,7 +16,7 @@ const SidebarUserPanel = () => {
             </div>
             <div className='sidebar-user-panel-icon-tray'>
                 <div className='sidebar-user-panel-settings-icon'>
-                    <i className="fa-solid fa-gear"></i>
+                    <i className="fa-solid fa-gear" />
                 </div>
             </div>
         </div>

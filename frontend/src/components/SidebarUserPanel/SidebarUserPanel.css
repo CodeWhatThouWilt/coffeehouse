@@ -35,3 +35,17 @@
     font-size: 14px;
     font-weight: 600;
 }
+
+.sidebar-user-panel-icon-tray {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.sidebar-user-panel-settings-icon {
+    font-size: 20px;
+    color: rgb(185, 187, 190);
+    margin-right: 8px;
+    cursor: pointer;
+}

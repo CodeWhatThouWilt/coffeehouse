@@ -61,7 +61,7 @@ const SidebarServerPanel = () => {
             }
             {showLeaveModal &&
                 <Modal onClose={() => setShowLeaveModal(false)} >
-                    <LeaveServerModal server={server} setShowModal={setShowLeaveModal} />
+                    <LeaveServerModal server={server} setShowLeaveModal={setShowLeaveModal} />
                 </Modal>
             }
         </>
