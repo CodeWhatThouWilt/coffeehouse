@@ -7,7 +7,7 @@ const MemberArea = ({ members }) => {
         <div className='member-area-container'>
             <div className='member-area-header'>Members</div>
             {membersArr.map(member => (
-                <div className='member-area-member'>
+                <div key={member.id} className='member-area-member'>
                     <img src={member.User.profilePicture} alt='pfp' />
                     <div className='member-area-name'>{member.User.username}</div>
                 </div>

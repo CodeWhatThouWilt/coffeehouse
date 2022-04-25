@@ -137,6 +137,7 @@
     border-radius: 3px;
     font-size: 16px;
     font-family: 400;
+    outline: none;
 }
 
 .server-settings-confirm-changes-container {

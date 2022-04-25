@@ -2,12 +2,14 @@ import './CreateServerForm.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createServer } from '../../store/servers';
+import { useHistory } from 'react-router-dom';
 
 const CreateServerForm = ({ setShowModal }) => {
     const [image, setImage] = useState();
     const [name, setName] = useState('');
     const [errors, setErrors] = useState([])
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -21,6 +23,7 @@ const CreateServerForm = ({ setShowModal }) => {
         formData.append('name', name);
         formData.append('image', image);
         dispatch(createServer(formData))
+            .then(res => history.push(`/channels/${res.id}/${Object.values(res.Channels)[0].id}`))
             .then(() => setShowModal(false))
             .catch(async res => {
                 const data = await res.json();

@@ -12,7 +12,7 @@ module.exports = {
         const users = await User.findAll();
         const usersAmount = users.length;
         const ownerId = Math.ceil(Math.random() * usersAmount);
-        const iconURL = faker.image.image(512, 512);
+      const iconURL = `https://picsum.photos/seed/${i+100}/512/512`;
         const createdAt = new Date();
         const updatedAt = new Date();
         serversArr.push({

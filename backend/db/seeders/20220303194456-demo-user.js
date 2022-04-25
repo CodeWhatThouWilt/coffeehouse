@@ -10,7 +10,7 @@ module.exports = {
       usersArr.push({
         email: faker.internet.email(),
         username: faker.internet.userName(),
-        profilePicture: faker.image.avatar(),
+        profilePicture: `https://picsum.photos/seed/${i + 1}/512/512`,
         hashedPassword: bcrypt.hashSync(faker.internet.password())
       });
       

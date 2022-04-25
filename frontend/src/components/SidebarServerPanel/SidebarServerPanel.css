@@ -17,9 +17,13 @@
 }
 
 .sidebar-server-panel-name {
+    width: 190px;
     font-size: 15px;
     font-weight: 500;
     line-height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .sidebar-server-dropdown-button {

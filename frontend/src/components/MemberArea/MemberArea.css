@@ -1,6 +1,6 @@
 .member-area-container {
     width: 300px;
-    height: calc(100vh - 68px - 48.5px);
+    height: calc(100vh - 48.5px);
     background-color: #2a2c30;
     overflow-y: scroll;
 }

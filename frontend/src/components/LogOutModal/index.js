@@ -9,6 +9,7 @@ const LogOutModal = ({ setShowLogOutModal }) => {
 
     const clickHandler = () => {
         dispatch(logout());
+        history.push('/login');
     };
 
     return (

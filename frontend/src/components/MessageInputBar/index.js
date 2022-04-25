@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 let socket;
 
-const MessageInputBar = ({ channel }) => {
+const MessageInputBar = ({ channel, showMembers }) => {
     const { serverId, channelId } = useParams();
     const dispatch = useDispatch();
     const [content, setContent] = useState("");
@@ -14,6 +14,7 @@ const MessageInputBar = ({ channel }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        if (content.length === 0 || content.length > 2000) return
         socket = io();
         dispatch(createMessage({
             serverId,
@@ -24,11 +25,21 @@ const MessageInputBar = ({ channel }) => {
             .then(() => setContent(""))
     };
 
+    const stylingHandler = () => {
+        if (showMembers) {
+            return 'message-input-bar-container-show-members'
+        } else {
+            return 'message-input-bar-container'
+        };
+    };
+
+
     return (
-        <form onSubmit={e => submitHandler(e)} className='message-input-bar-container'>
+        <form onSubmit={e => submitHandler(e)} className={stylingHandler()}>
             <input
                 type='text'
                 value={content}
+                maxLength={2000}
                 onChange={e => setContent(e.target.value)}
                 placeholder={`Message ${channel.name}`}
             />

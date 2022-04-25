@@ -9,6 +9,7 @@ import { restoreUser } from './store/session';
 import MainContent from './components/MainContent';
 import Sidebar from './components/Sidebar';
 import { Redirect } from 'react-router-dom';
+import SplashPage from './components/SplashPage';
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
           </Route>
 
           <Route path="/">
-            <Redirect to='/login' />
+            <SplashPage />
           </Route>
 
         </Switch>

@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 let socket;
 
-const MessagingArea = ({ messages, members, channel }) => {
+const MessagingArea = ({ messages, members, channel, showMembers }) => {
     const messagesArr = Object.values(messages);
     const [channelMessages, setChannelMessages] = useState(messagesArr);
     const { serverId, channelId } = useParams();
@@ -26,14 +26,22 @@ const MessagingArea = ({ messages, members, channel }) => {
         });
     }, [serverId, channelId]);
 
+    const stylingHandler = () => {
+        if (showMembers) {
+            return 'messaging-area-container-member-open';
+        } else {
+            return 'messaging-area-container';
+        }
+    }
+
     return (
-        <div className='messaging-area-container'>
+        <div className={stylingHandler()}>
             <div className='messaging-area-list'>
                 {channelMessages.map((message, i) => (
                     <Message key={message.id} message={message} member={members[message.userId]} />
                 ))}
             </div>
-            <MessageInputBar channel={channel} />
+            <MessageInputBar channel={channel} showMembers={showMembers} />
         </div>
     );
 };

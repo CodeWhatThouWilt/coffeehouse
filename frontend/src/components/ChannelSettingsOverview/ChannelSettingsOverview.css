@@ -12,6 +12,7 @@
     border: none;
     background-color: #202225;
     color: #dcddde;
+    outline: none;
 }
 
 .input-label {

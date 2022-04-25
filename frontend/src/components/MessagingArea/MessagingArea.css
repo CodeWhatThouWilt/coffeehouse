@@ -5,6 +5,13 @@
     /* overflow-y: scroll; */
 }
 
+.messaging-area-container-member-open {
+    width: calc(100% - 300px);
+    height: calc(100% - 48.5px - 68px);
+    background-color: #36393f;
+    /* overflow-y: scroll; */
+}
+
 .messaging-area-list {
     overflow-y: scroll;
     /* height: 100%; */

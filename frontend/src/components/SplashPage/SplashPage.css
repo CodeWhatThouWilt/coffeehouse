@@ -1,0 +1,154 @@
+
+
+.splash-page-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    bottom: 0px;
+}
+
+.splash-page-bottom-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.splash-top-background-top {
+    width: 100vw;
+    height: 50vh;
+    background-repeat: no-repeat;
+    background-color: black;
+}
+
+.splash-top-background-bottom {
+    width: 100vw;
+    height: 50vh;
+    background-repeat: no-repeat;
+    background-color: black;
+}
+
+.github-link {
+    position: absolute;
+    left: 5%;
+    top: 2%;
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100px;
+    gap: -30px;
+}
+
+.github-text {
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+.github-link a {
+    left: 2vw;
+    bottom: 35%;
+    text-decoration: none;
+    color: white;
+    font-size: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.linkedin-link {
+    position: absolute;
+    right: 5%;
+    top: 2%;
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100px;
+    gap: -30px;
+}
+
+.linkedin-link a {
+    left: 2vw;
+    bottom: 35%;
+    text-decoration: none;
+    color: white;
+    font-size: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.splash-mid-container {
+    position:absolute;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    display: flex;
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.coffeehouse-logo {
+    /* position: absolute; */
+    left: 34vw;
+    top: 8vh;
+    background-color: transparent;
+    height: 500px;
+    width: 500px;
+    z-index: 10;
+}
+
+.splash-login {
+    /* position: absolute; */
+    text-decoration: none;
+    font-size: 50px;
+    text-transform: uppercase;
+    color: white;
+    top: 30%;
+    left: 20%;
+    animation: radiate 1s ease-in-out infinite;
+}
+
+.splash-signup {
+    /* position: absolute; */
+    text-decoration: none;
+    font-size: 50px;
+    text-transform: uppercase;
+    color: white;
+    top: 30%;
+    right: 15%;
+    animation: radiate 1s ease-in-out infinite;
+}
+
+.splash-about-container {
+    position:absolute;
+    left:0;
+    right:0;
+    bottom: 100px;
+    margin-left:auto;
+    margin-right:auto;
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    width: 350px;
+    line-height: 30px;
+    font-weight: 600;
+}
+
+@keyframes radiate {
+    from {
+        text-shadow: 0 0 5px rgb(128, 128, 128), 0 0 10px rgb(121, 121, 121), 0 0 15px #6f6f6f, 0 0 20px #5b5b5b, 0 0 25px #676767, 0 0 30px #696969, 0 0 35px #8c8c8c;
+    }
+
+    to {
+        text-shadow: 0 0 30px rgb(0, 0, 0), 0 0 35px #000000, 0 0 45px #000000, 0 0 60px #000000, 0 0 80px #000000, 0 0 85px #000000, 0 0 90px #000000;
+    }
+}

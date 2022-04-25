@@ -2,8 +2,9 @@
 
 .message-container {
     position: relative;
+    word-wrap: break-word;
     margin-top: 17px;
-    height: 44px;
+    min-height: 44px;
     padding: 2px 48px 2px 72px;
 }
 

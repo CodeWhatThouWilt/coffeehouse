@@ -14,10 +14,12 @@ const ChannelSettingsOverview = ({ channel }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        setErrors([]);
         const serverId = channel.serverId;
         const channelId = channel.id;
         const formData = { name, serverId, channelId };
         dispatch(editChannel(formData))
+        .then(() => setErrors([]))
             .catch(async res => {
                 const data = await res.json();
                 data.errors && setErrors(data.errors);
@@ -72,6 +74,8 @@ const ChannelSettingsOverview = ({ channel }) => {
                 <div onSubmit={() => submitHandler()} className='new-channel-form'>
                     <label className='input-label'>Channel Name</label>
                     <input
+                        maxLength={100}
+                        minLength={1}
                         value={name}
                         onChange={e => inputHandler(e)}
                     />

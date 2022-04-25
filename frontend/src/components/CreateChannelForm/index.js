@@ -1,6 +1,6 @@
 import './CreateChannelForm.css';
 import { useState } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createChannel } from '../../store/servers';
 import unfilledRadio from '../../assets/unfilledRadio.svg';
@@ -8,6 +8,7 @@ import filledRadio from '../../assets/filledInRadio.svg';
 
 const CreateChannelForm = ({ setShowModal }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { serverId } = useParams();
     const [name, setName] = useState('');
     const [errors, setErrors] = useState([]);
@@ -16,6 +17,7 @@ const CreateChannelForm = ({ setShowModal }) => {
         e.preventDefault();
         setErrors([]);
         dispatch(createChannel({ name, serverId }))
+        .then(res => history.push(`/channels/${res.serverId}/${res.id}`))
         .then(() => setShowModal(false))
         .catch(async res => {
             const data = await res.json();

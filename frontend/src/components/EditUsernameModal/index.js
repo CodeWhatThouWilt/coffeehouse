@@ -38,6 +38,7 @@ const EditUsernameModal = ({ sessionUser, setShowUsernameModal }) => {
                             username
                         </label>
                         <input
+                            maxLength={32}
                             type='text'
                             value={username}
                             onChange={e => setUsername(e.target.value)}

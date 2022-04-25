@@ -119,6 +119,7 @@ export const createServer = (form) => async(dispatch) => {
     if (res.ok) {
         const server = await res.json();
         dispatch(addServer(server));
+        return server;
     };
     return res;
 };
@@ -160,6 +161,7 @@ export const createChannel = (form) => async(dispatch) => {
     if (res.ok) {
         const channel = await res.json();
         dispatch(addChannel(channel));
+        return channel;
     };
     return res;
 };
