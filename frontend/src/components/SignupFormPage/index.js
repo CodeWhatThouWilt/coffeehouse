@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { signup } from '../../store/session';
 import background from '../../assets/auth-background.svg';
+import * as sessionActions from '../../store/session';
+
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -30,6 +32,15 @@ function SignupFormPage() {
     };
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
+
+  const demoUserHandler = (e) => {
+    e.preventDefault();
+    return dispatch(sessionActions.login(
+      { credential: 'demo@demo.com', password: 'password' }
+    ))
+      .then(() => <Redirect to='/channels' />);
+  };
+
   return (
     <div className='auth-background' style={{ backgroundImage: `url(${background})` }}>
       <Link to='/'>
@@ -85,6 +96,9 @@ function SignupFormPage() {
             <button type="submit">Sign Up</button>
             <div className='login-bottom-container'>
               <div className='register-text'><Link to='/login'>Already have an account?</Link></div>
+              <div onClick={e => demoUserHandler(e)} className='demo-user-button'>
+                demo user
+              </div>
             </div>
           </form>
         </div>
