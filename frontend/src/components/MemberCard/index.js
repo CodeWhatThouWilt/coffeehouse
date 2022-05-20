@@ -1,14 +1,17 @@
 import './MemberCard.css';
 import { useState, useEffect } from 'react';
 import { deleteMember } from '../../store/servers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import KickMemberModal from '../KickMemberModal';
 import Modal from '../../context/modal';
 
 const MemberCard = ({ member }) => {
     const [rightMenu, setRightMenu] = useState(false);
     const dispatch = useDispatch();
-    let clickCoords = {};
+    const [clickCoords, setClickCoords] = useState({});
+    const servers = useSelector(state => state.serversState);
+    const server = servers[member.serverId];
+    console.log(server)
 
     useEffect(() => {
         if (!rightMenu) return;
@@ -29,8 +32,11 @@ const MemberCard = ({ member }) => {
 
     const rightClickHandler = (e) => {
         e.preventDefault();
-        clickCoords = { position: 'absolute', bottom: e.clientX + 'px', right: e.clientY + 'px' }
-        console.log(clickCoords);
+        const rightDropdown = document.getElementsByClassName('member-card-r-menu');
+        const dropdownHeight = 44;
+        const clientHeight = document.documentElement.clientHeight;
+        const yPosition = e.pageY + dropdownHeight * 3 > clientHeight ? e.pageY - dropdownHeight : e.pageY 
+        setClickCoords({ position: 'absolute', left: e.pageX + -200 + 'px', top: yPosition + 'px' })
         setRightMenu(true);
     };
 
