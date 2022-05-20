@@ -8,7 +8,7 @@ const MemberArea = ({ members }) => {
         <div className='member-area-container'>
             <div className='member-area-header'>Members</div>
             {membersArr.map(member => (
-                <MemberCard member={member}/>
+                <MemberCard key={member.id} member={member}/>
             ))}
         </div>
     );

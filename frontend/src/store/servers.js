@@ -12,6 +12,7 @@ const GET_MESSAGES = 'servers/getMessages'
 const ADD_MESSAGE = 'servers/addMessage';
 const EDIT_MESSAGE = 'servers/editMessage';
 const GET_MEMBERS = 'servers/getMembers';
+const REMOVE_MEMBER = 'servers/removeMember';
 const LEAVE_SERVER = 'servers/leaveServer';
 
 const getServers = (servers) => {
@@ -87,6 +88,13 @@ const editMessage = (message) => {
 const getMembers = (payload) => {
     return {
         type: GET_MEMBERS,
+        payload
+    };
+};
+
+const removeMember = (payload) => {
+    return {
+        type: REMOVE_MEMBER,
         payload
     };
 };
@@ -225,8 +233,20 @@ export const getServerMembers = (serverId) => async(dispatch) => {
     if (res.ok) {
         const payload = await res.json();
         dispatch(getMembers(payload))
-    }
-}
+    };
+};
+
+export const deleteMember = (payload) => async(dispatch) => {
+    const { serverId, memberId } = payload;
+    const res = await csrfFetch(`/api/servers/${serverId}/members/${memberId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        const payload = await res.json();
+        dispatch(removeMember(payload));
+    };
+};
 
 export const exitServer = (payload) => async(dispatch) => {
     const { serverId, memberId } = payload;

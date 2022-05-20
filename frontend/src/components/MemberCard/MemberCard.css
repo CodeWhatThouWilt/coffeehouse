@@ -1,10 +1,18 @@
 .member-card {
+    /* position: relative; */
+    color: #96989d;
     display: flex;
     align-items: center;
     height: 42px;
     box-sizing: border-box;
     width: 100%;
     padding: 0px 16px;
+    cursor: pointer;
+}
+
+.member-card:hover {
+    background-color: #2f3136;
+    color: #dcddde;
 }
 
 .member-card img {
@@ -19,8 +27,42 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
-    color: #96989d;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.member-card-r-menu {
+    color: #96989d;
+    position: absolute;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 8px;
+    background-color: #18191c;
+    border-radius: 4px;
+}
+
+.member-card-r-menu-item {
+    height: 20px;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    border-radius: 2px;
+}
+
+.member-card-r-menu-item:hover {
+    background-color: rgb(71, 82, 196);
+    color: white;
+}
+
+.member-card-r-menu-item.red {
+    color: #ed4245;
+}
+
+.member-card-r-menu-item.red:hover {
+    background-color: #ed4245;
+    color: white;
 }
