@@ -13,30 +13,3 @@
     line-height: 16px;
     letter-spacing: .02em;
 }
-
-.member-area-member {
-    display: flex;
-    align-items: center;
-    height: 42px;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0px 16px;
-}
-
-.member-area-member img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 12px;
-}
-
-.member-area-name {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;
-    color: #96989d;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}

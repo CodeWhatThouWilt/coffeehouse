@@ -4,6 +4,7 @@ import { NavLink, Redirect, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Modal } from '../../context/modal';
 import CreateServerForm from '../CreateServerForm';
+import logo from '../../assets/coffeehouse-logo.svg';
 
 
 const Navbar = () => {
@@ -44,6 +45,14 @@ const Navbar = () => {
     return (
         <>
             <nav className='navbar-container'>
+                {/* <div className='navbar-icon-container'>
+                    <div className='navbar-icon-notif-container'>
+                        <div className='navbar-icon-notif'></div>
+                    </div>
+                    <NavLink to='/@me'>
+                        <img src={logo} alt='icon' className='navbar-server-icon' style={{ backgroundColor: 'black'}}/>
+                    </NavLink>
+                </div> */}
                 {serversArr.map(server => (
                     <div className='navbar-icon-container' key={server.id} >
                         <div className='navbar-icon-notif-container'>
