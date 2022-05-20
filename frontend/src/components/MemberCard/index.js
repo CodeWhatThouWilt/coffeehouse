@@ -5,13 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import KickMemberModal from '../KickMemberModal';
 import Modal from '../../context/modal';
 
-const MemberCard = ({ member }) => {
+const MemberCard = ({ member, server }) => {
     const [rightMenu, setRightMenu] = useState(false);
     const dispatch = useDispatch();
     const [clickCoords, setClickCoords] = useState({});
-    const servers = useSelector(state => state.serversState);
-    const server = servers[member.serverId];
-    console.log(server)
+    const ownerId = useSelector(state => state.sessionState.user.id);
 
     useEffect(() => {
         if (!rightMenu) return;
@@ -35,7 +33,7 @@ const MemberCard = ({ member }) => {
         const rightDropdown = document.getElementsByClassName('member-card-r-menu');
         const dropdownHeight = 44;
         const clientHeight = document.documentElement.clientHeight;
-        const yPosition = e.pageY + dropdownHeight * 3 > clientHeight ? e.pageY - dropdownHeight : e.pageY 
+        const yPosition = e.pageY + dropdownHeight * 3 > clientHeight ? e.pageY - dropdownHeight : e.pageY
         setClickCoords({ position: 'absolute', left: e.pageX + -200 + 'px', top: yPosition + 'px' })
         setRightMenu(true);
     };
@@ -52,7 +50,9 @@ const MemberCard = ({ member }) => {
             <div className='member-card-name'>{member.User.username}</div>
             {rightMenu &&
                 <div className='member-card-r-menu' style={clickCoords}>
-                    <div className='member-card-r-menu-item red'>Kick {member.User.username}</div>
+                    {ownerId === server.ownerId && ownerId !== member.id &&
+                        <div className='member-card-r-menu-item red'>Kick {member.User.username}</div>
+                    }
                 </div>
             }
         </div>

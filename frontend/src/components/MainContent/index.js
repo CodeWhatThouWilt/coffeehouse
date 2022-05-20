@@ -37,7 +37,7 @@ const MainContent = () => {
                     <MessagingArea messages={messages} members={members} channel={channel} showMembers={showMembers}/>
                 }
                 {showMembers && isLoaded && members &&
-                    <MemberArea members={members} />
+                    <MemberArea members={members} server={server} />
                 }
             </div>
         </div>
