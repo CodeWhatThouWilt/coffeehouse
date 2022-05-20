@@ -214,7 +214,8 @@ router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, a
     const channelMessages = await Message.findAll({
         where: {
             channelId
-        }
+        },
+        include: User
     });
 
     const normalizedMessages = {};
@@ -235,6 +236,8 @@ router.post('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, 
         serverId,
         userId,
         content
+    }, {
+        include: User
     });
 
     return res.json(message);
@@ -259,9 +262,19 @@ router.get('/:serverId(\\d+)/members', requireAuth, asyncHandler(async(req, res)
 
 router.delete('/:serverId(\\d+)/members/:memberId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
     const { memberId, serverId } = req.params;
-    const member = await Member.findByPk(memberId);
-    await member.destroy();
-    return res.json({ serverId, memberId})
+    const userId = req.user.id;
+
+    const member = await Member.findByPk(memberId, {
+        include: { model: Server }
+    });
+
+    const serverOwner = member.dataValues.Server.dataValues.ownerId;
+    
+    if (userId === serverOwner) {
+        await member.destroy();
+        return res.json({ serverId, userId: member.userId })
+    }
+
 }));
 
 

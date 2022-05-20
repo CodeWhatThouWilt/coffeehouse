@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   Message.associate = function(models) {
     Message.belongsTo(models.Channel, { foreignKey: 'channelId' });
     Message.belongsTo(models.Server, { foreignKey: 'serverId' });
+    Message.belongsTo(models.User, { foreignKey: 'userId' })
   };
   return Message;
 };

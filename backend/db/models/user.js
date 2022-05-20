@@ -100,6 +100,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function (models) {
     User.hasMany(models.Server, { foreignKey: 'ownerId', onDelete: 'cascade', hooks: true });
     User.hasMany(models.Member, { foreignKey: 'userId', onDelete: 'cascade', hooks: true });
+    User.hasMany(models.Message, { foreignKey: 'userId', onDelete: 'cascade', hooks: true });
   };
   return User;
 };

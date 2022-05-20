@@ -51,7 +51,7 @@ const MemberCard = ({ member, server }) => {
             {rightMenu &&
                 <div className='member-card-r-menu' style={clickCoords}>
                     {ownerId === server.ownerId && ownerId !== member.id &&
-                        <div className='member-card-r-menu-item red'>Kick {member.User.username}</div>
+                        <div onClick={() => kickHandler()} className='member-card-r-menu-item red'>Kick {member.User.username}</div>
                     }
                 </div>
             }

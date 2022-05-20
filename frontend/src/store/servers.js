@@ -312,6 +312,10 @@ const serversReducer = (state = initialState, action) => {
             newState[action.payload.serverId].Members = action.payload.members;
             return newState;
 
+        case REMOVE_MEMBER:
+            delete newState[action.payload.serverId].Members[action.payload.userId];
+            return newState;
+
         case LEAVE_SERVER:
             delete newState[action.payload.serverId];
             return newState;
