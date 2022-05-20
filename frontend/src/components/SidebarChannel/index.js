@@ -23,7 +23,7 @@ const SidebarChannel = ({ channel, server }) => {
                 onMouseEnter={() => setShowSettings(true)}
                 onMouseLeave={() => setShowSettings(false)}
                 className='channel-container'>
-                <NavLink to={`/channels/${server.id}/${channel.id}`} className='channel-link'>
+                <NavLink to={`/channels/${server.id}/${channel.id}`} activeClassName='channel-link-active' className='channel-link'>
                     <div className='channel-name-container'>
                         <i className="fa-solid fa-hashtag"></i>
                         <div>{channel.name}</div>
