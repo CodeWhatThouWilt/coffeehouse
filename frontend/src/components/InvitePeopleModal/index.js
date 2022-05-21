@@ -2,7 +2,7 @@ import './InvitePeopleModal.css';
 import { useState, useEffect, useRef } from 'react';
 import { csrfFetch } from '../../store/csrf';
 
-const InvitePeople = ({ server, showInviteModal }) => {
+const InvitePeople = ({ server, setShowInviteModal }) => {
     const [form, setForm] = useState('invite');
     const [inviteUrl, setInviteUrl] = useState('');
     const [maxUses, setMaxUses] = useState(0);
@@ -68,40 +68,86 @@ const InvitePeople = ({ server, showInviteModal }) => {
                 const days = timeframe.slice(space);
                 if (days !== 1 || days !== 7) return null;
                 return date.setDate(date.getDate() + days);
-        
+
             default:
                 return null;
         };
     };
 
     return (
-        <div className='invite-people'>
-            <div className='invite-people-header'>
-                <div>Invite friends to {server.name}</div>
-                <div className='invite-people-channel'>
-                    <i className="fa-solid fa-hashtag  invite-people-hashtag" />
-                    <span>{firstChannel?.name}</span>
+        <>
+            {form === 'invite' &&
+                <div className='invite-people'>
+                    <div className='invite-people-header'>
+                        <div>Invite friends to {server.name}</div>
+                        <div className='invite-people-channel'>
+                            <i className="fa-solid fa-hashtag  invite-people-hashtag" />
+                            <span>{firstChannel?.name}</span>
+                        </div>
+                    </div>
+                    <div className='invite-people-link-section'>
+                        <div>Send a server invite link to a friend</div>
+                        <div className='invite-people-link-input-ctn'>
+                            <input
+                                spellCheck='false'
+                                readOnly='true'
+                                value={inviteUrl}
+                            />
+                            <button onClick={e => copyHandler(e)}>Copy</button>
+                        </div>
+                        <div className='invite-people-link-footer'>
+                            Your invite link expires in {expTimeFrame}.
+                            <span
+                                onClick={() => setForm('link-settings')}
+                                className=''
+                            > Edit invite link.</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className='invite-people-link-section'>
-                <div>Send a server invite link to a friend</div>
-                <div className='invite-people-link-input-ctn'>
-                    <input
-                        spellCheck='false'
-                        readOnly='true'
-                        value={inviteUrl}
-                    />
-                    <button onClick={e => copyHandler(e)}>Copy</button>
+            }
+            {form === 'link-settings' &&
+                <div className='invite-people'>
+                    <div className='invite-people-header'>
+                        <div>Server invite link settings</div>
+                    </div>
+                    <div>
+                        <div>
+                            <div>Expire after</div>
+                            <select>
+                                <option>30 minutes</option>
+                                <option>1 hours</option>
+                                <option>6 hours</option>
+                                <option>12 hours</option>
+                                <option>1 day</option>
+                                <option>7 days</option>
+                                <option>Never</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div>Max number of uses</div>
+                            <select>
+                                <option>No limit</option>
+                                <option>1 use</option>
+                                <option>5 uses</option>
+                                <option>10 uses</option>
+                                <option>25 uses</option>
+                                <option>50 uses</option>
+                                <option>100 uses</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className='create-channel-bottom-container'>
+                        <div onClick={() => setShowInviteModal(false)} className='create-channel-cancel'>
+                            Cancel
+                        </div>
+                        <div className='invite-people-submit-button' >
+                            Generate a New Link
+                        </div>
+                    </div>
                 </div>
-                <div className='invite-people-link-footer'>
-                    Your invite link expires in {expTimeFrame}. 
-                    <span 
-                    onClick={() => setForm('link-settings')}
-                    className=''
-                    > Edit invite link.</span>
-                </div>
-            </div>
-        </div>
+
+            }
+        </>
     );
 };
 
