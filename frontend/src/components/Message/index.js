@@ -6,7 +6,6 @@ import { useRef, useEffect } from 'react';
 const Message = ({ message, member, ref }) => {
     const divRef = useRef(null);
     
-    console.log(message);
     useEffect(() => {
         divRef.current.scrollIntoView();
     }, []);

@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import { deleteMember } from '../../store/servers';
 import { useDispatch, useSelector } from 'react-redux';
 import KickMemberModal from '../KickMemberModal';
-import Modal from '../../context/modal';
+import { Modal } from '../../context/modal';
 
 const MemberCard = ({ member, server }) => {
     const [rightMenu, setRightMenu] = useState(false);
-    const dispatch = useDispatch();
     const [clickCoords, setClickCoords] = useState({});
+    const [showKickModal, setShowKickModal] = useState();
+
     const ownerId = useSelector(state => state.sessionState.user.id);
 
     useEffect(() => {
@@ -30,7 +31,6 @@ const MemberCard = ({ member, server }) => {
 
     const rightClickHandler = (e) => {
         e.preventDefault();
-        const rightDropdown = document.getElementsByClassName('member-card-r-menu');
         const dropdownHeight = 44;
         const clientHeight = document.documentElement.clientHeight;
         const yPosition = e.pageY + dropdownHeight * 3 > clientHeight ? e.pageY - dropdownHeight : e.pageY
@@ -38,24 +38,25 @@ const MemberCard = ({ member, server }) => {
         setRightMenu(true);
     };
 
-    const kickHandler = () => {
-        const memberId = member.id;
-        const serverId = member.serverId;
-        dispatch(deleteMember({ memberId, serverId }));
-    };
-
     return (
-        <div onContextMenu={e => rightClickHandler(e)} key={member.id} className='member-card'>
-            <img src={member.User.profilePicture} alt='pfp' />
-            <div className='member-card-name'>{member.User.username}</div>
-            {rightMenu &&
-                <div className='member-card-r-menu' style={clickCoords}>
-                    {ownerId === server.ownerId && ownerId !== member.id &&
-                        <div onClick={() => kickHandler()} className='member-card-r-menu-item red'>Kick {member.User.username}</div>
-                    }
-                </div>
-            }
-        </div>
+        <>
+            <div onContextMenu={e => rightClickHandler(e)} key={member.id} className='member-card'>
+                <img src={member.User.profilePicture} alt='pfp' />
+                <div className='member-card-name'>{member.User.username}</div>
+                {rightMenu &&
+                    <div className='member-card-r-menu' style={clickCoords}>
+                        {ownerId === server.ownerId && ownerId !== member.id &&
+                            <div onClick={() => setShowKickModal(true)} className='member-card-r-menu-item red'>Kick {member.User.username}</div>
+                        }
+                    </div>
+                }
+                {showKickModal &&
+                    <Modal onclose={() => setShowKickModal(false)}>
+                        <KickMemberModal member={member} setShowKickModal={setShowKickModal} />
+                    </Modal>
+                }
+            </div>
+        </>
     );
 };
 

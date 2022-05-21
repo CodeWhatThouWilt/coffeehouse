@@ -1,9 +1,47 @@
 import './KickMemberModal.css';
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { deleteMember } from '../../store/servers';
 
-const KickMemberModal = () => {
+const KickMemberModal = ({ member, setShowKickModal }) => {
+    const [kickReason, setKickReason] = useState('');
+    const dispatch = useDispatch();
+
+    const clickHandler = () => {
+        const memberId = member.id;
+        const serverId = member.serverId;
+        dispatch(deleteMember({ memberId, serverId }))
+        .then(() => setShowKickModal(false));
+    };
 
     return (
-        <div>KickMemberModal</div>
+        <div className='kick-member-modal'>
+            <div className='kick-member-header'>Kick {member.User.username} from Server</div>
+            <div className='kick-member-body'>
+                <div>
+                    Are you sure you want to kick @{member.User.username} from
+                    the server? They will be able to rejoin again with
+                    a new invite.
+                </div>
+                <div>
+                    <label>Reason for kick</label>
+                    <textarea 
+                    maxLength={512} 
+                    value={kickReason}
+                    onChange={e => setKickReason(e.target.value)}
+                    />
+                    <span>{512 - kickReason.length}</span>
+                </div>
+            </div>
+            <div className='delete-server-bottom'>
+                <div onClick={() => setKickReason(false)} className='delete-server-cancel'>
+                    Cancel
+                </div>
+                <button onClick={() => clickHandler()} className='kick-member-del-btn'>
+                    Kick
+                </button>
+            </div>
+        </div>
     );
 };
 
