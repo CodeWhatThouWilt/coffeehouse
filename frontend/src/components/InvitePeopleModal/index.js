@@ -1,5 +1,5 @@
 import './InvitePeopleModal.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { csrfFetch } from '../../store/csrf';
 
 const InvitePeople = ({ server, showInviteModal }) => {
@@ -40,6 +40,10 @@ const InvitePeople = ({ server, showInviteModal }) => {
         };
     };
 
+    const copyHandler = () => {
+        navigator.clipboard.writeText(inviteUrl);
+    };
+
     return (
         <div className='invite-people'>
             <div className='invite-people-header'>
@@ -56,8 +60,8 @@ const InvitePeople = ({ server, showInviteModal }) => {
                     spellCheck='false'
                     readOnly='true'
                     value={inviteUrl}
-                    ref='linkArea'
                 />
+                <button onClick={() => copyHandler()}>Copy</button>
                 </div>
             </div>
         </div>
