@@ -43,7 +43,7 @@ const SidebarServerPanel = () => {
                 </div>
                 {showDropdown &&
                     <div className='sidebar-server-panel-dropdown-container'>
-                        <div onClick={() => setShowSettingsModal(true)} className='sidebar-server-panel-dropdown-item'>
+                        <div onClick={() => setShowInviteModal(true)} className='sidebar-server-panel-dropdown-item'>
                             Invite People
                             <i className="fa-solid fa-user-plus" />
                         </div>
@@ -71,9 +71,11 @@ const SidebarServerPanel = () => {
                     <LeaveServerModal server={server} setShowLeaveModal={setShowLeaveModal} />
                 </Modal>
             }
-            <Modal onClose={() => setShowInviteModal(false)} >
-                <InvitePeople setShowInviteModal={setShowInviteModal} server={server} />
-            </Modal>
+            {showInviteModal &&
+                <Modal onClose={() => setShowInviteModal(false)} >
+                    <InvitePeople setShowInviteModal={setShowInviteModal} server={server} />
+                </Modal>
+            }
         </>
     );
 };

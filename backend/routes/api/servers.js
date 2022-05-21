@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const { Server, Channel, Member, Message, User, Invite } = require('../../db/models');
+const { Server, Channel, Member, Message, User, ServerInvite } = require('../../db/models');
 const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -282,9 +282,9 @@ router.post('/:serverId(\\d+)/invites', requireAuth, asyncHandler(async(req, res
 
     const date = new Date();
     const nums = date.getTime();
-    const path = '' + nums + serverId + uses + expiration;
+    const path = 'inv' + nums + serverId + (expiration || '');
 
-    const invite = await Invite.create({
+    const invite = await ServerInvite.create({
         serverId,
         expiration,
         maxUses,
