@@ -1,0 +1,38 @@
+.invite-people {
+    background-color: #36393f;
+    width: 440px;
+    border-radius: 4px;
+}
+
+.invite-people-header {
+    padding: 16px;
+}
+
+.invite-people-header div:first-child {
+    margin-bottom: 4px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.invite-people-channel {
+    font-size: 16px;
+    line-height: 20px;
+    color: #b9bbbe;
+    margin-bottom: 4px;
+}
+
+.invite-people-hashtag {
+    margin: 4px 8px 0px 0px;
+}
+
+.invite-people-link-section div:first-child {
+    padding: 0px 16px 16px 16px;
+    color: #dcddde;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+}

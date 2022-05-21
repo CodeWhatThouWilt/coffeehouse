@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const { Server, Channel, Member, Message, User } = require('../../db/models');
+const { Server, Channel, Member, Message, User, Invite } = require('../../db/models');
 const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -275,6 +275,23 @@ router.delete('/:serverId(\\d+)/members/:memberId(\\d+)', requireAuth, asyncHand
         return res.json({ serverId, userId: member.userId })
     }
 
+}));
+
+router.post('/:serverId(\\d+)/invites', requireAuth, asyncHandler(async(req, res) => {
+    const { serverId, expiration, maxUses } = req.body;
+
+    const date = new Date();
+    const nums = date.getTime();
+    const path = '' + nums + serverId + uses + expiration;
+
+    const invite = await Invite.create({
+        serverId,
+        expiration,
+        maxUses,
+        link: path
+    });
+
+    return res.json(invite);
 }));
 
 

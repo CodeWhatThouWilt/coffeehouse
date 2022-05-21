@@ -5,11 +5,14 @@ import { useState, useEffect } from 'react';
 import { Modal } from '../../context/modal';
 import ServerSettings from '../ServerSettings';
 import LeaveServerModal from '../LeaveServerModal';
+import InvitePeople from '../InvitePeopleModal';
 
 const SidebarServerPanel = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [showSettingsModal, setShowSettingsModal] = useState(false);
     const [showLeaveModal, setShowLeaveModal] = useState(false);
+    const [showInviteModal, setShowInviteModal] = useState(false);
+
     const { serverId } = useParams();
     const servers = useSelector(state => state.serversState);
     const sessionUser = useSelector(state => state.sessionState.user);
@@ -40,6 +43,10 @@ const SidebarServerPanel = () => {
                 </div>
                 {showDropdown &&
                     <div className='sidebar-server-panel-dropdown-container'>
+                        <div onClick={() => setShowSettingsModal(true)} className='sidebar-server-panel-dropdown-item'>
+                            Invite People
+                            <i className="fa-solid fa-user-plus" />
+                        </div>
                         {owner === sessionUser.id &&
                             <div onClick={() => setShowSettingsModal(true)} className='sidebar-server-panel-dropdown-item'>
                                 Server Settings
@@ -64,6 +71,9 @@ const SidebarServerPanel = () => {
                     <LeaveServerModal server={server} setShowLeaveModal={setShowLeaveModal} />
                 </Modal>
             }
+            <Modal onClose={() => setShowInviteModal(false)} >
+                <InvitePeople setShowInviteModal={setShowInviteModal} server={server} />
+            </Modal>
         </>
     );
 };

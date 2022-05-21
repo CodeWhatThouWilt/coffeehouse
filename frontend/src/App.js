@@ -21,6 +21,8 @@ function App() {
       .then(() => setIsLoaded(true));
   }, [dispatch]);
 
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
   return (
     <>
       {/* <Navigation isLoaded={isLoaded} /> */}
