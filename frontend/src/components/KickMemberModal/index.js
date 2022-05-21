@@ -34,7 +34,7 @@ const KickMemberModal = ({ member, setShowKickModal }) => {
                 </div>
             </div>
             <div className='delete-server-bottom'>
-                <div onClick={() => setKickReason(false)} className='delete-server-cancel'>
+                <div onClick={() => setShowKickModal(false)} className='delete-server-cancel'>
                     Cancel
                 </div>
                 <button onClick={() => clickHandler()} className='kick-member-del-btn'>

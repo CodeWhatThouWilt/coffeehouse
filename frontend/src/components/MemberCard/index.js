@@ -50,12 +50,12 @@ const MemberCard = ({ member, server }) => {
                         }
                     </div>
                 }
-                {showKickModal &&
-                    <Modal onclose={() => setShowKickModal(false)}>
-                        <KickMemberModal member={member} setShowKickModal={setShowKickModal} />
-                    </Modal>
-                }
             </div>
+            {showKickModal &&
+                <Modal onClose={() => setShowKickModal(false)}>
+                    <KickMemberModal member={member} setShowKickModal={setShowKickModal} />
+                </Modal>
+            }
         </>
     );
 };
