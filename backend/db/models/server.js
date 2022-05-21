@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     Server.hasMany(models.Channel, { foreignKey: 'serverId', onDelete: 'cascade', hooks: true });
     Server.hasMany(models.Member, { foreignKey: 'serverId', onDelete: 'cascade', hooks: true });
     Server.hasMany(models.Message, { foreignKey: 'serverId', onDelete: 'cascade', hooks: true });
+    Server.hasMany(models.ServerInvite, { foreignKey: 'serverId', onDelete: 'cascade', hooks: true });
   };
   return Server;
 };
