@@ -4,16 +4,17 @@ import { csrfFetch } from '../../store/csrf';
 
 const InvitePeople = ({ server, showInviteModal }) => {
     const [form, setForm] = useState('invite');
-    const [inviteUrl, setInviteUrl] = useState();
+    const [inviteUrl, setInviteUrl] = useState('');
     const [maxUses, setMaxUses] = useState(0);
     const [expiration, setExpiration] = useState();
+    const [expTimeFrame, setExpTimeFrame] = useState('7 days');
     const [isLoaded, setIsLoaded] = useState(false);
     const [firstChannel, setFirstChannel] = useState();
 
-    
+
     useEffect(() => {
         if (!inviteUrl) {
-            
+
             for (const channel in server.Channels) {
                 setFirstChannel(server.Channels[channel]);
                 break;
@@ -40,8 +41,37 @@ const InvitePeople = ({ server, showInviteModal }) => {
         };
     };
 
-    const copyHandler = () => {
+    const copyHandler = (e) => {
         navigator.clipboard.writeText(inviteUrl);
+        e.target.innerHTML = 'Copied';
+        e.target.style.backgroundColor = 'rgb(45, 125, 70)';
+        setTimeout(() => {
+            e.target.innerHTML = 'Copy';
+            e.target.style.backgroundColor = 'rgb(88, 101, 242)';
+        }, 1000);
+    };
+
+    function expirationHandler(timeframe) {
+        const date = new Date();
+        const space = timeframe.indexOf(' ');
+        switch (timeframe) {
+
+            case timeframe === '30 minutes':
+                return date.setMinutes(date.getMinutes() + 30);
+
+            case timeframe.endsWith('hours') || timeframe.endsWith('hour'):
+                const hours = timeframe.slice(space);
+                if (hours !== 1 || hours !== 6 || hours !== 12) return null;
+                return date.setHours(date.getHours() + hours);
+
+            case timeframe.endsWith('day') || timeframe.endsWith('days'):
+                const days = timeframe.slice(space);
+                if (days !== 1 || days !== 7) return null;
+                return date.setDate(date.getDate() + days);
+        
+            default:
+                return null;
+        };
     };
 
     return (
@@ -55,13 +85,20 @@ const InvitePeople = ({ server, showInviteModal }) => {
             </div>
             <div className='invite-people-link-section'>
                 <div>Send a server invite link to a friend</div>
-                <div>
-                <input
-                    spellCheck='false'
-                    readOnly='true'
-                    value={inviteUrl}
-                />
-                <button onClick={() => copyHandler()}>Copy</button>
+                <div className='invite-people-link-input-ctn'>
+                    <input
+                        spellCheck='false'
+                        readOnly='true'
+                        value={inviteUrl}
+                    />
+                    <button onClick={e => copyHandler(e)}>Copy</button>
+                </div>
+                <div className='invite-people-link-footer'>
+                    Your invite link expires in {expTimeFrame}. 
+                    <span 
+                    onClick={() => setForm('link-settings')}
+                    className=''
+                    > Edit invite link.</span>
                 </div>
             </div>
         </div>

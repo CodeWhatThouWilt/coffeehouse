@@ -27,12 +27,72 @@
     margin: 4px 8px 0px 0px;
 }
 
-.invite-people-link-section div:first-child {
+.invite-people-link-section {
+    width: 100%;
     padding: 0px 16px 16px 16px;
+}
+
+.invite-people-link-section div:first-child {
+    /* padding: 0px 16px 16px 16px; */
     color: #dcddde;
     text-transform: uppercase;
     margin-bottom: 8px;
     font-size: 12px;
     line-height: 16px;
     font-weight: 500;
+}
+
+.invite-people-link-input-ctn {
+    width: calc(100% - 32px);
+    background-color: #202225;
+    height: 40px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.invite-people-link-input-ctn input {
+    color: #dcddde;
+    background-color: #202225;
+    font-size: 16px;
+    border-radius: 3px;
+    padding: 10px;
+    border: none;
+    width: 309px;
+    height: 20px;
+}
+
+.invite-people-link-input-ctn button {
+    color: #dcddde;
+    background-color: rgb(88, 101, 242);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 3px;
+    /* padding: 2px 16px; */
+    margin-right: 4px;
+    border: none;
+    width: 73px;
+    height: 28px;
+    text-align: center;
+    transition: background-color .17s ease, color .17s ease;
+    cursor: pointer;
+}
+
+.invite-people-link-footer {
+    margin-top: 8px;
+}
+
+.invite-people-link-footer {
+    font-size: 12px;
+    color: rgb(185, 187, 190);
+}
+
+.invite-people-link-footer span {
+    font-size: 12px;
+    color: rgb(0, 175, 244);
+    cursor: pointer;
+}
+
+.invite-people-link-footer span:hover {
+    text-decoration: underline;
 }
