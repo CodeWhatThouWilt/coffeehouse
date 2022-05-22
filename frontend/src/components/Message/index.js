@@ -13,10 +13,10 @@ const Message = ({ message, member, ref }) => {
     
     return (
         <div ref={divRef} className='message-container'>
-            <img src={message.User.profilePicture} alt='pfp' />
+            <img src={member.User.profilePicture || message.User.profilePicture} alt='pfp' />
             <div className='message-text-container'>
                 <div className='message-username'>
-                    {message.User.username}
+                    {member.User.username ||message.User.username}
                 </div>
                 <div className='message-content'>
                     {message.content}

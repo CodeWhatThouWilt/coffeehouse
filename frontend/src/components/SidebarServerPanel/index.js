@@ -54,7 +54,7 @@ const SidebarServerPanel = () => {
                             </div>
                         }
                         {owner !== sessionUser.id &&
-                            <div onClick={() => setShowLeaveModal(true)}>
+                            <div onClick={() => setShowLeaveModal(true)} className='sidebar-server-panel-dropdown-item'>
                                 Leave Server
                             </div>
                         }

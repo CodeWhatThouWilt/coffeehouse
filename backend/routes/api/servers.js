@@ -263,14 +263,14 @@ router.get('/:serverId(\\d+)/members', requireAuth, asyncHandler(async(req, res)
 router.delete('/:serverId(\\d+)/members/:memberId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
     const { memberId, serverId } = req.params;
     const userId = req.user.id;
-
+    
     const member = await Member.findByPk(memberId, {
         include: { model: Server }
     });
 
     const serverOwner = member.dataValues.Server.dataValues.ownerId;
     
-    if (userId === serverOwner) {
+    if (userId !== serverOwner) {
         await member.destroy();
         return res.json({ serverId, userId: member.userId })
     }
