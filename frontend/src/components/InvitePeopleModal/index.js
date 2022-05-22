@@ -6,31 +6,28 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
     const [form, setForm] = useState('invite');
     const [inviteUrl, setInviteUrl] = useState('');
     const [maxUses, setMaxUses] = useState(0);
-    const [expiration, setExpiration] = useState();
     const [expTimeFrame, setExpTimeFrame] = useState('7 days');
-    const [isLoaded, setIsLoaded] = useState(false);
+    // const [isLoaded, setIsLoaded] = useState(false);
     const [firstChannel, setFirstChannel] = useState();
 
+    const getLink = async () => {
+        const expiration = expirationHandler(expTimeFrame);
+        const res = await csrfFetch(`/api/servers/${server.id}/invites`, {
+            method: 'POST',
+            body: JSON.stringify({ serverId: server.id, maxUses, expiration })
+        });
+        const inv = await res.json();
+        setInviteUrl(domainName() + inv.link);
+    };
 
     useEffect(() => {
         if (!inviteUrl) {
-
             for (const channel in server.Channels) {
                 setFirstChannel(server.Channels[channel]);
                 break;
             };
-
-            const serverId = server.id;
-            const getLink = async () => {
-                const res = await csrfFetch(`/api/servers/${server.id}/invites`, {
-                    method: 'POST',
-                    body: JSON.stringify({ serverId, maxUses, expiration })
-                });
-                const inv = await res.json();
-                setInviteUrl(domainName() + inv.link);
-            };
-            getLink();
-        }
+            getLink('7 days');
+        };
     }, []);
 
     function domainName() {
@@ -51,27 +48,37 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
         }, 1000);
     };
 
-    function expirationHandler(timeframe) {
+    function expirationHandler(timeFrame) {
         const date = new Date();
-        const space = timeframe.indexOf(' ');
-        switch (timeframe) {
+        const space = timeFrame.indexOf(' ');
+        if (timeFrame === '30 minutes') {
+            date.setMinutes(date.getMinutes() + 30);
+            console.log(date);
+            return date;
 
-            case timeframe === '30 minutes':
-                return date.setMinutes(date.getMinutes() + 30);
+        } else if (timeFrame.endsWith('hour') || timeFrame.endsWith('hours')) {
+            const hoursStr = timeFrame.slice(0, space);
+            const hours = parseInt(hoursStr, 10);
+            if (hours !== 1 && hours !== 6 && hours !== 12) return undefined;
+            date.setHours(date.getHours() + hours);
+            return date;
 
-            case timeframe.endsWith('hours') || timeframe.endsWith('hour'):
-                const hours = timeframe.slice(space);
-                if (hours !== 1 || hours !== 6 || hours !== 12) return null;
-                return date.setHours(date.getHours() + hours);
+        } else if (timeFrame.endsWith('day') || timeFrame.endsWith('days')) {
+            const daysStr = timeFrame.slice(0, space);
+            const days = parseInt(daysStr, 10);
+            if (days !== 1 && days !== 7) return undefined;
+            date.setDate(date.getDate() + days);
+            return date;
 
-            case timeframe.endsWith('day') || timeframe.endsWith('days'):
-                const days = timeframe.slice(space);
-                if (days !== 1 || days !== 7) return null;
-                return date.setDate(date.getDate() + days);
-
-            default:
-                return null;
+        } else {
+            return undefined;
         };
+    };
+
+    const newLinkHandler = () => {
+        getLink()
+        .then(() => setForm('invite'));
+        console.log(inviteUrl);
     };
 
     return (
@@ -89,18 +96,18 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
                         <div>Send a server invite link to a friend</div>
                         <div className='invite-people-link-input-ctn'>
                             <input
-                                spellCheck='false'
-                                readOnly='true'
+                                spellCheck={false}
+                                readOnly={true}
                                 value={inviteUrl}
                             />
                             <button onClick={e => copyHandler(e)}>Copy</button>
                         </div>
                         <div className='invite-people-link-footer'>
-                            Your invite link expires in {expTimeFrame}.
+                            Your invite link expires in {expTimeFrame}.&nbsp;
                             <span
                                 onClick={() => setForm('link-settings')}
                                 className=''
-                            > Edit invite link.</span>
+                            >Edit invite link.</span>
                         </div>
                     </div>
                 </div>
@@ -113,26 +120,32 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
                     <div>
                         <div>
                             <div>Expire after</div>
-                            <select>
-                                <option>30 minutes</option>
-                                <option>1 hours</option>
-                                <option>6 hours</option>
-                                <option>12 hours</option>
-                                <option>1 day</option>
-                                <option>7 days</option>
-                                <option>Never</option>
+                            <select
+                                value={expTimeFrame}
+                                onChange={e => setExpTimeFrame(e.target.value)}
+                            >
+                                <option value='30 minutes'>30 minutes</option>
+                                <option value='1 hour'>1 hour</option>
+                                <option value='6 hours'>6 hours</option>
+                                <option value='12 hours'>12 hours</option>
+                                <option value='1 day'>1 day</option>
+                                <option value='7 days'>7 days</option>
+                                <option value={undefined}>Never</option>
                             </select>
                         </div>
                         <div>
                             <div>Max number of uses</div>
-                            <select>
-                                <option>No limit</option>
-                                <option>1 use</option>
-                                <option>5 uses</option>
-                                <option>10 uses</option>
-                                <option>25 uses</option>
-                                <option>50 uses</option>
-                                <option>100 uses</option>
+                            <select
+                            value={maxUses}
+                            onChange={e => setMaxUses(e.target.value)}
+                            >
+                                <option value={0}>No limit</option>
+                                <option value={1}>1 use</option>
+                                <option value={5}>5 uses</option>
+                                <option value={10}>10 uses</option>
+                                <option value={25}>25 uses</option>
+                                <option value={50}>50 uses</option>
+                                <option value={100}>100 uses</option>
                             </select>
                         </div>
                     </div>
@@ -140,7 +153,7 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
                         <div onClick={() => setShowInviteModal(false)} className='create-channel-cancel'>
                             Cancel
                         </div>
-                        <div className='invite-people-submit-button' >
+                        <div onClick={() => newLinkHandler()} className='invite-people-submit-button' >
                             Generate a New Link
                         </div>
                     </div>

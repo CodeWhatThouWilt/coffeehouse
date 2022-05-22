@@ -282,7 +282,7 @@ router.post('/:serverId(\\d+)/invites', requireAuth, asyncHandler(async(req, res
 
     const date = new Date();
     const nums = date.getTime();
-    const path = 'inv' + nums + serverId + (expiration || '');
+    const path = 'inv' + nums + serverId + (maxUses || '');
 
     const invite = await ServerInvite.create({
         serverId,
