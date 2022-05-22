@@ -228,7 +228,7 @@ router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, a
 
 router.post('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async (req, res) => {
     const { channelId, serverId } = req.params;
-    const { content } = req.body;
+    const { content, profilePicture, username } = req.body;
     const userId = req.user.id;
 
     const message = await Message.create({
@@ -236,9 +236,9 @@ router.post('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, 
         serverId,
         userId,
         content
-    }, {
-        include: User
     });
+
+    message.dataValues.User = { profilePicture, username };
 
     return res.json(message);
 }));

@@ -19,7 +19,9 @@ const MessageInputBar = ({ channel, showMembers }) => {
         dispatch(createMessage({
             serverId,
             channelId,
-            content
+            content,
+            profilePicture: user.profilePicture,
+            username: user.username
         }))
             .then(res => socket.emit(`chat`, res))
             .then(() => setContent(""))
