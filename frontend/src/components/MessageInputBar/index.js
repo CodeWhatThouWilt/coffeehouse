@@ -14,7 +14,7 @@ const MessageInputBar = ({ channel, showMembers }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if (content.length === 0 || content.length > 2000) return
+        if (content.length === 0 || content.length > 2000) return;
         socket = io();
         dispatch(createMessage({
             serverId,
@@ -24,14 +24,14 @@ const MessageInputBar = ({ channel, showMembers }) => {
             username: user.username
         }))
             .then(res => socket.emit(`chat`, res))
-            .then(() => setContent(""))
+            .then(() => setContent(""));
     };
 
     const stylingHandler = () => {
         if (showMembers) {
-            return 'message-input-bar-container-show-members'
+            return 'message-input-bar-container-show-members';
         } else {
-            return 'message-input-bar-container'
+            return 'message-input-bar-container';
         };
     };
 

@@ -1,7 +1,7 @@
 import './Navbar.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Redirect, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Modal } from '../../context/modal';
 import CreateServerForm from '../CreateServerForm';
 import logo from '../../assets/coffeehouse-logo.svg';
@@ -28,7 +28,7 @@ const Navbar = () => {
             return `/channels/${serverId}/${serverChannels[0].id}`
         } else {
             return `/channels/${serverId}`
-        }
+        };
     };
 
     if (!currentServer) {
@@ -39,8 +39,8 @@ const Navbar = () => {
         if (hasChannels) {
             const firstChannel = Object.values(server.Channels)[0];
             <Redirect to={`/channels/${currentServer}/${firstChannel.id}`} />
-        }
-    }
+        };
+    };
 
     return (
         <>
@@ -58,7 +58,7 @@ const Navbar = () => {
                         <div className='navbar-icon-notif-container'>
                             <div className='navbar-icon-notif'></div>
                         </div>
-                        <NavLink to={routeHandler(server.id)}>
+                        <NavLink  to={routeHandler(server.id)}>
                             <img src={server.iconURL} alt='icon' className='navbar-server-icon' />
                         </NavLink>
                     </div>

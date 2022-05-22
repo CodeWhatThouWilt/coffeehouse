@@ -53,7 +53,6 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
         const space = timeFrame.indexOf(' ');
         if (timeFrame === '30 minutes') {
             date.setMinutes(date.getMinutes() + 30);
-            console.log(date);
             return date;
 
         } else if (timeFrame.endsWith('hour') || timeFrame.endsWith('hours')) {
@@ -78,7 +77,6 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
     const newLinkHandler = () => {
         getLink()
             .then(() => setForm('invite'));
-        console.log(inviteUrl);
     };
 
     return (
