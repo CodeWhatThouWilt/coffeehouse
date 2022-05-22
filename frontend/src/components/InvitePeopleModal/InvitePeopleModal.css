@@ -96,3 +96,37 @@
 .invite-people-link-footer span:hover {
     text-decoration: underline;
 }
+
+.invite-people-link-section select {
+    color: #dcddde;
+    background-color: #202225;
+    font-size: 16px;
+    border-radius: 3px;
+    padding: 8px 8px 8px 12px;
+    border: none;
+    width: calc(100% - 32px);
+    height: 100%;
+    outline: none;
+}
+
+.invite-people-link-section option {
+    color: #dcddde;
+    background-color: #202225;
+    font-size: 16px;
+    border-radius: 3px;
+    padding: 8px 8px 8px 12px;
+    border: none;
+    width: calc(100% - 32px);
+    height: 100%;
+}
+
+.invite-people-submit-button {
+    border: none;
+    background-color: rgb(88, 101, 242);
+    padding: 2px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-radius: 3px;
+    color: #fff;
+}

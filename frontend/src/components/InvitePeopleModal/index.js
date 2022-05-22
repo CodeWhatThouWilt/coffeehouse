@@ -77,7 +77,7 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
 
     const newLinkHandler = () => {
         getLink()
-        .then(() => setForm('invite'));
+            .then(() => setForm('invite'));
         console.log(inviteUrl);
     };
 
@@ -117,29 +117,31 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
                     <div className='invite-people-header'>
                         <div>Server invite link settings</div>
                     </div>
-                    <div>
+                    <div className='invite-people-link-section'>
                         <div>
                             <div>Expire after</div>
                             <select
+                            id='expire'
                                 value={expTimeFrame}
                                 onChange={e => setExpTimeFrame(e.target.value)}
                             >
-                                <option value='30 minutes'>30 minutes</option>
-                                <option value='1 hour'>1 hour</option>
-                                <option value='6 hours'>6 hours</option>
-                                <option value='12 hours'>12 hours</option>
-                                <option value='1 day'>1 day</option>
-                                <option value='7 days'>7 days</option>
-                                <option value={undefined}>Never</option>
+                                    <option for='expire' value='30 minutes'>30 minutes</option>
+                                    <option value='1 hour'>1 hour</option>
+                                    <option value='6 hours'>6 hours</option>
+                                    <option value='12 hours'>12 hours</option>
+                                    <option value='1 day'>1 day</option>
+                                    <option value='7 days'>7 days</option>
+                                    <option value={undefined}>Never</option>
                             </select>
                         </div>
                         <div>
                             <div>Max number of uses</div>
                             <select
-                            value={maxUses}
-                            onChange={e => setMaxUses(e.target.value)}
+                                id='max-uses'
+                                value={maxUses}
+                                onChange={e => setMaxUses(e.target.value)}
                             >
-                                <option value={0}>No limit</option>
+                                <option for='max-uses' value={0}>No limit</option>
                                 <option value={1}>1 use</option>
                                 <option value={5}>5 uses</option>
                                 <option value={10}>10 uses</option>
@@ -153,9 +155,9 @@ const InvitePeople = ({ server, setShowInviteModal }) => {
                         <div onClick={() => setShowInviteModal(false)} className='create-channel-cancel'>
                             Cancel
                         </div>
-                        <div onClick={() => newLinkHandler()} className='invite-people-submit-button' >
+                        <button onClick={() => newLinkHandler()} className='invite-people-submit-button' >
                             Generate a New Link
-                        </div>
+                        </button>
                     </div>
                 </div>
 
