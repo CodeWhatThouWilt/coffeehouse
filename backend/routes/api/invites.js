@@ -4,13 +4,11 @@ const asyncHandler = require('express-async-handler');
 const { Server, Channel, Member, Message, User, ServerInvite } = require('../../db/models');
 const { Op } = require('sequelize');
 const { requireAuth, restoreUser } = require('../../utils/auth');
-const { handleValidationErrors } = require('../../utils/validation');
-const { check } = require('express-validator');
-const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss3');
 
 router.post('/:link', requireAuth, asyncHandler(async(req, res) => {
     const { link } = req.params;
     const userId = req.user.id;
+    const date = new Date();
 
     const notFound = () => {
         const err = new Error('Not found');
@@ -22,7 +20,8 @@ router.post('/:link', requireAuth, asyncHandler(async(req, res) => {
     
     const invite = await ServerInvite.findOne({
         where: {
-            link
+            link,
+            expiration: { [Op.gte]: date }
         }
     });
 

@@ -19,7 +19,7 @@ const InviteHandling = () => {
                         body: JSON.stringify({ user })
                     })
                     const isValid = await res.json();
-                    return history.push(`/${isValid.member.serverId}`);
+                    return history.push(`/channels/${isValid.member.serverId}`);
                     
                 } catch (error) {
                     
@@ -32,7 +32,9 @@ const InviteHandling = () => {
 
 
     return (
-        <div>InviteHandling</div>
+        <>
+        Loading
+        </>
     );
 };
 
