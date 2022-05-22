@@ -10,7 +10,7 @@ import MainContent from './components/MainContent';
 import Sidebar from './components/Sidebar';
 import { Redirect } from 'react-router-dom';
 import SplashPage from './components/SplashPage';
-
+import InviteHandling from './components/InviteHandling';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +41,10 @@ function App() {
 
           <Route path='/@me'>
             <UserApplication />
+          </Route>
+
+          <Route path={`/inv` + ':invite'}>
+            <InviteHandling />
           </Route>
 
           <Route path="/">
