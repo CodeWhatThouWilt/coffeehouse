@@ -1,7 +1,9 @@
 import './InviteHandling.css';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
+import InvalidInvite from '../InvalidInvite';
+import { csrfFetch } from '../../store/csrf';
 
 const InviteHandling = () => {
     const user = useSelector(state => state.sessionState.user.id);
@@ -10,9 +12,14 @@ const InviteHandling = () => {
     useEffect(() => {
         if (user) {
             const joinServer = async() => {
-                const res = await fetch(`/api/invites/${inviteLink}`);
-
+                const res = await csrfFetch(`/api/invites/${inviteLink}`, {
+                    method: 'POST',
+                    body: JSON.stringify({ user })
+                });
+                const isValid = await res.json();
+                console.log(isValid);
             };
+            joinServer();
         };
 
     }, [])
