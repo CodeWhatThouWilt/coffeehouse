@@ -14,7 +14,8 @@ module.exports = {
       const serverId = Math.ceil(Math.random() * serversAmount);
       const createdAt = new Date();
       const updatedAt = new Date();
-      channelsArr.push({
+
+      serverId !== 4 && channelsArr.push({
         name,
         serverId,
         createdAt,
@@ -74,6 +75,12 @@ module.exports = {
       {
         name: 'Just chat',
         serverId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'general',
+        serverId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },

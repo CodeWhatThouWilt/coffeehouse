@@ -46,6 +46,13 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        name: "Linkedin",
+        ownerId: 2,
+        iconURL: "https://coffeehouse-app.s3.amazonaws.com/1653330348259.png",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ...serversArr], {});
   },
 

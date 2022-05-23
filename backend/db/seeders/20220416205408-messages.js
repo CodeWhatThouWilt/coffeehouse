@@ -23,7 +23,11 @@ module.exports = {
         const serverId = serverIds[Math.floor(Math.random() * serverIds.length)];
         const channels = await Channel.findAll({
           where: {
-            serverId: serverId
+            [Op.or] : [
+              { serverId: serverId },
+              { serverId: {[Op.not]: 4}}
+
+            ]
           }
         });
         const channelIds = channels.map(channel => channel.id);
