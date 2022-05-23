@@ -15,12 +15,13 @@ const MainContent = () => {
     const [showMembers, setShowMembers] = useState(false);
     const { serverId, channelId } = useParams();
     const dispatch = useDispatch();
-
+    
     const servers = useSelector(state => state.serversState);
     const server = servers[serverId];
     const channel = server.Channels[channelId];
     const messages = channel.Messages;
-    const members = server.Members;
+    // const members = server.Members;
+    const [members, setMembers] = useState(server.Members);
 
     useEffect(() => {
         dispatch(getServerMembers(serverId))
@@ -28,18 +29,20 @@ const MainContent = () => {
             .then(() => setIsLoaded(true))
     }, [dispatch, serverId, channelId]);
 
-    // useEffect(() => {
-    //     socket = io();
-    //     // setChannelMessages(messagesArr);
+    useEffect(() => {
+        socket = io();
+        // setChannelMessages(messagesArr);
 
-    //     socket.on(serverId, member => {
-    //         members[member.userId] = member;
-    //     });
+        socket.on(serverId, member => {
+            const updatedMembers = members;
+            updatedMembers[member.userId] = member;
+            setMembers(channelMembers => updatedMembers);
+        });
 
-    //     return (() => {
-    //         socket.disconnect();
-    //     });
-    // }, [serverId]);
+        return (() => {
+            socket.disconnect();
+        });
+    }, [serverId, members]);
 
 
     return (

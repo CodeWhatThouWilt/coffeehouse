@@ -5,6 +5,8 @@ import InvalidInvite from '../InvalidInvite';
 import { csrfFetch } from '../../store/csrf';
 import LoginFormPage from '../LoginFormPage';
 import SignupFormPage from '../SignupFormPage';
+import { io } from 'socket.io-client';
+let socket;
 
 const InviteHandling = ({ inviteProp }) => {
     const [errorStatus, setErrorStatus] = useState();
@@ -20,9 +22,10 @@ const InviteHandling = ({ inviteProp }) => {
                 const res = await csrfFetch(`/api/invites/${inviteLink}`, {
                     method: 'POST'
                 })
-                const isValid = await res.json();
-                return history.push(`/channels/${isValid.member.serverId}`);
-
+                const { member, newMember} = await res.json();
+                history.push(`/channels/${member.serverId}`);
+                socket = io();
+                return socket.emit('members', member);
             } catch (error) {
                 if (error.status === 401) {
                     setForm('login')

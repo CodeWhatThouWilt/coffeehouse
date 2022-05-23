@@ -58,6 +58,7 @@ app.use((req, res, next) => {
   return next()
 });
 
+app.use(routes);
 
 io.on('connection', socket => {
 
@@ -73,17 +74,18 @@ io.on('connection', socket => {
 
   // listen for chat
   socket.on('chat', (message) => {
-    console.log("############", message);
     socket.join(message.channelId);
     io.emit(message.channelId, message);
     // io.to(message.channelId).emit(message);
   });
+
+  socket.on('members', (member) => {
+    socket.join(member.serverId);
+    io.emit(member.serverId, member);
+  });
 });
 
 // const namespaces = io._nsps.keys();
-
-
-app.use(routes);
 
 
 app.use((_req, _res, next) => {
