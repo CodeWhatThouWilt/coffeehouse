@@ -1,39 +1,49 @@
 import './InviteHandling.css';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import InvalidInvite from '../InvalidInvite';
 import { csrfFetch } from '../../store/csrf';
+import LoginFormPage from '../LoginFormPage';
+import SignupFormPage from '../SignupFormPage';
 
-const InviteHandling = () => {
-    const user = useSelector(state => state.sessionState.user.id);
+const InviteHandling = ({ inviteProp }) => {
+    const [errorStatus, setErrorStatus] = useState();
+    const [forceRender, setForceRender] = useState(false);
+    const [form, setForm] = useState();
     const inviteLink = 'inv' + useParams().invite;
+
     const history = useHistory();
 
     useEffect(() => {
-        if (user) {
-            const joinServer = async() => {
-                try {
-                    const res = await csrfFetch(`/api/invites/${inviteLink}`, {
-                        method: 'POST',
-                        body: JSON.stringify({ user })
-                    })
-                    const isValid = await res.json();
-                    return history.push(`/channels/${isValid.member.serverId}`);
-                    
-                } catch (error) {
-                    
-                }
+        const joinServer = async () => {
+            try {
+                const res = await csrfFetch(`/api/invites/${inviteLink}`, {
+                    method: 'POST'
+                })
+                const isValid = await res.json();
+                return history.push(`/channels/${isValid.member.serverId}`);
+
+            } catch (error) {
+                if (error.status === 401) {
+                    setForm('login')
+                } else if (error.status === 404) {
+                    setErrorStatus(404);
+                    return history.push('/login');
+                };
             };
-            joinServer();
         };
+        joinServer();
 
-    }, [])
-
+    }, [inviteLink, history, forceRender])
 
     return (
         <>
-        Loading
+            {form === 'login' &&
+                <LoginFormPage inviteLink={inviteLink} setForm={setForm} setForceRender={setForceRender}/>
+            }
+            {form === 'signup' &&
+                <SignupFormPage inviteLink={inviteLink} setForm={setForm} setForceRender={setForceRender}/>
+            }
         </>
     );
 };

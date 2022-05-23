@@ -115,9 +115,10 @@
     
 }
 
-.register-text a {
+.auth-form-link {
     color: #00AAf4;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .demo-user-button {

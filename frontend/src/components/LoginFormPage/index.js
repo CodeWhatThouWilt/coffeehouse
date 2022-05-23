@@ -2,17 +2,18 @@ import './LoginForm.css'
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { useHistory, Link, Redirect } from 'react-router-dom';
 import background from '../../assets/auth-background.svg';
 
-function LoginFormPage() {
+function LoginFormPage({ inviteLink, setForm, setForceRender }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector(state => state.sessionState.user);
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
-  if (sessionUser) return (
+  if (sessionUser && !inviteLink) return (
     <Redirect to="/channels" />
   );
 
@@ -20,10 +21,16 @@ function LoginFormPage() {
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
-      .then(() => <Redirect to='/channels' />)
-      .catch(async (res) => { //if there is an error, then skip the res.ok and get the response
-        const data = await res.json(); //parse the data again because we skipped the res.ok
-        if (data && data.errors) setErrors(data.errors); //set the new Errors
+      .then(() => {
+        if (inviteLink) {
+          setForceRender(true);
+        } else {
+          return history.push('/channels');
+        }
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
       });
   }
 
@@ -35,11 +42,19 @@ function LoginFormPage() {
       .then(() => <Redirect to='/channels' />);
   };
 
+  const linkHandler = () => {
+    if (inviteLink) {
+      return <span onClick={() => setForm('signup')} className='auth-form-link'>Register</span>
+    } else {
+      return <Link to='/signup' className='auth-form-link'>Register</Link>
+    };
+  };
+
   return (
     <div className="auth-background" style={{ backgroundImage: `url(${background})` }}>
       <Link to='/'>
         <div className='auth-home-button'>
-        Home
+          Home
         </div>
       </Link>
       <div className='auth-container'>
@@ -72,7 +87,7 @@ function LoginFormPage() {
             />
             <button type="submit">Login</button>
             <div className='login-bottom-container'>
-              <div className='register-text'>Need an account? <Link to='/signup'>Register</Link></div>
+              <div className='register-text'>Need an account? {linkHandler()}</div>
               <div onClick={e => demoUserHandler(e)} className='demo-user-button'>
                 demo user
               </div>
