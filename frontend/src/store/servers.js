@@ -232,7 +232,8 @@ export const getServerMembers = (serverId) => async(dispatch) => {
     
     if (res.ok) {
         const payload = await res.json();
-        dispatch(getMembers(payload))
+        dispatch(getMembers(payload));
+        return payload;
     };
 };
 

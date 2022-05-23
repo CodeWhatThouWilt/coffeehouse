@@ -22,10 +22,13 @@ const InviteHandling = ({ inviteProp }) => {
                 const res = await csrfFetch(`/api/invites/${inviteLink}`, {
                     method: 'POST'
                 })
-                const { member, newMember} = await res.json();
+                const { member, newMember } = await res.json();
                 history.push(`/channels/${member.serverId}`);
-                socket = io();
-                return socket.emit('members', member);
+
+                if (newMember) {
+                    socket = io();
+                    return socket.emit('members', member);
+                };
             } catch (error) {
                 if (error.status === 401) {
                     setForm('login')
@@ -42,10 +45,10 @@ const InviteHandling = ({ inviteProp }) => {
     return (
         <>
             {form === 'login' &&
-                <LoginFormPage inviteLink={inviteLink} setForm={setForm} setForceRender={setForceRender}/>
+                <LoginFormPage inviteLink={inviteLink} setForm={setForm} setForceRender={setForceRender} />
             }
             {form === 'signup' &&
-                <SignupFormPage inviteLink={inviteLink} setForm={setForm} setForceRender={setForceRender}/>
+                <SignupFormPage inviteLink={inviteLink} setForm={setForm} setForceRender={setForceRender} />
             }
         </>
     );

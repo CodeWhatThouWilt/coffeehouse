@@ -8,6 +8,7 @@ const { requireAuth, restoreUser } = require('../../utils/auth');
 router.post('/:link', requireAuth, asyncHandler(async (req, res, next) => {
     const { link } = req.params;
     const userId = req.user.id;
+    const user = req.user;
     const date = new Date();
 
     const notFound = () => {
@@ -42,6 +43,7 @@ router.post('/:link', requireAuth, asyncHandler(async (req, res, next) => {
             serverId: invite.serverId
         }
     });
+    
 
     if (member) return res.json({ newMember: false, member });
 
@@ -49,7 +51,8 @@ router.post('/:link', requireAuth, asyncHandler(async (req, res, next) => {
         userId,
         serverId: invite.serverId
     });
-
+    newMember.dataValues.User = user;
+    
     return res.json({ newMember: true, member: newMember });
 }));
 
