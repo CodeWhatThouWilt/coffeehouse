@@ -22,11 +22,11 @@ const MainContent = () => {
     const messages = channel.Messages;
     const members = server.Members;
 
-    // useEffect(() => {
-    //     dispatch(getServerMembers(serverId))
-    //         .then(() => dispatch(getChannelMessages({ serverId, channelId })))
-    //         .then(() => setIsLoaded(true))
-    // }, [dispatch, serverId, channelId]);
+    useEffect(() => {
+        dispatch(getServerMembers(serverId))
+            .then(() => dispatch(getChannelMessages({ serverId, channelId })))
+            .then(() => setIsLoaded(true))
+    }, [dispatch, serverId, channelId]);
 
     // useEffect(() => {
     //     socket = io();
