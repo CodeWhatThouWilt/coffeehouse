@@ -18,8 +18,8 @@ const routes = require('./routes'); //connects all the routes
 
 app.use(morgan('dev')); //for logging info about req and res
 app.use(cookieParser()); //for parsing cookies
-app.use(express.urlencoded({limit: '8mb', extended: false })); // parses incoming requests with urlencoded payloads
-app.use(express.json({limit: '8mb'})); //for parsing JSON bodies of req with content-type of application/json
+app.use(express.urlencoded({ limit: '8mb', extended: false })); // parses incoming requests with urlencoded payloads
+app.use(express.json({ limit: '8mb' })); //for parsing JSON bodies of req with content-type of application/json
 
 if (!isProduction) {
   // enable cors only in development
@@ -79,10 +79,18 @@ io.on('connection', socket => {
     // io.to(message.channelId).emit(message);
   });
 
-  socket.on('members', (member) => {
+  socket.on('member-join', (member) => {
+    member.action = 'join';
     socket.join(member.serverId);
     io.emit(member.serverId, member);
   });
+
+  socket.on('member-leave', member => {
+    member.action = 'leave';
+    socket.join(member.serverId);
+    io.emit(member.serverId, member);
+  });
+
 });
 
 // const namespaces = io._nsps.keys();

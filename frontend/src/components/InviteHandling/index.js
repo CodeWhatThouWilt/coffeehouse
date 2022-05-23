@@ -27,7 +27,7 @@ const InviteHandling = ({ inviteProp }) => {
 
                 if (newMember) {
                     socket = io();
-                    return socket.emit('members', member);
+                    return socket.emit('member-join', member);
                 };
             } catch (error) {
                 if (error.status === 401) {

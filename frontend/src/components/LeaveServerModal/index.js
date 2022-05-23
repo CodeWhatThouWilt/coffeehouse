@@ -2,6 +2,8 @@ import './LeaveServerModal.css';
 import { exitServer } from '../../store/servers';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { io } from 'socket.io-client';
+let socket;
 
 const LeaveServerModal = ({ server, setShowLeaveModal }) => {
     const dispatch = useDispatch();
@@ -15,7 +17,9 @@ const LeaveServerModal = ({ server, setShowLeaveModal }) => {
     const clickHandler = () => {
         dispatch(exitServer({ serverId: server.id, memberId }));
         history.push('/@me');
-    }
+        socket = io();
+        socket.emit('member-leave', member);
+    };
 
     return (
         <div className='leave-server-container'>
