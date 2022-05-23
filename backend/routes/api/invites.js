@@ -5,7 +5,7 @@ const { Server, Channel, Member, Message, User, ServerInvite } = require('../../
 const { Op } = require('sequelize');
 const { requireAuth, restoreUser } = require('../../utils/auth');
 
-router.post('/:link', requireAuth, asyncHandler(async(req, res, next) => {
+router.post('/:link', requireAuth, asyncHandler(async (req, res, next) => {
     const { link } = req.params;
     const userId = req.user.id;
     const date = new Date();
@@ -17,17 +17,20 @@ router.post('/:link', requireAuth, asyncHandler(async(req, res, next) => {
         err.status = 404;
         return next(err);
     };
-    
+
     const invite = await ServerInvite.findOne({
         where: {
             link,
-            expiration: { [Op.gte]: date }
+            [Op.or]: [
+                { expiration: { [Op.gte]: date } },
+                { expiration: null }
+            ]
         }
     });
 
-    if(!invite) return notFound();
+    if (!invite) return notFound();
 
-    if (invite.maxUses > 0 ) {
+    if (invite.maxUses > 0) {
         if (invite.uses >= invite.maxUses) return notFound();
         invite.uses++;
         await invite.save();
