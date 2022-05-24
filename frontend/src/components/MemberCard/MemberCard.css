@@ -15,12 +15,33 @@
     color: #dcddde;
 }
 
+/* .member-card div:first-child {
+    margin-right: 6px;
+    display: flex;
+    justify-content: flex-start;
+} */
+
+.member-pfp-ctn {
+    position: relative;
+    width: 40px;
+}
+
 .member-card img {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 12px;
+}
+
+.member-status-circle {
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    bottom: 0px;
+    right: 4px;
+    border: 3px solid #2a2c30;
 }
 
 .member-card-name {

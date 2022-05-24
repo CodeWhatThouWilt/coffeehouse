@@ -91,10 +91,13 @@ io.on('connection', socket => {
     io.emit(member.serverId, member);
   });
 
+  socket.on('user-status', user => {
+    const status = 'online'
+    socket.join(user.id);
+    io.emit(user.id, status);
+  })
+
 });
-
-// const namespaces = io._nsps.keys();
-
 
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");

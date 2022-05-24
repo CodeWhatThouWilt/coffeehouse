@@ -4,6 +4,8 @@ import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link, Redirect } from 'react-router-dom';
 import background from '../../assets/auth-background.svg';
+import { io } from 'socket.io-client';
+let socket;
 
 function LoginFormPage({ inviteLink, setForm, setForceRender }) {
   const dispatch = useDispatch();
@@ -21,11 +23,15 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
-      .then(() => {
+      .then(res => {
         if (inviteLink) {
           setForceRender(true);
         } else {
+          socket = io();
+          console.log("RES", res);
+          socket.emit('user-status', res.user);
           return history.push('/channels');
+
         }
       })
       .catch(async (res) => {
