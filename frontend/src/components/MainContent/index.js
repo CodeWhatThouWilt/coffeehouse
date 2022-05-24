@@ -20,12 +20,16 @@ const MainContent = () => {
     const server = servers[serverId];
     const channel = server.Channels[channelId];
     const messages = channel.Messages;
-    const membersObj = server.Members;
+    // const membersObj = server.Members;
     const [members, setMembers] = useState();
+    const [membersObj, setMembersObj] = useState({});
 
     useEffect(() => {
         dispatch(getServerMembers(serverId))
-        .then(res => setMembers(Object.values(res.members)))
+        .then(res => {
+            setMembers(Object.values(res.members));
+            setMembersObj(res.members);
+        })
             .then(() => dispatch(getChannelMessages({ serverId, channelId })))
             .then(() => setIsLoaded(true))
     }, [dispatch, serverId, channelId]);
@@ -35,16 +39,20 @@ const MainContent = () => {
         socket.on(serverId, member => {
             if (member.action === 'join') {
                 setMembers(members => [...members, member]);
+                membersObj[member.userId] = member;
+                setMembersObj(membersObj => membersObj);
             } else if (member.action === 'leave') {
-                delete membersObj[member.serverId];
+                delete membersObj[member.userId];
+                console.log(membersObj);
                 setMembers(Object.values(membersObj));
+                setMembersObj(membersObj => membersObj);
             };
         });
 
         return (() => {
             socket.disconnect();
         });
-    }, [serverId, members]);
+    }, [serverId, members, membersObj]);
 
 
     return (
