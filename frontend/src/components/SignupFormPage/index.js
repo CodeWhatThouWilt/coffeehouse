@@ -5,6 +5,8 @@ import { Redirect, Link,useHistory } from "react-router-dom";
 import { signup } from '../../store/session';
 import background from '../../assets/auth-background.svg';
 import * as sessionActions from '../../store/session';
+import { io } from 'socket.io-client';
+let socket;
 
 
 function SignupFormPage({ inviteLink, setForm, setForceRender}) {
@@ -26,8 +28,10 @@ function SignupFormPage({ inviteLink, setForm, setForceRender}) {
     if (password === confirmPassword) {
       setErrors([]);
       return dispatch(signup({ email: email.trim(), username: username.trim(), password: password.trim() }))
-        .then(() => {
+        .then(res => {
           if (inviteLink) {
+            socket = io();
+            socket.emit('user-status', res.user);
             setForceRender(true);
           } else {
             return history.push('/@me');
