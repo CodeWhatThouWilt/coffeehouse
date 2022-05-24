@@ -61,8 +61,8 @@ module.exports = (sequelize, DataTypes) => {
 
   //return an obj with only the User instance info that is safe to save to a JWT
   User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
-    const { id, username, email, profilePicture } = this; // context will be the User instance
-    return { id, username, email, profilePicture };
+    const { id, username, email, profilePicture, status, selectedStatus } = this; // context will be the User instance
+    return { id, username, email, profilePicture, status, selectedStatus };
   };
 
   User.prototype.validatePassword = function(password) {
@@ -89,6 +89,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     });
     if (user && user.validatePassword(password)) { //if use found, then method should validate pw by pasing it into instance .validatepw method
+      user.status = 'online';
+      await user.save();
       return await User.scope('currentUser').findByPk(user.id); //if pw valid, mehtod should return uer by uing currentUser scope
     }
   };
@@ -99,8 +101,10 @@ module.exports = (sequelize, DataTypes) => {
       username,
       email,
       hashedPassword,
-      profilePicture
+      profilePicture,
+      status: 'online'
     });
+
     return await User.scope('currentUser').findByPk(user.id); //return created user using cuurrentUserscope
   };
 
