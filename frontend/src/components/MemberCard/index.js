@@ -11,6 +11,10 @@ const MemberCard = ({ member, server }) => {
     const [rightMenu, setRightMenu] = useState(false);
     const [clickCoords, setClickCoords] = useState({});
     const [showKickModal, setShowKickModal] = useState();
+
+    const user = useSelector(state => state.sessionState.user);
+
+
     const [userStatus, setUserStatus] = useState('offline');
 
     const ownerId = useSelector(state => state.sessionState.user.id);

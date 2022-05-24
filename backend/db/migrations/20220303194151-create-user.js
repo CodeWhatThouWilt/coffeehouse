@@ -22,6 +22,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      status: {
+        type: Sequelize.string,
+        allowNull: false,
+        defaultValue: 'offline'
+      },
+      selectedStatus: {
+        type: Sequelize.string,
+        allowNull: true,
+        defaultValue: null
+      },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,
         allowNull: false
