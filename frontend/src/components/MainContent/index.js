@@ -49,7 +49,7 @@ const MainContent = () => {
         });
 
         return (() => {
-            socket.disconnect();
+            socket.off(serverId);
         });
     }, [serverId, members, membersObj]);
 

@@ -3,7 +3,6 @@ const morgan = require('morgan'); //http req middleware logger for Node.js
 const cors = require('cors'); //can be used to enable cors with various options
 const csurf = require('csurf');
 const helmet = require('helmet');
-const { createServer } = require('http');
 const { Server } = require('socket.io');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
@@ -12,7 +11,8 @@ const isProduction = environment === 'production';
 const { db } = require('./db/models');
 
 const app = express();
-const server = createServer(app);
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 
 const routes = require('./routes'); //connects all the routes
 
@@ -46,7 +46,7 @@ app.use(
   })
 );
 
-const ioCorsHandler = () => {
+function ioOptions() {
   if (isProduction) {
     return {
       cors:
@@ -61,8 +61,7 @@ const ioCorsHandler = () => {
   };
 };
 
-const io = new Server(server, ioCorsHandler());
-// const io = new Server(server);
+// const io = new Server(server, ioCorsHandler());
 
 app.use((req, res, next) => {
   req.io = io;
@@ -72,11 +71,10 @@ app.use((req, res, next) => {
 app.use(routes);
 
 io.on('connection', socket => {
-
   // socket.emit('chat', 'Welcome to coffeehouse');
 
   // Broadcasts when a user connects
-  socket.broadcast.emit('chat', 'A user has joined the chat');
+  // socket.broadcast.emit('chat', 'A user has joined the chat');
 
   // Broadcasts when client disconnects
   socket.on('disconnect', () => {
@@ -105,8 +103,7 @@ io.on('connection', socket => {
   socket.on('user-status', user => {
     socket.join(user.id);
     io.emit(user.id, user);
-    socket.disconnect();
-  })
+  });
 
 });
 

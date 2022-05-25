@@ -21,7 +21,7 @@ const MessagingArea = ({ messages, members, channel, showMembers }) => {
         });
         
         return (() => {
-            socket.disconnect();
+            socket.off(channelId);
         });
     }, [serverId, channelId]);
 

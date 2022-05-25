@@ -39,11 +39,12 @@ const MemberCard = ({ member, server }) => {
 
     useEffect(() => {
         socket.on(member.userId, user => {
+            console.log('hey')
             setUserStatus(determineStatus(user));
         });
 
         return (() => {
-            socket.disconnect();
+            socket.off(member.userId);
         });
     }, [member.userId, member.User.status, member.User.selectedStatus]);
 

@@ -2,12 +2,13 @@ import './LogOutModal.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../store/session';
-import { io } from 'socket.io-client';
-let socket;
+import { SocketContext } from '../../context/socket';
+import { useContext } from 'react';
 
 const LogOutModal = ({ setShowLogOutModal }) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const socket = useContext(SocketContext);
     const user = useSelector(state => state.sessionState.user);
 
     const clickHandler = () => {

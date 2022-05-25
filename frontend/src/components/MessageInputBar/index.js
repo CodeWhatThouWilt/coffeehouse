@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMessage } from '../../store/servers';
 import { useParams } from 'react-router-dom';
-import { SocketContext } from '../../context/socket';
+import { SocketContext } from '../../context/socket.js';
 
 const MessageInputBar = ({ channel, showMembers }) => {
     const { serverId, channelId } = useParams();
@@ -22,9 +22,10 @@ const MessageInputBar = ({ channel, showMembers }) => {
             profilePicture: user.profilePicture,
             username: user.username
         }))
-            .then(res => socket.emit(`chat`, res))
+            .then(res => socket.emit('chat', res))
             .then(() => setContent(""));
     };
+    console.log(socket);
 
     const stylingHandler = () => {
         if (showMembers) {
