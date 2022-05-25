@@ -4,17 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getChannelMessages } from '../../store/servers';
 import MessageInputBar from '../MessageInputBar';
 import Message from '../Message';
-import { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
-let socket;
+import { useState, useEffect, useContext } from 'react';
+import { SocketContext } from '../../context/socket';
 
 const MessagingArea = ({ messages, members, channel, showMembers }) => {
     const messagesArr = Object.values(messages);
     const [channelMessages, setChannelMessages] = useState(messagesArr);
     const { serverId, channelId } = useParams();
+    const socket = useContext(SocketContext);
     
     useEffect(() => {
-        socket = io();
         setChannelMessages(messagesArr);
 
         socket.on(channelId, chat => {

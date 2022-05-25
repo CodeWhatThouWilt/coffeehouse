@@ -46,12 +46,23 @@ app.use(
   })
 );
 
+const ioCorsHandler = () => {
+  if (isProduction) {
+    return {
+      cors:
+        { origin: 'https://coffeehouse-app.herokuapp.com' }
+    };
+  } else {
+    return {
+      cors: {
+        origin: 'http://localhost:3000'
+      }
+    }
+  };
+};
 
-const io = new Server(server, isProduction && {
-  cors: {
-    origin: 'https://coffeehouse-app.herokuapp.com/'
-  }
-});
+const io = new Server(server, ioCorsHandler());
+// const io = new Server(server);
 
 app.use((req, res, next) => {
   req.io = io;
@@ -92,9 +103,9 @@ io.on('connection', socket => {
   });
 
   socket.on('user-status', user => {
-    const status = 'online'
     socket.join(user.id);
-    io.emit(user.id, status);
+    io.emit(user.id, user);
+    socket.disconnect();
   })
 
 });

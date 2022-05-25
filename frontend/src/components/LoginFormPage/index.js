@@ -28,7 +28,6 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
           setForceRender(true);
         } else {
           socket = io();
-          console.log("RES", res);
           socket.emit('user-status', res.user);
           return history.push('/channels');
 
@@ -45,7 +44,11 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
     return dispatch(sessionActions.login(
       { credential: 'demo@demo.com', password: 'password' }
     ))
-      .then(() => <Redirect to='/channels' />);
+      .then(res => {
+        socket = io();
+        socket.emit('user-status', res.user);
+        return <Redirect to='/channels' />;
+      });
   };
 
   const linkHandler = () => {

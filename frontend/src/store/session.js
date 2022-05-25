@@ -71,13 +71,15 @@ export const signup = (user) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  const response = await csrfFetch('/api/session', {
+  const res = await csrfFetch('/api/session', {
     method: 'DELETE',
   });
-  if (response.ok) {
+  if (res.ok) {
+    const data = await res.json();
     dispatch(removeUser());
+    return data;
   };
-  return response;
+  return res;
 };
 
 export const changeUsername = (payload) => async(dispatch) => {

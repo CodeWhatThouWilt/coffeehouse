@@ -50,7 +50,11 @@ function SignupFormPage({ inviteLink, setForm, setForceRender}) {
     return dispatch(sessionActions.login(
       { credential: 'demo@demo.com', password: 'password' }
     ))
-      .then(() => <Redirect to='/channels' />);
+      .then(res => {
+        socket = io();
+        socket.emit('user-status', res.user);
+        return <Redirect to='/channels' />;
+      });
   };
 
   const linkHandler = () => {

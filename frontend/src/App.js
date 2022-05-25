@@ -11,6 +11,7 @@ import Sidebar from './components/Sidebar';
 import { Redirect } from 'react-router-dom';
 import SplashPage from './components/SplashPage';
 import InviteHandling from './components/InviteHandling';
+import { SocketContext, socket } from './context/socket';
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +37,9 @@ function App() {
           </Route>
 
           <Route path='/channels/:serverId(\d+)?/:channelId(\d+)?'>
-            <UserApplication />
+            <SocketContext.Provider value={socket}>
+              <UserApplication />
+            </SocketContext.Provider>
           </Route>
 
           <Route path='/@me'>

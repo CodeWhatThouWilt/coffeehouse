@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const asyncHandler = require('express-async-handler'); //wrap asynch route handlers and custom middlewares
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator'); //used with handle validationerr to validate the body of a req
 const { handleValidationErrors } = require('../../utils/validation');
 const { User } = require('../../db/models');
@@ -51,16 +51,15 @@ router.post('/', validateLogin, asyncHandler(async (req, res, next) => {
 );
 
 //Log out
-router.delete('/', asyncHandler(async (req, res) => {
+router.delete('/', requireAuth,asyncHandler(async (req, res) => {
   const userId = req.user.id;
-
-  res.clearCookie('token');
 
   const user = await User.findByPk(userId);
   user.status = 'offline';
   await user.save();
   
-  return res.json({ message: 'success' });
+  res.clearCookie('token');
+  return res.json({ message: 'success', user });
 }));
 
 module.exports = router;

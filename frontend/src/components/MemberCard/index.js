@@ -1,21 +1,22 @@
 import './MemberCard.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { deleteMember } from '../../store/servers';
 import { useDispatch, useSelector } from 'react-redux';
 import KickMemberModal from '../KickMemberModal';
 import { Modal } from '../../context/modal';
-import { io } from 'socket.io-client';
-let socket;
+import { SocketContext } from '../../context/socket';
 
 const MemberCard = ({ member, server }) => {
     const [rightMenu, setRightMenu] = useState(false);
     const [clickCoords, setClickCoords] = useState({});
     const [showKickModal, setShowKickModal] = useState();
+    const [userStatus, setUserStatus] = useState(determineStatus(member.User));
+    const socket = useContext(SocketContext);
 
-    const user = useSelector(state => state.sessionState.user);
-
-
-    const [userStatus, setUserStatus] = useState('offline');
+    function determineStatus(user) {
+        if (user.status === 'offline') return user.status;
+        return user.selectedStatus ? user.selectedStatus : user.status;
+    };
 
     const ownerId = useSelector(state => state.sessionState.user.id);
 
@@ -37,21 +38,18 @@ const MemberCard = ({ member, server }) => {
     }, [rightMenu]);
 
     useEffect(() => {
-        socket = io();
-        socket.on(member.userId, status => {
-            if (status === 'online') {
-                setUserStatus('online');
-            };
+        socket.on(member.userId, user => {
+            setUserStatus(determineStatus(user));
         });
 
         return (() => {
             socket.disconnect();
         });
-    }, [member.userId]);
+    }, [member.userId, member.User.status, member.User.selectedStatus]);
 
     const statusStyling = () => {
         if (userStatus === 'online') {
-            return { backgroundColor: "hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)"}
+            return { backgroundColor: "hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)" }
         }
     };
 
@@ -66,11 +64,11 @@ const MemberCard = ({ member, server }) => {
 
     return (
         <>
-            <div 
-            onContextMenu={e => rightClickHandler(e)} 
-            key={member.id} 
-            className='member-card'
-            style={{ opacity: userStatus === 'offline' && '0.3'}}
+            <div
+                onContextMenu={e => rightClickHandler(e)}
+                key={member.id}
+                className='member-card'
+                style={{ opacity: userStatus === 'offline' && '0.3' }}
             >
                 <div>
                     <div className='member-pfp-ctn'>
