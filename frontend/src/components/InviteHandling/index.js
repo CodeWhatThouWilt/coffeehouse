@@ -1,18 +1,18 @@
 import './InviteHandling.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import InvalidInvite from '../InvalidInvite';
 import { csrfFetch } from '../../store/csrf';
 import LoginFormPage from '../LoginFormPage';
 import SignupFormPage from '../SignupFormPage';
-import { io } from 'socket.io-client';
-let socket;
+import { SocketContext } from '../../context/socket.js';
 
 const InviteHandling = ({ inviteProp }) => {
     const [errorStatus, setErrorStatus] = useState();
     const [forceRender, setForceRender] = useState(false);
     const [form, setForm] = useState();
     const inviteLink = 'inv' + useParams().invite;
+    const socket = useContext(SocketContext);
 
     const history = useHistory();
 
@@ -26,7 +26,6 @@ const InviteHandling = ({ inviteProp }) => {
                 history.push(`/channels/${member.serverId}`);
 
                 if (newMember) {
-                    socket = io();
                     return socket.emit('member-join', member);
                 };
             } catch (error) {

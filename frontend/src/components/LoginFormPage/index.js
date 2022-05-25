@@ -1,11 +1,10 @@
 import './LoginForm.css'
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link, Redirect } from 'react-router-dom';
 import background from '../../assets/auth-background.svg';
-import { io } from 'socket.io-client';
-let socket;
+import { SocketContext } from '../../context/socket.js';
 
 function LoginFormPage({ inviteLink, setForm, setForceRender }) {
   const dispatch = useDispatch();
@@ -14,6 +13,7 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
+  const socket = useContext(SocketContext);
 
   if (sessionUser && !inviteLink) return (
     <Redirect to="/channels" />
@@ -27,10 +27,8 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
         if (inviteLink) {
           setForceRender(true);
         } else {
-          socket = io();
           socket.emit('user-status', res.user);
           return history.push('/channels');
-
         }
       })
       .catch(async (res) => {
@@ -45,7 +43,6 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
       { credential: 'demo@demo.com', password: 'password' }
     ))
       .then(res => {
-        socket = io();
         socket.emit('user-status', res.user);
         return <Redirect to='/channels' />;
       });

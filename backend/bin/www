@@ -6,18 +6,31 @@ const { app, server }= require('../app');
 const db = require('../db/models');
 
 // Check the database connection before starting the app
-db.sequelize
-  .authenticate()
-  .then(() => {
+// db.sequelize
+//   .authenticate()
+//   .then(() => {
+//     console.log('Database connection success! Sequelize is ready to use...');
+
+//     // Start listening for connections
+//     server.listen(port, () => console.log(`Listening on port ${port}...`));
+//   })
+//   .catch((err) => {
+//     console.log('Database connection failure.');
+//     console.error(err);
+//   });
+(async() => {
+  try {
+    await db.sequelize.authenticate();
     console.log('Database connection success! Sequelize is ready to use...');
 
-    // Start listening for connections
     server.listen(port, () => console.log(`Listening on port ${port}...`));
-  })
-  .catch((err) => {
+
+  } catch (error) {
     console.log('Database connection failure.');
-    console.error(err);
-  });
+    console.log(err);
+  }
+})()
+
 
 
 // starting express application to listen for server reqs only after authenticating database connection

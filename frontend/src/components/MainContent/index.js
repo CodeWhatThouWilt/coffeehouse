@@ -5,16 +5,16 @@ import MainContentTopBar from '../MainContentTopBar';
 import { getServerMembers } from '../../store/servers';
 import { useParams } from 'react-router-dom';
 import { getChannelMessages } from '../../store/servers';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { io } from 'socket.io-client';
-let socket;
+import { SocketContext } from '../../context/socket';
 
 const MainContent = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [showMembers, setShowMembers] = useState(false);
     const { serverId, channelId } = useParams();
     const dispatch = useDispatch();
+    const socket = useContext(SocketContext);
     
     const servers = useSelector(state => state.serversState);
     const server = servers[serverId];
@@ -35,7 +35,6 @@ const MainContent = () => {
     }, [dispatch, serverId, channelId]);
 
     useEffect(() => {
-        socket = io();
         socket.on(serverId, member => {
             if (member.action === 'join') {
                 setMembers(members => [...members, member]);
