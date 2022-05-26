@@ -25,7 +25,6 @@ const MessageInputBar = ({ channel, showMembers }) => {
             .then(res => socket.emit('chat', res))
             .then(() => setContent(""));
     };
-    console.log(socket);
 
     const stylingHandler = () => {
         if (showMembers) {

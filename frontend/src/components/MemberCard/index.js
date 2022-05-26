@@ -39,14 +39,14 @@ const MemberCard = ({ member, server }) => {
 
     useEffect(() => {
         socket.on(member.userId, user => {
-            console.log('hey')
+            console.log(user)
             setUserStatus(determineStatus(user));
         });
 
         return (() => {
             socket.off(member.userId);
         });
-    }, [member.userId, member.User.status, member.User.selectedStatus]);
+    }, [socket, member.userId, member.User.status, member.User.selectedStatus]);
 
     const statusStyling = () => {
         if (userStatus === 'online') {
@@ -74,7 +74,9 @@ const MemberCard = ({ member, server }) => {
                 <div>
                     <div className='member-pfp-ctn'>
                         <img src={member.User.profilePicture} alt='pfp' />
-                        <div style={statusStyling()} className='member-status-circle'></div>
+                        {userStatus !== 'offline' &&
+                            <div style={statusStyling()} className='member-status-circle'></div>
+                        }
                     </div>
                 </div>
 

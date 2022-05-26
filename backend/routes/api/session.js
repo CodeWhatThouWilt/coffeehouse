@@ -9,11 +9,11 @@ const { User } = require('../../db/models');
 // Restore session user
 router.get('/', restoreUser, (req, res) => {
   const { user } = req;
-  if (user) { //if there is user...
-    return res.json({ //returning the session user as JSON...
-      user: user.toSafeObject() //under the key of user
+  if (user) { 
+    return res.json({
+      user: user.toSafeObject()
     });
-  } else return res.json({}); // if there is not a session, will return JSON with an empty obj
+  } else return res.json({});
 }
 );
 
@@ -37,18 +37,15 @@ router.post('/', validateLogin, asyncHandler(async (req, res, next) => {
   if (!user) {
     const err = new Error('Login failed');
     err.status = 401;
-    err.title = 'Login failed'; //if no user returned from login static method, create login failed
+    err.title = 'Login failed';
     err.errors = ['The provided credentials were invalid.'];
-    return next(err); //and invoke the next error-handling middleware
-  }
+    return next(err);
+  };
 
-  await setTokenCookie(res, user); //if there i sa uuser returned from login, call setTokenCookie
+  await setTokenCookie(res, user);
 
-  return res.json({ //return JSON response w/ user info
-    user
-  });
-})
-);
+  return res.json({ user });
+}));
 
 //Log out
 router.delete('/', requireAuth,asyncHandler(async (req, res) => {

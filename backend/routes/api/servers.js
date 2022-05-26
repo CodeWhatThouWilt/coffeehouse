@@ -13,6 +13,7 @@ const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icon
 
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
+    const io = req.io;
 
     const userServers = await Member.findAll({
         where: {
@@ -27,10 +28,12 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
     });
 
     const normalizedServers = {};
+    const ioRooms = []
 
     userServers.forEach(membership => {
         const server = membership.dataValues.Server;
         normalizedServers[server.id] = server;
+        
 
         const currentServer = normalizedServers[server.id];
         const channels = server.dataValues.Channels;
@@ -38,11 +41,12 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
 
         channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
+            ioRooms.push(channel.id);
         });
-        currentServer.dataValues.Channels = normalizedChannels
+        currentServer.dataValues.Channels = normalizedChannels;
     });
 
-    return res.json(normalizedServers);
+    return res.json({ servers: normalizedServers, ioRooms });
 }));
 
 

@@ -23,13 +23,15 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
-      .then(res => {
+      .then(async(res) => {
         if (inviteLink) {
           setForceRender(true);
         } else {
-          socket.emit('user-status', res.user);
+          console.log(res);
+          const data = await res.json();
+          socket.emit('user-status', data.user);
           return history.push('/channels');
-        }
+        };
       })
       .catch(async (res) => {
         const data = await res.json();

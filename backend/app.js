@@ -9,6 +9,7 @@ const { ValidationError } = require('sequelize');
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 const { db } = require('./db/models');
+const socketIoHandler = require('./utils/socket');
 
 const app = express();
 const server = require("http").createServer(app);
@@ -71,40 +72,7 @@ app.use((req, res, next) => {
 app.use(routes);
 
 io.on('connection', socket => {
-  // socket.emit('chat', 'Welcome to coffeehouse');
-
-  // Broadcasts when a user connects
-  // socket.broadcast.emit('chat', 'A user has joined the chat');
-
-  // Broadcasts when client disconnects
-  socket.on('disconnect', () => {
-    io.emit('chat', 'A user has left the chat');
-  });
-
-  // listen for chat
-  socket.on('chat', (message) => {
-    socket.join(message.channelId);
-    io.emit(message.channelId, message);
-    // io.to(message.channelId).emit(message);
-  });
-
-  socket.on('member-join', (member) => {
-    member.action = 'join';
-    socket.join(member.serverId);
-    io.emit(member.serverId, member);
-  });
-
-  socket.on('member-leave', member => {
-    member.action = 'leave';
-    socket.join(member.serverId);
-    io.emit(member.serverId, member);
-  });
-
-  socket.on('user-status', user => {
-    socket.join(user.id);
-    io.emit(user.id, user);
-  });
-
+  socketIoHandler(io, socket);
 });
 
 app.use((_req, _res, next) => {

@@ -110,8 +110,9 @@ export const getUserServers = () => async(dispatch) => {
     const res = await csrfFetch('/api/servers');
 
     if (res.ok) {
-        const servers = await res.json();
-        dispatch(getServers(servers));
+        const payload = await res.json();
+        dispatch(getServers(payload.servers));
+        return payload;
     };
 };
 
