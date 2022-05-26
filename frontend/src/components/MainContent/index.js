@@ -51,7 +51,7 @@ const MainContent = () => {
         return (() => {
             socket.off(serverId);
         });
-    }, [serverId, members, membersObj]);
+    }, [socket, serverId, members, membersObj]);
 
 
     return (

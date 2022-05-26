@@ -303,6 +303,7 @@ const serversReducer = (state = initialState, action) => {
             return newState;
 
         case ADD_MESSAGE:
+            console.log(action);
             newState[action.message.serverId].Channels[action.message.channelId].Messages[action.message.id] = action.message;
             return newState;
 
