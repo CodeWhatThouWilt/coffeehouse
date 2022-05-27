@@ -5,24 +5,24 @@ const { User } = require('../models');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-    const serversArr = [];
-    const arr = new Array(35);
-    for await (const [i, _ignore] of arr.entries()) {
-        const name = faker.internet.domainWord().split('-').join(' ');
-        const users = await User.findAll();
-        const usersAmount = users.length;
-        const ownerId = Math.ceil(Math.random() * usersAmount);
-      const iconURL = `https://picsum.photos/seed/${i+100}/512/512`;
-        const createdAt = new Date();
-        const updatedAt = new Date();
-        serversArr.push({
-          name,
-          ownerId,
-          iconURL,
-          createdAt,
-          updatedAt
-        });
-    };
+    // const serversArr = [];
+    // const arr = new Array(35);
+    // for await (const [i, _ignore] of arr.entries()) {
+    //     const name = faker.internet.domainWord().split('-').join(' ');
+    //     const users = await User.findAll();
+    //     const usersAmount = users.length;
+    //     const ownerId = Math.ceil(Math.random() * usersAmount);
+    //   const iconURL = `https://picsum.photos/seed/${i+100}/512/512`;
+    //     const createdAt = new Date();
+    //     const updatedAt = new Date();
+    //     serversArr.push({
+    //       name,
+    //       ownerId,
+    //       iconURL,
+    //       createdAt,
+    //       updatedAt
+    //     });
+    // };
 
     return queryInterface.bulkInsert('Servers', [
       {
@@ -53,7 +53,8 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-    ...serversArr], {});
+    // ...serversArr
+  ], {});
   },
 
   down: (queryInterface, Sequelize) => {

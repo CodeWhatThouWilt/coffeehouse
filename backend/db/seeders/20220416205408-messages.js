@@ -8,7 +8,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
 
       const messagesArr = [];
-      const arr = new Array(2000);
+      const arr = new Array(150);
 
       for await (const [i, _ignore] of arr.entries()) {
         const users = await User.findAll();
@@ -26,7 +26,6 @@ module.exports = {
             [Op.or] : [
               { serverId: serverId },
               { serverId: {[Op.not]: 4}}
-
             ]
           }
         });

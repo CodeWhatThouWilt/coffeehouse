@@ -18,7 +18,8 @@ module.exports = {
         counter ++;
       };
     };
-    const arr = new Array(Math.floor(counter / 3));
+    // const arr = new Array(Math.floor(counter / 3));
+    const arr = new Array(30);
     const membersObj = {};
     const membersArr = [];
     const serverOwners = await Server.findAll();

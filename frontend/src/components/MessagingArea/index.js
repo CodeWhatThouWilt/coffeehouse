@@ -14,11 +14,9 @@ const MessagingArea = ({ messages, members, channel, showMembers }) => {
     const socket = useContext(SocketContext);
     
     useEffect(() => {
-        // setChannelMessages(channelMessages => messagesArr);
 
         socket.on(channelId, chat => {
             messages[chat.id] = chat;
-            // setChannelMessages(channelMessages => ({...channelMessages, chat}));
             setChannelMessages({...messages})
             console.log(messages);
         });
@@ -26,7 +24,7 @@ const MessagingArea = ({ messages, members, channel, showMembers }) => {
         return (() => {
             socket.off(channelId);
         });
-    }, [socket, serverId, channelId, messages, channelMessages]);
+    }, [socket, serverId, channelId, messages]);
 
     const stylingHandler = () => {
         if (showMembers) {
@@ -39,7 +37,7 @@ const MessagingArea = ({ messages, members, channel, showMembers }) => {
     return (
         <div className={stylingHandler()}>
             <div className='messaging-area-list'>
-                {Object.values(messages).map((message, i) => (
+                {Object.values(channelMessages).map((message, i) => (
                     <Message key={message.id} message={message} member={members[message.userId]} />
                 ))}
             </div>

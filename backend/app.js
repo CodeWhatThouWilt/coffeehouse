@@ -47,22 +47,20 @@ app.use(
   })
 );
 
-function ioOptions() {
-  if (isProduction) {
-    return {
-      cors:
-        { origin: 'https://coffeehouse-app.herokuapp.com' }
-    };
-  } else {
-    return {
-      cors: {
-        origin: 'http://localhost:3000'
-      }
-    }
-  };
-};
-
-// const io = new Server(server, ioCorsHandler());
+// function ioOptions() {
+//   if (isProduction) {
+//     return {
+//       // cors:
+//       //   { origin: 'https://coffeehouse-app.herokuapp.com' }
+//     };
+//   } else {
+//     return {
+//       cors: {
+//         origin: 'http://localhost:3000'
+//       }
+//     }
+//   };
+// };
 
 app.use((req, res, next) => {
   req.io = io;
