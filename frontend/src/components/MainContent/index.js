@@ -22,14 +22,10 @@ const MainContent = () => {
     const messages = channel.Messages;
     // const membersObj = server.Members;
     const [members, setMembers] = useState();
-    const [membersObj, setMembersObj] = useState({});
 
     useEffect(() => {
         dispatch(getServerMembers(serverId))
-        .then(res => {
-            setMembers(Object.values(res.members));
-            setMembersObj(res.members);
-        })
+        .then(res => setMembers(res.members))
             .then(() => dispatch(getChannelMessages({ serverId, channelId })))
             .then(() => setIsLoaded(true))
     }, [dispatch, serverId, channelId]);
@@ -37,21 +33,18 @@ const MainContent = () => {
     useEffect(() => {
         socket.on(serverId, member => {
             if (member.action === 'join') {
-                setMembers(members => [...members, member]);
-                membersObj[member.userId] = member;
-                setMembersObj(membersObj => membersObj);
+                members[member.userId] = member;
+                setMembers({...members});
             } else if (member.action === 'leave') {
-                delete membersObj[member.userId];
-                console.log(membersObj);
-                setMembers(Object.values(membersObj));
-                setMembersObj(membersObj => membersObj);
+                delete members[member.userId];
+                setMembers({...members});
             };
         });
 
         return (() => {
             socket.off(serverId);
         });
-    }, [socket, serverId, members, membersObj]);
+    }, [socket, serverId, members]);
 
 
     return (
@@ -61,7 +54,7 @@ const MainContent = () => {
                 {isLoaded && messages && members &&
                     <MessagingArea messages={messages} members={members} channel={channel} showMembers={showMembers}/>
                 }
-                {showMembers && isLoaded && members &&
+                {showMembers && isLoaded && members && messages &&
                     <MemberArea members={members} server={server} />
                 }
             </div>

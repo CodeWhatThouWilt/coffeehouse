@@ -17,7 +17,6 @@ const MessagingArea = ({ messages, members, channel, showMembers }) => {
         socket.on(channelId, chat => {
             messages[chat.id] = chat;
             setChannelMessages({...messages})
-            console.log(messages);
         });
         
         return (() => {
