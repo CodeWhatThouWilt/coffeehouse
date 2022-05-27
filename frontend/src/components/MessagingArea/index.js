@@ -8,7 +8,6 @@ import { useState, useEffect, useContext } from 'react';
 import { SocketContext } from '../../context/socket';
 
 const MessagingArea = ({ messages, members, channel, showMembers }) => {
-    // const messagesArr = Object.values(messages);
     const [channelMessages, setChannelMessages] = useState(messages);
     const { serverId, channelId } = useParams();
     const socket = useContext(SocketContext);
@@ -25,6 +24,10 @@ const MessagingArea = ({ messages, members, channel, showMembers }) => {
             socket.off(channelId);
         });
     }, [socket, serverId, channelId, messages]);
+
+    useEffect(() => {
+        setChannelMessages(messages);
+    }, [messages])
 
     const stylingHandler = () => {
         if (showMembers) {
