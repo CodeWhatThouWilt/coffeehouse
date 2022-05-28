@@ -71,7 +71,6 @@ app.use((req, res, next) => {
 app.use(routes);
 
 io.on('connection', socket => {
-  console.log(socket);
   socketIoHandler(io, socket);
 });
 

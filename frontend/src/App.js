@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import LoginFormPage from './components/LoginFormPage';
@@ -11,14 +11,18 @@ import Sidebar from './components/Sidebar';
 import { Redirect } from 'react-router-dom';
 import SplashPage from './components/SplashPage';
 import InviteHandling from './components/InviteHandling';
-import { SocketContext, socket } from './context/socket';
+import { SocketContext } from './context/socket';
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     dispatch(restoreUser())
+    .then(res => {
+      res.user && socket.emit('status', res.user);
+    })
       .then(() => setIsLoaded(true));
   }, [dispatch]);
 

@@ -39,7 +39,6 @@ const MemberCard = ({ member, server }) => {
 
     useEffect(() => {
         socket.on(member.userId, user => {
-            console.log(user)
             setUserStatus(determineStatus(user));
         });
 

@@ -27,35 +27,32 @@ const UserApplication = () => {
 
     useEffect(() => {
         dispatch(getUserServers())
-            .then(() => socket.emit('online', user))
             .then(() => setIsLoaded(true));
     }, [dispatch, user]);
 
     if (!session.user) return <Redirect to='/login' />
 
     return (
-        <SocketContext.Provider value={socket}>
-            <div className='application-container'>
-                {isLoaded &&
-                    <>
-                        <Navbar />
-                        <Sidebar />
-                        {channelId &&
-                            <MainContent />
-                        }
-                        {serverId && !channelId && Object.values(channels).length > 0 &&
-                            <SelectAChannel />
-                        }
-                        {serverId && !channelId && Object.values(channels).length < 1 &&
-                            <NoChannelsToDisplay />
-                        }
-                        {!serverId && !channelId &&
-                            <SelectAServer />
-                        }
-                    </>
-                }
-            </div>
-        </SocketContext.Provider>
+        <div className='application-container'>
+            {isLoaded &&
+                <>
+                    <Navbar />
+                    <Sidebar />
+                    {channelId &&
+                        <MainContent />
+                    }
+                    {serverId && !channelId && Object.values(channels).length > 0 &&
+                        <SelectAChannel />
+                    }
+                    {serverId && !channelId && Object.values(channels).length < 1 &&
+                        <NoChannelsToDisplay />
+                    }
+                    {!serverId && !channelId &&
+                        <SelectAServer />
+                    }
+                </>
+            }
+        </div>
     );
 };
 

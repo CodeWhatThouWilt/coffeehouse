@@ -34,7 +34,7 @@ const socketIoHandler = (io, socket) => {
         io.emit(member.serverId, member);
     });
 
-    socket.on('user-status', user => {
+    socket.on('status', user => {
         console.log("#######", user);
         socket.join(user.id);
         io.emit(user.id, user);
