@@ -37,9 +37,7 @@ function App() {
           </Route>
 
           <Route path='/channels/:serverId(\d+)?/:channelId(\d+)?'>
-            <SocketContext.Provider value={socket}>
-              <UserApplication />
-            </SocketContext.Provider>
+            <UserApplication />
           </Route>
 
           <Route path='/@me'>

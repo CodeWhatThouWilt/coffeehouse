@@ -14,13 +14,13 @@ const MessagingArea = ({ messages, members, channel, showMembers }) => {
     
     useEffect(() => {
 
-        socket.on(channelId, chat => {
+        socket.on('chat', chat => {
             messages[chat.id] = chat;
-            setChannelMessages({...messages})
+            setChannelMessages({...messages});
         });
         
         return (() => {
-            socket.off(channelId);
+            socket.off('chat');
         });
     }, [socket, serverId, channelId, messages]);
 

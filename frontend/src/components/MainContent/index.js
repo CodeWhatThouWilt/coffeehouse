@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { getChannelMessages } from '../../store/servers';
 import { useEffect, useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SocketContext } from '../../context/socket';
+import { SocketContext } from '../UserApplication';
 
 const MainContent = () => {
     const [isLoaded, setIsLoaded] = useState(false);

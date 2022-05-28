@@ -41,7 +41,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
 
         channels.forEach(channel => {
             normalizedChannels[channel.id] = channel;
-            ioRooms.push(channel.id);
+            ioRooms.push(`channels/${channel.id}`);
         });
         currentServer.dataValues.Channels = normalizedChannels;
     });

@@ -2,11 +2,9 @@ const { Server, Channel, Member, Message, User, ServerInvite } = require('../db/
 
 
 const socketIoHandler = (io, socket) => {
-    socket.on('get-servers', payload => {
-        
-    });
 
-    socket.on('join-servers', channels => {
+    socket.on('join-rooms', channels => {
+        // 'channels/:channelId
         socket.join(channels);
     });
 
@@ -19,7 +17,9 @@ const socketIoHandler = (io, socket) => {
     socket.on('chat', (message) => {
         // socket.join(message.channelId);
         // io.emit(message.channelId, message);
-        socket.to(message.channelId).emit(message.channelId, message);
+        socket.to(`channels/${message.channelId}`)
+            // .emit(message);
+        .emit('chat', message);
     });
 
     socket.on('member-join', (member) => {

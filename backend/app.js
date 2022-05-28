@@ -64,12 +64,14 @@ app.use(
 
 app.use((req, res, next) => {
   req.io = io;
+  
   return next()
 });
 
 app.use(routes);
 
 io.on('connection', socket => {
+  console.log(socket);
   socketIoHandler(io, socket);
 });
 

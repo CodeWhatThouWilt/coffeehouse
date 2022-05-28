@@ -5,7 +5,6 @@ import { Redirect, Link,useHistory } from "react-router-dom";
 import { signup } from '../../store/session';
 import background from '../../assets/auth-background.svg';
 import * as sessionActions from '../../store/session';
-import { SocketContext } from '../../context/socket';
 
 
 function SignupFormPage({ inviteLink, setForm, setForceRender}) {
@@ -17,7 +16,6 @@ function SignupFormPage({ inviteLink, setForm, setForceRender}) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
-  const socket = useContext(SocketContext);
 
   if (sessionUser && !inviteLink) return (
     <Redirect to="/@me" />
@@ -30,7 +28,6 @@ function SignupFormPage({ inviteLink, setForm, setForceRender}) {
       return dispatch(signup({ email: email.trim(), username: username.trim(), password: password.trim() }))
         .then(res => {
           if (inviteLink) {
-            socket.emit('user-status', res.user);
             setForceRender(true);
           } else {
             return history.push('/@me');
@@ -50,7 +47,6 @@ function SignupFormPage({ inviteLink, setForm, setForceRender}) {
       { credential: 'demo@demo.com', password: 'password' }
     ))
       .then(res => {
-        socket.emit('user-status', res.user);
         return <Redirect to='/channels' />;
       });
   };
