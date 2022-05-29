@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     dispatch(restoreUser())
     .then(res => {
-      res.user && socket.emit('status', res.user);
+      res.user && socket.emit('user-status', res.user);
     })
       .then(() => setIsLoaded(true));
   }, [dispatch]);

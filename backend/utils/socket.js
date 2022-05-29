@@ -2,6 +2,13 @@ const { Server, Channel, Member, Message, User, ServerInvite } = require('../db/
 
 
 const socketIoHandler = (io, socket) => {
+    const users = [];
+
+    socket.on('user-status', user => {
+        socket.join(user.id);
+        console.log("#######", socket);
+        io.emit(user.id, user);
+    });
 
     socket.on('join-rooms', channels => {
         // 'channels/:channelId
@@ -32,12 +39,6 @@ const socketIoHandler = (io, socket) => {
         member.action = 'leave';
         socket.join(member.serverId);
         io.emit(member.serverId, member);
-    });
-
-    socket.on('status', user => {
-        console.log("#######", user);
-        socket.join(user.id);
-        io.emit(user.id, user);
     });
 };
 
