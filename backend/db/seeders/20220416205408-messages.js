@@ -3,9 +3,16 @@ const { faker } = require('@faker-js/faker');
 const { Channel, Server, Member, User } = require('../models');
 const { Op } = require('sequelize');
 
+let options = {};
+if (process.env.NODE_ENV === "production") {
+	options.schema = process.env.SCHEMA; // define your schema in options object
+}
+
 module.exports = {
   // id, serverId, channelId, content
   up: async (queryInterface, Sequelize) => {
+
+      options.tableName = 'Messages';
 
       const messagesArr = [];
       const arr = new Array(2000);
@@ -48,10 +55,13 @@ module.exports = {
         });
       };
 
-      return queryInterface.bulkInsert('Messages', messagesArr, {});
+      return queryInterface.bulkInsert(options, messagesArr, {});
   },
 
   down: (queryInterface, Sequelize) => {
-      return queryInterface.bulkDelete('Messages', null, {});
+
+      options.tableName = 'Messages';
+
+      return queryInterface.bulkDelete(options, null, {});
   }
 };

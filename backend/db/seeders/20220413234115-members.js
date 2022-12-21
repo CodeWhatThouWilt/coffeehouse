@@ -2,8 +2,15 @@
 const { faker } = require('@faker-js/faker');
 const { Server, User } = require('../models');
 
+let options = {};
+if (process.env.NODE_ENV === "production") {
+	options.schema = process.env.SCHEMA; // define your schema in options object
+}
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+
+    options.tableName = 'Members';
 
     const users = await User.findAll();
     const usersAmount = users.length;
@@ -53,10 +60,13 @@ module.exports = {
         membersArr.push(member);
       };
     }
-    return queryInterface.bulkInsert('Members', membersArr, {});
+    return queryInterface.bulkInsert(options, membersArr, {});
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Members', null, {});
+
+    options.tableName = 'Members';
+
+    return queryInterface.bulkDelete(options, null, {});
   }
 };
