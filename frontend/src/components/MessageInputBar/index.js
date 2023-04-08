@@ -24,7 +24,7 @@ const MessageInputBar = ({ channel, showMembers, emitMessage }) => {
 
 
     return (
-        <form onSubmit={e => emitMessage(e, content)} className={stylingHandler()}>
+        <form onSubmit={e => emitMessage(e, content, setContent)} className={stylingHandler()}>
             <input
                 type='text'
                 value={content}

@@ -26,20 +26,21 @@ const MessagingArea = ({ messages, members, channel, showMembers }) => {
         return (() => {
             socket.disconnect();
         });
-    }, [serverId, channelId]);
+    }, [dispatch, serverId, channelId]);
 
-    const emitMessage = (e, message) => {
+    const emitMessage = async (e, message, setContent) => {
         e.preventDefault()
         if (message.length === 0 || message.length > 2000) return;
-        console.log("TEST", message)
 		const payload = {
 			serverId,
 			channelId,
 			content: message
 		};
-		socket.emit(`chat`, payload);
-
+		await socket.emit(`chat`, payload);
+        setContent('')
     }
+
+    // TODO implement emitEditMessage
 
     const stylingHandler = () => {
         if (showMembers) {
