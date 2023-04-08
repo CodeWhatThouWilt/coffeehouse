@@ -15,6 +15,8 @@ const GET_MEMBERS = 'servers/getMembers';
 const REMOVE_MEMBER = 'servers/removeMember';
 const LEAVE_SERVER = 'servers/leaveServer';
 
+// TODO rework entire state to match something similar to channels state
+
 const getServers = (servers) => {
     return {
         type: GET_SERVERS,

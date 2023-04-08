@@ -10,6 +10,7 @@ const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss
 
 const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icons/coffeehouse-default-server+(512+%C3%97+512+px).svg';
 
+// TODO split into multiple different routers
 
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;

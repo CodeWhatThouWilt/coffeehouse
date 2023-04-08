@@ -12,6 +12,9 @@ import { Redirect } from 'react-router-dom';
 import SplashPage from './components/SplashPage';
 import InviteHandling from './components/InviteHandling';
 
+// TODO reorganize all components
+
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
