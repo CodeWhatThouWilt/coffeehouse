@@ -10,6 +10,8 @@ const { ValidationError } = require('sequelize');
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 const { db } = require('./db/models');
+const { emitMessage, chatSubscribe } = require('./controllers/message-sockets');
+const { authenticateSocket } = require("./utils/socket-auth.js");
 
 const app = express();
 const server = createServer(app);
@@ -46,50 +48,57 @@ app.use(
   })
 );
 
-
-const io = new Server(server, isProduction && {
+const socketCors = isProduction && {
   cors: {
     origin: 'https://coffeehouse-app.herokuapp.com/'
   }
+}
+
+const io = new Server(server, {
+  ...socketCors
 });
 
-app.use((req, res, next) => {
-  req.io = io;
-  return next()
-});
 
 app.use(routes);
 
+
+io.use((socket, next) => authenticateSocket(socket, next))
+
 io.on('connection', socket => {
+  // console.log(socket.handshake.auth.tokenFromCookie);
+  // console.log(socket.request.headers);
+  console.log('A user connected');
 
-  // socket.emit('chat', 'Welcome to coffeehouse');
+  chatSubscribe(socket, io)
 
+  emitMessage(socket, io)
+  
   // Broadcasts when a user connects
-  socket.broadcast.emit('chat', 'A user has joined the chat');
+  // socket.broadcast.emit('chat', 'A user has joined the chat');
 
-  // Broadcasts when client disconnects
+  // // Broadcasts when client disconnects
   socket.on('disconnect', () => {
-    io.emit('chat', 'A user has left the chat');
+    console.log('disconnected from socket')
   });
 
-  // listen for chat
-  socket.on('chat', (message) => {
-    socket.join(message.channelId);
-    io.emit(message.channelId, message);
-    // io.to(message.channelId).emit(message);
-  });
+  // // listen for chat
+  // socket.on('chat', (message) => {
+  //   socket.join(message.channelId);
+  //   io.emit(message.channelId, message);
+  //   // io.to(message.channelId).emit(message);
+  // });
 
-  socket.on('member-join', (member) => {
-    member.action = 'join';
-    socket.join(member.serverId);
-    io.emit(member.serverId, member);
-  });
+  // socket.on('member-join', (member) => {
+  //   member.action = 'join';
+  //   socket.join(member.serverId);
+  //   io.emit(member.serverId, member);
+  // });
 
-  socket.on('member-leave', member => {
-    member.action = 'leave';
-    socket.join(member.serverId);
-    io.emit(member.serverId, member);
-  });
+  // socket.on('member-leave', member => {
+  //   member.action = 'leave';
+  //   socket.join(member.serverId);
+  //   io.emit(member.serverId, member);
+  // });
 
 });
 

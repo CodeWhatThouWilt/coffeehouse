@@ -71,7 +71,7 @@ const getMessages = (payload) => {
     };
 };
 
-const addMessage = (message) => {
+export const addMessage = (message) => {
     return {
         type: ADD_MESSAGE,
         message

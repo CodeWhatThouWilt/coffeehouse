@@ -6,26 +6,13 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 let socket;
 
-const MessageInputBar = ({ channel, showMembers }) => {
+const MessageInputBar = ({ channel, showMembers, emitMessage }) => {
     const { serverId, channelId } = useParams();
     const dispatch = useDispatch();
     const [content, setContent] = useState("");
     const { user } = useSelector(state => state.sessionState);
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        if (content.length === 0 || content.length > 2000) return;
-        socket = io();
-        dispatch(createMessage({
-            serverId,
-            channelId,
-            content,
-            profilePicture: user.profilePicture,
-            username: user.username
-        }))
-            .then(res => socket.emit(`chat`, res))
-            .then(() => setContent(""));
-    };
+    
 
     const stylingHandler = () => {
         if (showMembers) {
@@ -37,7 +24,7 @@ const MessageInputBar = ({ channel, showMembers }) => {
 
 
     return (
-        <form onSubmit={e => submitHandler(e)} className={stylingHandler()}>
+        <form onSubmit={e => emitMessage(e, content)} className={stylingHandler()}>
             <input
                 type='text'
                 value={content}
