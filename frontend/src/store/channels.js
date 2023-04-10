@@ -131,13 +131,14 @@ const channelsReducer = (state = initialState, action) => {
 		}
 		case REMOVE_CHANNEL: {
 			const { channelId } = action.payload;
+
 			const remainingChannelsById = { ...state.byId };
 			delete remainingChannelsById[channelId];
 			// alternatively named destructure / spread
 			// const { [channelId]: removedChannel, ...remainingChannels } = state.byId
-			const remainingChannelsAllIds = state.allIds.filter(
-				(id) => id !== channelId
-			);
+			const remainingChannelsAllIds = state.allIds.filter((id) => {
+				return id !== channelId
+			});
 
 			return {
 				byId: remainingChannelsById,

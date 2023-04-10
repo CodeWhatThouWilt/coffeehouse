@@ -10,8 +10,6 @@ const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss
 
 const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icons/coffeehouse-default-server+(512+%C3%97+512+px).svg';
 
-// TODO split into multiple different routers
-
 // TODO redo routes / create routes to avoid sending too much data
 // TODO remove loops in backend routes and offload to reducers
 
@@ -20,17 +18,15 @@ const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icon
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
 
-    const userServers = await Member.findAll({
-        where: {
-            userId
-        },
+    const userServers = await Server.findAll({
         include: [{
-            model: Server,
-            include: [{
-                model: Channel
-            }]
+            model: Member,
+            where: {
+                userId
+            },
+            attributes: []
         }]
-    });
+    })
 
     return res.json(userServers);
 }));

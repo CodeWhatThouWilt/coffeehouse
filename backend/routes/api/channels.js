@@ -94,7 +94,7 @@ router.delete('/:channelId(\\d+)', requireAuth, asyncHandler(async (req, res) =>
     const channel = await Channel.findByPk(channelId);
     await channel.destroy();
 
-    return res.json({ channelId, serverId });
+    return res.json(channelId);
 }));
 
 module.exports = router;
