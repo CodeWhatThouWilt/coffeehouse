@@ -19,7 +19,7 @@ router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/servers', serversRouter);
 router.use('/invites', invitesRouter);
-router.user("/servers/:serverId(\\d+)/members");
+router.use("/servers/:serverId(\\d+)/members", membersRouter);
 router.use("/servers/:serverId(\\d+)/channels", channelsRouter);
 router.use('/servers/:serverId(\\d+)/channels/:channelId(\\d+)/messages', messagesRouter);
 

@@ -9,12 +9,12 @@ import logo from '../../assets/coffeehouse-logo.svg';
 
 const Navbar = () => {
     const dispatch = useDispatch();
-    const servers = useSelector(state => state.serversState);
-    const serversArr = Object.values(servers);
+    const servers = useSelector(state => state.servers);
     const [showModal, setShowModal] = useState(false);
     const { serverId, channelId } = useParams();
     const [currentServer, setCurrentServer] = useState(serverId);
     const [currentChannel, setCurrentChannel] = useState(channelId);
+    const channels = useSelector(state => state.channels);
 
     useEffect(() => {
         setCurrentChannel(channelId);
@@ -22,8 +22,10 @@ const Navbar = () => {
     }, [serverId, channelId]);
 
     const routeHandler = (serverId) => {
-        const server = servers[serverId];
-        const serverChannels = Object.values(server.Channels);
+        const serverChannels = channels.allIds.filter((id) => {
+            return channels.byId[id].serverId === parseInt(serverId)
+        });
+        
         if (serverChannels.length) {
             return `/channels/${serverId}/${serverChannels[0].id}`
         } else {
@@ -53,7 +55,7 @@ const Navbar = () => {
                         <img src={logo} alt='icon' className='navbar-server-icon' style={{ backgroundColor: 'black'}}/>
                     </NavLink>
                 </div> */}
-                {serversArr.map(server => (
+                {servers.allIds.map(server => {
                     <div className='navbar-icon-container' key={server.id} >
                         <div className='navbar-icon-notif-container'>
                             <div className='navbar-icon-notif'></div>
@@ -62,7 +64,7 @@ const Navbar = () => {
                             <img src={server.iconURL} alt='icon' className='navbar-server-icon' />
                         </NavLink>
                     </div>
-                ))}
+                })}
                 <div onClick={() => setShowModal(true)} className='navbar-new-server-icon'>
                     <i className="fa-light fa-plus new-server-icon"></i>
                 </div>
