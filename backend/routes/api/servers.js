@@ -15,6 +15,8 @@ const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icon
 // TODO redo routes / create routes to avoid sending too much data
 // TODO remove loops in backend routes and offload to reducers
 
+// TODO restructure this to be more like a query route and put this into current user route
+// Get servers that current user belongs to
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
 
@@ -51,7 +53,7 @@ const validateServer = [
     handleValidationErrors
 ];
 
-
+// Create a server
 router.post('/', requireAuth, singleMulterUpload('image'), validateServer, asyncHandler(async (req, res) => {
     const { name } = req.body;
     const imageFile = req.file;
@@ -87,7 +89,7 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
     return res.json({ server, channel, member });
 }));
 
-
+// Edit a server
 router.put('/:serverId(\\d+)', requireAuth,
     singleMulterUpload('image'), validateServer, asyncHandler(async (req, res) => {
         const { serverId } = req.params;
@@ -107,7 +109,7 @@ router.put('/:serverId(\\d+)', requireAuth,
         return res.json(server);
     }));
 
-
+// Delete a server
 router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async (req, res) => {
     const { serverId } = req.params;
     const userId = req.user.id;
@@ -123,43 +125,6 @@ router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async (req, res) => 
     err.status = 401;
     return next(err);
 }));
-
-router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async (req, res) => {
-    const { channelId, serverId } = req.params;
-
-    const channelMessages = await Message.findAll({
-        where: {
-            channelId
-        },
-        include: User
-    });
-
-    const normalizedMessages = {};
-    channelMessages.forEach(message => {
-        normalizedMessages[message.id] = message;
-    });
-
-    return res.json({ serverId, channelId, messages: normalizedMessages });
-}));
-
-
-// TODO remove when finished with all other socket routes
-// router.post('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async (req, res) => {
-//     const { channelId, serverId } = req.params;
-//     const { content, profilePicture, username } = req.body;
-//     const userId = req.user.id;
-
-//     const message = await Message.create({
-//         channelId,
-//         serverId,
-//         userId,
-//         content
-//     });
-
-//     message.dataValues.User = { profilePicture, username };
-
-//     return res.json(message);
-// }));
 
 router.get('/:serverId(\\d+)/members', requireAuth, asyncHandler(async(req, res) => {
     const { serverId } = req.params;
