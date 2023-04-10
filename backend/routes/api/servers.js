@@ -126,39 +126,7 @@ router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async (req, res) => 
     return next(err);
 }));
 
-router.get('/:serverId(\\d+)/members', requireAuth, asyncHandler(async(req, res) => {
-    const { serverId } = req.params;
 
-    const members = await Member.findAll({
-        where: {
-            serverId
-        },
-        include: User
-    });
-
-    const normalizedMembers = {};
-    members.forEach(member => {
-        normalizedMembers[member.User.id] = member;
-    });
-    return res.json({ serverId, members: normalizedMembers });
-}));
-
-router.delete('/:serverId(\\d+)/members/:memberId(\\d+)', requireAuth, asyncHandler(async(req, res) => {
-    const { memberId, serverId } = req.params;
-    const userId = req.user.id;
-    
-    const member = await Member.findByPk(memberId, {
-        include: { model: Server }
-    });
-
-    const serverOwner = member.dataValues.Server.dataValues.ownerId;
-    
-    if (userId !== serverOwner) {
-        await member.destroy();
-        return res.json({ serverId, userId: member.userId })
-    }
-
-}));
 
 router.post('/:serverId(\\d+)/invites', requireAuth, asyncHandler(async(req, res) => {
     const { serverId, expiration, maxUses } = req.body;

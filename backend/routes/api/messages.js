@@ -10,7 +10,7 @@ const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss
 
 // Get all messages for a channel
 router.get(
-    "/:serverId(\\d+)/channels/:channelId(\\d+)/messages",
+    "/",
     requireAuth,
     asyncHandler(async (req, res) => {
 		const { channelId, serverId } = req.params;
