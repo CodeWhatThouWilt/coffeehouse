@@ -12,6 +12,9 @@ const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icon
 
 // TODO split into multiple different routers
 
+// TODO redo routes / create routes to avoid sending too much data
+// TODO remove loops in backend routes and offload to reducers
+
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const userId = req.user.id;
 
@@ -27,23 +30,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
         }]
     });
 
-    const normalizedServers = {};
-
-    userServers.forEach(membership => {
-        const server = membership.dataValues.Server;
-        normalizedServers[server.id] = server;
-
-        const currentServer = normalizedServers[server.id];
-        const channels = server.dataValues.Channels;
-        const normalizedChannels = {};
-
-        channels.forEach(channel => {
-            normalizedChannels[channel.id] = channel;
-        });
-        currentServer.dataValues.Channels = normalizedChannels
-    });
-
-    return res.json(normalizedServers);
+    return res.json(userServers);
 }));
 
 
@@ -97,13 +84,7 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
         userId
     })
 
-    const normalizedServer = server;
-    // normalizedServer[server.id] = server;
-    normalizedServer.dataValues.Members = {};
-    normalizedServer.dataValues.Members[member.id] = member;
-    normalizedServer.dataValues.Channels = {}
-    normalizedServer.dataValues.Channels[channel.id] = channel;
-    return res.json(normalizedServer);
+    return res.json({ server, channel, member });
 }));
 
 
@@ -123,7 +104,7 @@ router.put('/:serverId(\\d+)', requireAuth,
 
         await server.save();
 
-        return res.json({ id: serverId, iconURL: newIcon, name: name });
+        return res.json(server);
     }));
 
 
@@ -142,72 +123,6 @@ router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async (req, res) => 
     err.status = 401;
     return next(err);
 }));
-
-
-const validateChannel = [
-    check('name')
-        .isLength({ min: 1, max: 100 })
-        .withMessage('Valid name length: 1-100')
-        .custom(async (val, { req }) => {
-            const { name } = req.body;
-            const splitName = name.split('');
-            const symbolCheck = splitName.filter((char, i) => {
-                const charCode = char.charCodeAt(0);
-                const lowerCaseCodes = charCode > 96 && charCode < 123;
-                const numbers = charCode > 47 && charCode < 58;
-                const hyphen = charCode === 45;
-                let hyphenRepeats = false;
-                if (i > 2 && hyphen) {
-                    hyphenRepeats = name.charCodeAt(i - 1) === 45;
-                };
-                return (!lowerCaseCodes && !numbers && !hyphen) || hyphenRepeats;
-            });
-            if (name.endsWith('-')) {
-                return await Promise.reject('Name must end with a letter or number');
-            } else if (name.startsWith('-')) {
-                return await Promise.reject('Name must start with a letter or number');
-            } else if (symbolCheck.length) {
-                return await Promise.reject('Name can only contain [a-z], [1-9] or "-"');
-            };
-        }),
-    handleValidationErrors
-];
-
-router.post('/:serverId(\\d+)/channels', requireAuth, validateChannel, asyncHandler(async (req, res) => {
-    const userId = req.user.id;
-    const { serverId } = req.params;
-    const { name } = req.body;
-
-    const newChannel = await Channel.create({
-        serverId,
-        name
-    });
-
-    return res.json(newChannel);
-}));
-
-router.put('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, validateChannel, asyncHandler(async (req, res) => {
-    const userId = req.user.id;
-    const { serverId, channelId } = req.params;
-    const { name } = req.body;
-
-    const channel = await Channel.findByPk(channelId);
-    channel.name = name;
-    await channel.save();
-
-    return res.json(channel);
-}));
-
-router.delete('/:serverId(\\d+)/channels/:channelId(\\d+)', requireAuth, asyncHandler(async (req, res) => {
-    const userId = req.user.id;
-    const { channelId, serverId } = req.params;
-
-    const channel = await Channel.findByPk(channelId);
-    await channel.destroy();
-
-    return res.json({ channelId, serverId });
-}));
-
 
 router.get('/:serverId(\\d+)/channels/:channelId(\\d+)/messages', requireAuth, asyncHandler(async (req, res) => {
     const { channelId, serverId } = req.params;

@@ -17,14 +17,13 @@ export const addMessage = (message) => {
 	};
 };
 
-const editMessage = (message) => {
+export const editMessage = (message) => {
 	return {
 		type: EDIT_MESSAGE,
 		payload: { message }
 	};
 };
 
-// TODO finish messages state to match channels with the exception of: add a byChannelId to initial state for easy tracking / filtering
 
 const initialState = {
 	byId: {},
@@ -81,3 +80,5 @@ const messagesReducer = (state = initialState, action) => {
         }
     }
 }
+
+export default messagesReducer;
