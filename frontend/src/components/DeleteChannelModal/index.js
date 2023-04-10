@@ -1,6 +1,6 @@
 import './DeleteChannelModal.css';
 import { useDispatch } from 'react-redux';
-import { deleteChannel } from '../../store/servers';
+import { deleteChannel } from '../../store/channels';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 

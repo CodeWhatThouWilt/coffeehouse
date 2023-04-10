@@ -2,7 +2,7 @@ import './CreateChannelForm.css';
 import { useState } from 'react';
 import { useParams, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { createChannel } from '../../store/servers';
+import { createChannel } from '../../store/channels';
 import unfilledRadio from '../../assets/unfilledRadio.svg';
 import filledRadio from '../../assets/filledInRadio.svg';
 

@@ -1,6 +1,6 @@
 import './ChannelSettingsOverview.css';
 import { useDispatch } from 'react-redux';
-import { editChannel } from '../../store/servers';
+import { editChannel } from '../../store/channels';
 import { useState } from 'react';
 
 const ChannelSettingsOverview = ({ channel }) => {

@@ -1,7 +1,7 @@
 import './KickMemberModal.css';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { deleteMember } from '../../store/servers';
+import { deleteMember } from '../../store/members';
 
 const KickMemberModal = ({ member, setShowKickModal }) => {
     const [kickReason, setKickReason] = useState('');

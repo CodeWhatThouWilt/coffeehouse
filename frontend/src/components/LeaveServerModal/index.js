@@ -1,5 +1,5 @@
 import './LeaveServerModal.css';
-import { exitServer } from '../../store/servers';
+import { deleteMember } from '../../store/members';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { io } from 'socket.io-client';
@@ -15,7 +15,7 @@ const LeaveServerModal = ({ server, setShowLeaveModal }) => {
     const memberId = member.id
 
     const clickHandler = () => {
-        dispatch(exitServer({ serverId: server.id, memberId }));
+        dispatch(deleteMember({ serverId: server.id, memberId }));
         history.push('/@me');
         socket = io();
         socket.emit('member-leave', member);

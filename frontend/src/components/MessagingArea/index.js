@@ -1,12 +1,12 @@
 import './MessagingArea.css';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getChannelMessages } from '../../store/servers';
+import { getChannelMessages } from '../../store/messages';
 import MessageInputBar from '../MessageInputBar';
 import Message from '../Message';
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { addMessage } from '../../store/servers';
+import { addMessage } from '../../store/messages';
 let socket;
 
 const MessagingArea = ({ messages, members, channel, showMembers }) => {
