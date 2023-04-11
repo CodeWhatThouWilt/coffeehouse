@@ -9,7 +9,7 @@ import CloseSettings from "../CloseSettings";
 const ServerSettings = ({ setShowModal }) => {
 	const [currentForm, setCurrentForm] = useState("overview");
 	const { serverId } = useParams();
-	const servers = useSelector((state) => state.servers);
+	const servers = useSelector((state) => state.servers.byId);
 	const server = servers[serverId];
 
 	return (
