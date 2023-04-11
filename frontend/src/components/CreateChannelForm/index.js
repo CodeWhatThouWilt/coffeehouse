@@ -17,7 +17,7 @@ const CreateChannelForm = ({ setShowModal }) => {
         e.preventDefault();
         setErrors([]);
         dispatch(createChannel({ name, serverId }))
-        .then(res => history.push(`/channels/${res.serverId}/${res.id}`))
+        .then(res => history.push(`/${res.serverId}/${res.id}`))
         .then(() => setShowModal(false))
         .catch(async res => {
             const data = await res.json();

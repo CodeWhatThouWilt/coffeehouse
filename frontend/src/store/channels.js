@@ -92,7 +92,7 @@ export const deleteChannel = (form) => async (dispatch) => {
 
 const initialState = {
 	byId: {},
-	byServerId: [],
+	byServerId: {},
 };
 
 const channelsReducer = (state = initialState, action) => {

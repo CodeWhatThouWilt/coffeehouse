@@ -18,7 +18,7 @@ const DeleteChannelModal = ({ channel, setShowDeleteModal }) => {
 				serverId: channel.serverId,
 			})
 		);
-		history.push(`/channels/${channel.serverId}/`);
+		history.push(`/${channel.serverId}/`);
 	};
 
 	return (

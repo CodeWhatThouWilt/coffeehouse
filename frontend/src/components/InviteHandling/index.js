@@ -23,7 +23,7 @@ const InviteHandling = ({ inviteProp }) => {
                     method: 'POST'
                 })
                 const { member, newMember } = await res.json();
-                history.push(`/channels/${member.serverId}`);
+                history.push(`/${member.serverId}`);
 
                 if (newMember) {
                     socket = io();

@@ -1,28 +1,31 @@
 import "./SidebarChannelPanel.css";
 import { useParams, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import { Modal } from "../../context/modal";
 import CreateChannelForm from "../CreateChannelForm";
 import SidebarChannel from "../SidebarChannel";
+import { getChannelsByServer } from "../../store/selectors/channels";
+import { getServerChannels } from "../../store/channels";
 
 const SidebarChannelPanel = () => {
+	const dispatch = useDispatch();
 	const { serverId } = useParams();
 	const [showModal, setShowModal] = useState(false);
+	const [isLoaded, setIsLoaded] = useState(false)
 
 	const { byId: serversById } = useSelector((state) => state.servers);
 	const server = serversById[serverId];
 
-	const { byId: channelsById, allIds: channelsIds} = useSelector((state) => {
-		return state.channels;
-	});
+	const channels = useSelector((state) => getChannelsByServer(state, serverId))
 
-	const channels = channelsIds.map((id) => {
-		return channelsById[id].serverId === parseInt(serverId)
-	})
+	useEffect(() => {
+		dispatch(getServerChannels(serverId))
+		.then(() => setIsLoaded(true));
+	}, [dispatch, serverId]);
 
 	return (
-		server && (
+		server && isLoaded && (
 			<form>
 				<div className="channel-panel-container">
 					<div className="channel-panel-category-header-container">

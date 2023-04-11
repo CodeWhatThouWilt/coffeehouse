@@ -16,7 +16,7 @@ const UserApplication = () => {
 	const dispatch = useDispatch();
 	const { serverId, channelId } = useParams();
 	const session = useSelector((state) => state.session);
-	const channels = useSelector((state) => state.channels);
+	const channels = useSelector((state) => state.channels.byServerId[serverId]);
 
 	// TODO change rendering logic etc within UserApplication and lower components to be more simplified
 

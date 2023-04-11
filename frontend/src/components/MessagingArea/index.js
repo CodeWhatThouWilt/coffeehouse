@@ -7,15 +7,15 @@ import Message from "../Message";
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { addMessage } from "../../store/messages";
+import { getMessagesByChannel } from "../../store/selectors/messages";
 let socket;
 
 const MessagingArea = ({ members, channel, showMembers }) => {
 	const dispatch = useDispatch();
-	const messagesArr = Object.values(messages);
 	const { serverId, channelId } = useParams();
 	const user = useSelector((state) => state.session.user);
 
-    const { byChannelId: }
+    const messages = useSelector(state => getMessagesByChannel(state, channelId))
 
 	useEffect(() => {
 		socket = io();
@@ -55,7 +55,7 @@ const MessagingArea = ({ members, channel, showMembers }) => {
 	return (
 		<div className={stylingHandler()}>
 			<div className="messaging-area-list">
-				{messagesArr.map((message, i) => (
+				{messages.map((message, i) => (
 					<Message
 						key={message.id}
 						message={message}

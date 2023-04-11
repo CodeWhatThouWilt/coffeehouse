@@ -25,7 +25,7 @@ const SidebarChannel = ({ channel, server }) => {
 				className="channel-container"
 			>
 				<NavLink
-					to={`/channels/${server.id}/${channel.id}`}
+					to={`/${server.id}/${channel.id}`}
 					activeClassName="channel-link-active"
 					className="channel-link"
 				>
