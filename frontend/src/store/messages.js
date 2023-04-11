@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_MESSAGES = "servers/getMessages";
 const ADD_MESSAGE = "servers/addMessage";
 const EDIT_MESSAGE = "servers/editMessage";
+const DELETE_MESSAGE = "servers/deleteMessage";
 
 const getMessages = (messages) => {
 	return {
@@ -24,6 +25,13 @@ export const editMessage = (message) => {
 		payload: { message },
 	};
 };
+
+export const deleteMessage = (messageId, channelId) => {
+	return {
+		type: DELETE_MESSAGE,
+		payload: { messageId, channelId }
+	}
+}
 
 export const createMessage = (form) => async (dispatch) => {
 	const { serverId, channelId } = form;
@@ -58,11 +66,9 @@ export const getChannelMessages = (idData) => async (dispatch) => {
 const initialState = {
 	byId: {},
 	byChannelId: {},
-	allIds: [],
 };
 
 const messagesReducer = (state = initialState, action) => {
-    
 	switch (action.type) {
 		case GET_MESSAGES: {
 			const { messages } = action.payload;
@@ -73,16 +79,16 @@ const messagesReducer = (state = initialState, action) => {
 			}, {});
 
 			const messagesByChannelId = messages.reduce((acc, message) => {
-				acc[message.channelId] = message;
+				if (!acc[message.channelId]) {
+					acc[message.channelId] = [];
+				}
+				acc[message.channelId].push(message.id);
 				return acc;
 			}, {});
-
-			const messagesIds = messages.map((message) => message.id);
 
 			return {
 				byId: { ...state.byId, ...messagesById },
 				byChannelId: { ...state.byChannelId, ...messagesByChannelId },
-				allIds: [...state.allIds, ...messagesIds],
 			};
 		}
 		case ADD_MESSAGE: {
@@ -90,8 +96,12 @@ const messagesReducer = (state = initialState, action) => {
 
 			return {
 				byId: { ...state.byId, [message.id]: message },
-				byChannelId: { ...state.byId, [message.channelId]: message },
-				allIds: [...state.allIds, message.id],
+				byChannelId: {
+					...state.byChannelId,
+					[message.channelId]: state.byChannelId[message.channelId]
+						? [...state.byChannelId[message.channelId], message.id]
+						: [message.id],
+				},
 			};
 		}
 		case EDIT_MESSAGE: {
@@ -99,8 +109,23 @@ const messagesReducer = (state = initialState, action) => {
 
 			return {
 				byId: { ...state.byId, [message.id]: message },
-				byChannelId: { ...state.byId, [message.channelId]: message },
-				allIds: [...state.allIds],
+				byChannelId: { ...state.byChannelId },
+			};
+		}
+		case DELETE_MESSAGE: {
+			const { messageId, channelId } = action.payload;
+
+			const newById = { ...state.byId };
+			delete newById[messageId];
+
+			const newByChannelId = { ...state.byChannelId };
+			newByChannelId[channelId] = newByChannelId[channelId].filter(
+				(id) => id !== messageId
+			);
+
+			return {
+				byId: newById,
+				byChannelId: newByChannelId,
 			};
 		}
 
