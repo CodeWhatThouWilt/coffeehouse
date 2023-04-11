@@ -59,26 +59,36 @@ const membersReducer = (state = initialState, action) => {
                 return acc;
             }, {});
 
-            const membersByServerId = { ...state.byServerId, [serverId]: members};
+            const byServerId = { ...state.byServerId };
+            members.forEach((member) => {
+                if (!byServerId[member.serverId]) {
+                    byServerId[member.serverId] = [];
+                }
+                byServerId[member.serverId].push(member.id)
+            });
 
             return {
-                byId: membersById,
-                byServerId: membersByServerId
+                byId: { ...state.byId, ...membersById },
+                byServerId
             }
         }
         case REMOVE_MEMBER: {
             const { serverId, memberId } = action.payload;
+            const member = state.byId[memberId]
 
             const remainingMembersById = { ...state.byId };
             delete remainingMembersById[memberId];
 
-            const remainingMembersByServerId = state.byServerId[serverId].filter((member) => {
-                return member.id !== memberId
-            });
+            const remainingMembersByServerId = {
+                ...state.byServerId,
+                [serverId]: state.byServerId[serverId].filter(
+                    (id) => id !== memberId
+                )
+            };
 
             return {
                 byId: remainingMembersById,
-                byServerId: { ...state.byServerId, [serverId]: remainingMembersByServerId }
+                byServerId: remainingMembersByServerId
             }
         }
         default: {
