@@ -92,20 +92,25 @@ export const deleteChannel = (form) => async (dispatch) => {
 
 const initialState = {
 	byId: {},
-	allIds: [],
+	byServerId: [],
 };
 
 const channelsReducer = (state = initialState, action) => {
-
 	switch (action.type) {
-		case ADD_CHANNEL:
+		case ADD_CHANNEL: {
 			const { channel } = action.payload;
 
 			return {
 				byId: { ...state.byId, [channel.id]: channel },
-				allIds: [...state.allIds, channel.id],
+				byServerId: {
+					...state.byServerId,
+					[channel.serverId]: [
+						...(state.byServerId[channel.serverId] || []),
+						channel.id,
+					],
+				},
 			};
-
+		}
 		case ADD_SERVER_CHANNELS: {
 			const { channels } = action.payload;
 
@@ -114,11 +119,17 @@ const channelsReducer = (state = initialState, action) => {
 				return acc;
 			}, {});
 
-			const channelsIds = channels.map((channel) => channel.id);
+			const byServerId = { ...state.byServerId };
+			channels.forEach((channel) => {
+				if (!byServerId[channel.serverId]) {
+					byServerId[channel.serverId] = [];
+				}
+				byServerId[channel.serverId].push(channel.id);
+			});
 
 			return {
 				byId: { ...state.byId, ...channelsById },
-				allIds: [...state.allIds, ...channelsIds],
+				byServerId,
 			};
 		}
 		case UPDATE_CHANNEL: {
@@ -126,23 +137,27 @@ const channelsReducer = (state = initialState, action) => {
 
 			return {
 				byId: { ...state.byId, [channel.id]: channel },
-				allIds: [...state.allIds],
+				byServerId: { ...state.byServerId },
 			};
 		}
 		case REMOVE_CHANNEL: {
 			const { channelId } = action.payload;
+			const channel = state.byId[channelId];
+			if (!channel) return state;
 
 			const remainingChannelsById = { ...state.byId };
 			delete remainingChannelsById[channelId];
-			// alternatively named destructure / spread
-			// const { [channelId]: removedChannel, ...remainingChannels } = state.byId
-			const remainingChannelsAllIds = state.allIds.filter((id) => {
-				return id !== channelId
-			});
+
+			const remainingChannelsByServerId = {
+				...state.byServerId,
+				[channel.serverId]: state.byServerId[channel.serverId].filter(
+					(id) => id !== channelId
+				),
+			};
 
 			return {
 				byId: remainingChannelsById,
-				allIds: remainingChannelsAllIds,
+				byServerId: remainingChannelsByServerId,
 			};
 		}
 		default: {

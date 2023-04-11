@@ -26,5 +26,8 @@
 	"bugs": {
 		"url": "https://github.com/CodeWhatThouWilt/coffeehouse/issues"
 	},
-	"homepage": "https://github.com/CodeWhatThouWilt/coffeehouse#readme"
+	"homepage": "https://github.com/CodeWhatThouWilt/coffeehouse#readme",
+	"dependencies": {
+		"reselect": "^4.1.7"
+	}
 }
