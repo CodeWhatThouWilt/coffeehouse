@@ -1,5 +1,5 @@
 import "./SidebarChannelPanel.css";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link, useHistory, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { Modal } from "../../context/modal";
@@ -30,6 +30,10 @@ const SidebarChannelPanel = () => {
 		})
 		.then(() => setIsLoaded(true));
 	}, [dispatch, serverId]);
+
+	if (channels.length > 0 && !channelId) {
+		return <Redirect to={`/${serverId}/${channels[0].id}`} />
+	}
 
 	return (
 		server && isLoaded && (

@@ -30,7 +30,7 @@ const MessageInputBar = ({ channel, showMembers, emitMessage }) => {
 				value={content}
 				maxLength={2000}
 				onChange={(e) => setContent(e.target.value)}
-				placeholder={`Message ${channel.name}`}
+				placeholder={`Message ${channel && channel.name}`}
 			/>
 		</form>
 	);

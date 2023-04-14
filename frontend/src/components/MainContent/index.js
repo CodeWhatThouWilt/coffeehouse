@@ -27,8 +27,8 @@ const MainContent = () => {
 	console.log("MEMBERS",members)
 
 	useEffect(() => {
-		dispatch(getServerMembers(serverId))
-			.then(() => dispatch(getChannelMessages({ serverId, channelId })))
+		dispatch(getChannelMessages({ serverId, channelId }))
+			.then(() => dispatch(getServerMembers(serverId)))
 			.then(() => setIsLoaded(true));
 	}, [dispatch, serverId, channelId]);
 
@@ -55,7 +55,7 @@ const MainContent = () => {
 
 	return (
 		<>
-        { isLoaded && (
+        {/* { isLoaded && ( */}
 			<div className="main-content-container">
 				<MainContentTopBar
 					channel={channel}
@@ -73,7 +73,7 @@ const MainContent = () => {
 					)}
 				</div>
 			</div>
-        )}
+        {/* )} */}
 		</>
 	);
 };
