@@ -8,6 +8,7 @@ import { getChannelMessages } from "../../store/messages";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getMembersByServer } from "../../store/selectors/members";
+import { getChannelsByServer, getChannelById } from "../../store/selectors/channels";
 import { io } from "socket.io-client";
 let socket;
 
@@ -19,13 +20,8 @@ const MainContent = () => {
 
 	const { byId: serversById } = useSelector((state) => state.servers);
     const server = serversById[serverId];
-
-	const { byId: channelsById } = useSelector((state) => state.channels);
-    const channel = channelsById[channelId];
-
-	const { byId: messagesById, allIds: messagesIds } = useSelector(
-        (state) => state.messages
-    );
+	
+	const channel = useSelector((state) => getChannelById(state, channelId));
 
     const members = useSelector((state) => getMembersByServer(state, serverId))
 	console.log("MEMBERS",members)
