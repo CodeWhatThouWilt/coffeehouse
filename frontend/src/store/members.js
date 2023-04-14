@@ -3,10 +3,10 @@ const GET_MEMBERS = "servers/getMembers";
 const REMOVE_MEMBER = "servers/removeMember";
 
 
-const getMembers = (members) => {
+const getMembers = (members, serverId) => {
 	return {
 		type: GET_MEMBERS,
-		payload: { members },
+		payload: { members, serverId },
 	};
 };
 
@@ -22,7 +22,7 @@ export const getServerMembers = (serverId) => async (dispatch) => {
 
 	if (res.ok) {
 		const members = await res.json();
-		dispatch(getMembers(members));
+		dispatch(getMembers(members, serverId));
 		return members;
 	}
 };
@@ -52,25 +52,20 @@ const membersReducer = (state = initialState, action) => {
     
     switch (action.type) {
         case GET_MEMBERS: {
-            const { members } = action.payload;
-            const serverId = members[0].serverId;
+            const { members, serverId } = action.payload;
 
             const membersById = members.reduce((acc, member) => {
                 acc[member.id] = member;
                 return acc;
             }, {});
 
-            const byServerId = { ...state.byServerId };
-            members.forEach((member) => {
-                if (!byServerId[member.serverId]) {
-                    byServerId[member.serverId] = [];
-                }
-                byServerId[member.serverId].push(member.id)
+            const byServerId = members.map((member) => {
+                return member.id;
             });
 
             return {
                 byId: { ...state.byId, ...membersById },
-                byServerId
+                byServerId: { ...state.byServerId, [serverId]: byServerId}
             }
         }
         case REMOVE_MEMBER: {
