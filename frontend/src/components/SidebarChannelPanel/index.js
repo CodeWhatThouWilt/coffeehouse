@@ -1,5 +1,5 @@
 import "./SidebarChannelPanel.css";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { Modal } from "../../context/modal";
@@ -10,7 +10,8 @@ import { getServerChannels } from "../../store/channels";
 
 const SidebarChannelPanel = () => {
 	const dispatch = useDispatch();
-	const { serverId } = useParams();
+	const history = useHistory();
+	const { serverId, channelId } = useParams();
 	const [showModal, setShowModal] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false)
 
@@ -21,6 +22,12 @@ const SidebarChannelPanel = () => {
 
 	useEffect(() => {
 		dispatch(getServerChannels(serverId))
+		.then((channelsArr) => {
+			console.log("channels: ",channels)
+			if (!channelId) {
+				history.push(`/${serverId}/${channelsArr[0].id}`)
+			}
+		})
 		.then(() => setIsLoaded(true));
 	}, [dispatch, serverId]);
 
