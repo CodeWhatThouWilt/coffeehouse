@@ -12,10 +12,10 @@ const addChannel = (channel) => {
 	};
 };
 
-const addServerChannels = (channels) => {
+const addServerChannels = (channels, serverId) => {
 	return {
 		type: ADD_SERVER_CHANNELS,
-		payload: { channels },
+		payload: { channels, serverId },
 	};
 };
 
@@ -52,7 +52,7 @@ export const getServerChannels = (serverId) => async (dispatch) => {
 
 	if (res.ok) {
 		const channels = await res.json();
-		dispatch(addServerChannels(channels));
+		dispatch(addServerChannels(channels, serverId));
 	}
 };
 
@@ -112,24 +112,22 @@ const channelsReducer = (state = initialState, action) => {
 			};
 		}
 		case ADD_SERVER_CHANNELS: {
-			const { channels } = action.payload;
+			const { channels, serverId } = action.payload;
 
 			const channelsById = channels.reduce((acc, channel) => {
 				acc[channel.id] = channel;
 				return acc;
 			}, {});
 
-			const byServerId = { ...state.byServerId };
-			channels.forEach((channel) => {
-				if (!byServerId[channel.serverId]) {
-					byServerId[channel.serverId] = [];
-				}
-				byServerId[channel.serverId].push(channel.id);
-			});
+			const byServerId = channels.map((channel) => {
+				return channel.id
+			})
+
+	
 
 			return {
 				byId: { ...state.byId, ...channelsById },
-				byServerId,
+				byServerId: { ...state.byServerId, [serverId]: byServerId},
 			};
 		}
 		case UPDATE_CHANNEL: {

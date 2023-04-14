@@ -10,13 +10,14 @@ import NoChannelsToDisplay from '../NoChannelsToDisplay';
 import SelectAServer from '../SelectAServer';
 import { useParams } from 'react-router-dom';
 import SelectAChannel from '../SelectAChannel';
+import { getChannelsByServer } from '../../store/selectors/channels';
 
 const UserApplication = () => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const dispatch = useDispatch();
 	const { serverId, channelId } = useParams();
 	const session = useSelector((state) => state.session);
-	const channels = useSelector((state) => state.channels.byServerId[serverId]);
+	const channels = useSelector((state) => getChannelsByServer(state, serverId));
 
 	// TODO change rendering logic etc within UserApplication and lower components to be more simplified
 

@@ -46,9 +46,10 @@ const initialState = {
     byId: {},
     byServerId: {}
 }
+// TODO get double renders of members fixed. Check other states for the same issue
 
 const membersReducer = (state = initialState, action) => {
-
+    
     switch (action.type) {
         case GET_MEMBERS: {
             const { members } = action.payload;

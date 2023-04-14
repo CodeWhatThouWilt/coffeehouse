@@ -40,7 +40,7 @@ const Navbar = () => {
                         <div className='navbar-icon-notif-container'>
                             <div className='navbar-icon-notif'></div>
                         </div>
-                        <NavLink  to={`/${serverId}`}>
+                        <NavLink  to={`/${server.id}`}>
                             <img src={server.iconURL} alt='icon' className='navbar-server-icon' />
                         </NavLink>
                     </div>
