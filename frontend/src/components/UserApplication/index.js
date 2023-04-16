@@ -24,7 +24,6 @@ const UserApplication = () => {
 	useEffect(() => {
 		dispatch(getUserServers()).then(() => setIsLoaded(true));
 	}, [dispatch]);
-
 	if (!session.user) return <Redirect to="/login" />;
 
 	return (
@@ -36,12 +35,12 @@ const UserApplication = () => {
 					{channelId && <MainContent />}
 					{serverId &&
 						!channelId &&
-						Object.values(channels).length > 0 && (
+						channels.length > 0 && (
 							<SelectAChannel />
 						)}
 					{serverId &&
 						!channelId &&
-						Object.values(channels).length < 1 && (
+						channels.length < 1 && (
 							<NoChannelsToDisplay />
 						)}
 					{!serverId && !channelId && <SelectAServer />}

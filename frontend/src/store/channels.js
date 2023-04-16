@@ -150,7 +150,7 @@ const channelsReducer = (state = initialState, action) => {
 			const remainingChannelsByServerId = {
 				...state.byServerId,
 				[channel.serverId]: state.byServerId[channel.serverId].filter(
-					(id) => id !== channelId
+					(id) => id !== parseInt(channelId)
 				),
 			};
 

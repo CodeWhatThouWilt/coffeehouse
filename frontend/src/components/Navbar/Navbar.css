@@ -1,97 +1,101 @@
 .navbar-container {
-    height: 100vh;
-    min-width: 72px;
-    width: 72px;
-    background-color: #202225;
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    box-sizing: border-box;
-    gap: 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 20px 0px 15px;
+	height: 100vh;
+	min-width: 72px;
+	width: 72px;
+	background-color: #202225;
+	display: flex;
+	flex-direction: column;
+	/* align-items: center; */
+	box-sizing: border-box;
+	gap: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 20px 0px 15px;
 }
 
 .navbar-icon-container {
-    width: 100%;
-    display: flex;
+	width: 100%;
+	display: flex;
 }
 
 .navbar-icon-container:hover .navbar-icon-notif {
-    height: 35%;
-    width: 8px;
-    background-color: white;
-    border-radius: 0px 4px 4px 0px;
-    margin: -4px;
-    transition: margin 0.3s ease;
-    transition: height 0.3s ease;
-    transition: width 0.3s ease;
+	height: 35%;
+	width: 8px;
+	background-color: white;
+	border-radius: 0px 4px 4px 0px;
+	margin: -4px;
+	transition: margin 0.3s ease;
+	transition: height 0.3s ease;
+	transition: width 0.3s ease;
 }
 
 .navbar-icon-notif-container {
-    width: 12px;
-    display: flex;
-    align-items: center;
+	width: 12px;
+	display: flex;
+	align-items: center;
 }
 
 .navbar-icon-notif {
-    margin: -8px;
-    height: 0px;
-    width: 0px;
-    transition: margin 0.3s ease;
-    transition: height 0.3s ease;
-    transition: width 0.3s ease;
+	margin: -8px;
+	height: 0px;
+	width: 0px;
+	transition: margin 0.3s ease;
+	transition: height 0.3s ease;
+	transition: width 0.3s ease;
 }
 
 .navbar-server-icon {
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    transition: border-radius 0.2s;
+	height: 48px;
+	width: 48px;
+	border-radius: 50%;
+	object-fit: cover;
+	transition: border-radius 0.2s;
 }
 
 .navbar-server-icon:hover {
-    border-radius: 25%;
+	border-radius: 25%;
 }
 
 .navbar-icon-container-active .navbar-icon-notif {
-
 }
 
 .navbar-new-server-icon {
-    min-height: 48px;
-    min-width: 48px;
-    height: 48px;
-    width: 48px;
-    margin: 0px 12px;
-    border-radius: 50%;
-    background-color: #36393f;
-    color: #3ba55d;
-    font-size: 38px;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
+	min-height: 48px;
+	min-width: 48px;
+	height: 48px;
+	width: 48px;
+	margin: 0px 12px;
+	border-radius: 50%;
+	background-color: #36393f;
+	color: #3ba55d;
+	font-size: 38px;
+	display: flex;
+	justify-content: center;
+	align-items: center; /* add this line */
+	cursor: pointer;
+}
+
+.new-server-icon {
+    margin-bottom: 8px;
 }
 
 .navbar-container::-webkit-scrollbar {
-    width: 8px;
-    background-color: transparent;
+	width: 8px;
+	background-color: transparent;
 }
 
 .navbar-container::-webkit-scrollbar-button {
-    display: none;
-    width: 0;
-    height: 0;
+	display: none;
+	width: 0;
+	height: 0;
 }
 
 .navbar-container::-webkit-scrollbar-corner {
-    background-color: transparent;
+	background-color: transparent;
 }
 
 .navbar-container::-webkit-scrollbar-thumb {
-    background-color: #313439;
-    /* border: 2px solid #282a2d; */
-    border-radius: 8px;
+	background-color: #313439;
+	/* border: 2px solid #282a2d; */
+	border-radius: 8px;
 }

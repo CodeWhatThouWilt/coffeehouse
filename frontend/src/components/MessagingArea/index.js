@@ -10,12 +10,18 @@ import { addMessage } from "../../store/messages";
 import { getMessagesByChannel } from "../../store/selectors/messages";
 let socket;
 
-const MessagingArea = ({ members, channel, showMembers }) => {
+const MessagingArea = ({ channel, showMembers }) => {
 	const dispatch = useDispatch();
 	const { serverId, channelId } = useParams();
-	const user = useSelector((state) => state.session.user);
-
-    const messages = useSelector(state => getMessagesByChannel(state, channelId))
+	// const user = useSelector((state) => state.session.user);
+	// const members = useSelector((state) => state.members.byUserId);
+    const messages = useSelector(state => getMessagesByChannel(state, channelId));
+	const [isLoaded, setIsLoaded] = useState(false);
+	
+	useEffect(() => {
+		dispatch(getChannelMessages({ serverId, channelId }))
+		.then(() => setIsLoaded(true));
+	}, [dispatch, serverId, channelId]);
 
 	useEffect(() => {
 		socket = io();
@@ -42,6 +48,18 @@ const MessagingArea = ({ members, channel, showMembers }) => {
 		setContent("");
 	};
 
+	const emitEditMessage = async (e, message) => {
+		e.preventDefault();
+		if (message.length === 0 || message.length > 2000) return;
+		const payload = {
+			messageId: message.id,
+			serverId,
+			channelId,
+			content: message
+		};
+		await socket.emit(`chat edit`, payload);
+	}
+
 	// TODO implement emitEditMessage
 
 	const stylingHandler = () => {
@@ -55,11 +73,10 @@ const MessagingArea = ({ members, channel, showMembers }) => {
 	return (
 		<div className={stylingHandler()}>
 			<div className="messaging-area-list">
-				{messages.map((message, i) => (
+				{isLoaded && messages.map((message) => (
 					<Message
 						key={message.id}
 						message={message}
-						member={members[message.userId]}
 					/>
 				))}
 			</div>

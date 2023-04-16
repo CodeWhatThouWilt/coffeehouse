@@ -44,7 +44,8 @@ export const deleteMember = (payload) => async (dispatch) => {
 
 const initialState = {
     byId: {},
-    byServerId: {}
+    byServerId: {},
+    // byUserId: {}
 }
 // TODO get double renders of members fixed. Check other states for the same issue
 
@@ -59,13 +60,19 @@ const membersReducer = (state = initialState, action) => {
                 return acc;
             }, {});
 
+            // const membersByUserId = members.reduce((acc, member) => {
+            //     acc[member.userId] = member
+            //     return acc;
+            // }, {});
+
             const byServerId = members.map((member) => {
                 return member.id;
             });
 
             return {
                 byId: { ...state.byId, ...membersById },
-                byServerId: { ...state.byServerId, [serverId]: byServerId}
+                byServerId: { ...state.byServerId, [serverId]: byServerId},
+                // byUserId: { ...state.byUserId, ...membersByUserId }
             }
         }
         case REMOVE_MEMBER: {

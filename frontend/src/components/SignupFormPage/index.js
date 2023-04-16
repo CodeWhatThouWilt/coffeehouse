@@ -54,7 +54,7 @@ function SignupFormPage({ inviteLink, setForm, setForceRender }) {
 				credential: "demo@demo.com",
 				password: "password",
 			})
-		).then(() => <Redirect to="/channels" />);
+		).then(() => <Redirect to="/@me" />);
 	};
 
 	const linkHandler = () => {

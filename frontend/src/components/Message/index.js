@@ -3,12 +3,11 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
 
-const Message = ({ message, member, ref }) => {
+const Message = ({ message }) => {
     const divRef = useRef(null);
     useEffect(() => {
         divRef.current.scrollIntoView();
     }, []);
-
     
     return (
         <div ref={divRef} className='message-container'>

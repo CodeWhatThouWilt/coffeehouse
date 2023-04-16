@@ -13,7 +13,6 @@ import { io } from "socket.io-client";
 let socket;
 
 const MainContent = () => {
-	const [isLoaded, setIsLoaded] = useState(false);
 	const [showMembers, setShowMembers] = useState(false);
 	const { serverId, channelId } = useParams();
 	const dispatch = useDispatch();
@@ -24,12 +23,9 @@ const MainContent = () => {
 	const channel = useSelector((state) => getChannelById(state, channelId));
 
     const members = useSelector((state) => getMembersByServer(state, serverId))
-	console.log("MEMBERS",members)
 
 	useEffect(() => {
-		dispatch(getChannelMessages({ serverId, channelId }))
-			.then(() => dispatch(getServerMembers(serverId)))
-			.then(() => setIsLoaded(true));
+			dispatch(getServerMembers(serverId))
 	}, [dispatch, serverId, channelId]);
 
     // TODO implement sockets for members joining / leaving the server
@@ -55,7 +51,6 @@ const MainContent = () => {
 
 	return (
 		<>
-        {/* { isLoaded && ( */}
 			<div className="main-content-container">
 				<MainContentTopBar
 					channel={channel}
@@ -73,7 +68,6 @@ const MainContent = () => {
 					)}
 				</div>
 			</div>
-        {/* )} */}
 		</>
 	);
 };

@@ -7,9 +7,6 @@ import { useSelector } from "react-redux";
 const DeleteChannelModal = ({ channel, setShowDeleteModal }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const servers = useSelector((state) => state.servers);
-	const server = servers[channel.serverId];
-	const channels = Object.values(server.Channels);
 
 	const deleteHandler = () => {
 		dispatch(
