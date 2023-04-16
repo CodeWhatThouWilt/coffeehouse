@@ -6,14 +6,14 @@ import MessageInputBar from "../MessageInputBar";
 import Message from "../Message";
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
-import { addMessage } from "../../store/messages";
+import { addMessage, editMessage } from "../../store/messages";
 import { getMessagesByChannel } from "../../store/selectors/messages";
 let socket;
 
 const MessagingArea = ({ channel, showMembers }) => {
 	const dispatch = useDispatch();
 	const { serverId, channelId } = useParams();
-	// const user = useSelector((state) => state.session.user);
+	const user = useSelector((state) => state.session.user);
 	// const members = useSelector((state) => state.members.byUserId);
     const messages = useSelector(state => getMessagesByChannel(state, channelId));
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -27,8 +27,11 @@ const MessagingArea = ({ channel, showMembers }) => {
 		socket = io();
 		socket.emit("join_room", channelId);
 		socket.on("chat", (chat) => {
-			console.log("message", chat);
 			dispatch(addMessage(chat));
+		});
+
+		socket.on("chat edit", (chat) => {
+			dispatch(editMessage(chat));
 		});
 
 		return () => {
@@ -48,14 +51,13 @@ const MessagingArea = ({ channel, showMembers }) => {
 		setContent("");
 	};
 
-	const emitEditMessage = async (e, message) => {
-		e.preventDefault();
+	const emitEditMessage = async (message) => {
 		if (message.length === 0 || message.length > 2000) return;
 		const payload = {
 			messageId: message.id,
 			serverId,
 			channelId,
-			content: message
+			content: message.content
 		};
 		await socket.emit(`chat edit`, payload);
 	}
@@ -77,6 +79,8 @@ const MessagingArea = ({ channel, showMembers }) => {
 					<Message
 						key={message.id}
 						message={message}
+						emitEditMessage={emitEditMessage}
+						user={user}
 					/>
 				))}
 			</div>
