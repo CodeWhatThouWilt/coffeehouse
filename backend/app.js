@@ -10,8 +10,8 @@ const { ValidationError } = require('sequelize');
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 const { db } = require('./db/models');
-const { emitMessage, chatSubscribe, emitEditMessage } = require('./controllers/message-sockets');
 const { authenticateSocket } = require("./utils/socket-auth.js");
+const { emitMessage, chatSubscribe, emitEditMessage, openAIChat } = require('./controllers/message-sockets');
 
 const app = express();
 const server = createServer(app);
@@ -74,6 +74,8 @@ io.on('connection', socket => {
   emitMessage(socket, io)
 
   emitEditMessage(socket, io);
+
+  openAIChat(socket, io);
   
   // Broadcasts when a user connects
   // socket.broadcast.emit('chat', 'A user has joined the chat');
