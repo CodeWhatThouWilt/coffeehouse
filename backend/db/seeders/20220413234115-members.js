@@ -40,7 +40,7 @@ module.exports = {
 			}
 		}
 
-		const arr = new Array(Math.floor(counter / 3));
+		const arr = new Array(Math.floor(counter / 5));
 		const membersObj = {};
 		const membersArr = [];
 
@@ -62,7 +62,7 @@ module.exports = {
 			const userId = Math.ceil(Math.random() * usersAmount);
 			const createdAt = new Date();
 			const updatedAt = new Date();
-			if (serverId !== 1) {
+			if (serverId !== 1 && userId !== 3) {
 				const member = {
 					serverId,
 					userId,

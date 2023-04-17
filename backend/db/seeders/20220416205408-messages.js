@@ -14,7 +14,7 @@ module.exports = {
 		options.tableName = "Messages";
 
 		const messagesArr = [];
-		const arr = new Array(2000);
+		const arr = new Array(200);
 
 		for await (const [i, _ignore] of arr.entries()) {
 			const users = await User.findAll();
@@ -26,16 +26,19 @@ module.exports = {
 				},
 			});
 			const serverIds = userServers.map((member) => member.serverId);
+      if (!serverIds.length) continue;
+
 			const serverId =
 				serverIds[Math.floor(Math.random() * serverIds.length)];
 			const channels = await Channel.findAll({
 				where: {
 					[Op.or]: [
 						{ serverId: serverId },
-						{ serverId: { [Op.not]: 4 } },
+						{ serverId: { [Op.notIn]: [4, 1] } },
 					],
 				},
 			});
+
 			const channelIds = channels.map((channel) => channel.id);
 			const channelId =
 				channelIds[Math.floor(Math.random() * channelIds.length)];

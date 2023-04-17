@@ -12,7 +12,7 @@ module.exports = {
 		options.tableName = "Channels";
 
 		const channelsArr = [];
-		const arr = new Array(200);
+		const arr = new Array(50);
 		for await (const [i, _ignore] of arr.entries()) {
 			const name = faker.internet.domainWord();
 			const servers = await Server.findAll();

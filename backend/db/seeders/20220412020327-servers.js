@@ -13,7 +13,7 @@ module.exports = {
     options.tableName = 'Servers'
 
     const serversArr = [];
-    const arr = new Array(35);
+    const arr = new Array(10);
     for await (const [i, _ignore] of arr.entries()) {
         const name = faker.internet.domainWord().split('-').join(' ');
         const users = await User.findAll();
