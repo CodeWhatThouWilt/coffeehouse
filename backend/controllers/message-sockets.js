@@ -44,15 +44,16 @@ const openAIChat = (socket, io) => {
         try {
             console.log("### MESSAGE:", message)
             // console.log("PROCESS: ", configuration);
-            const res = await openai.createCompletion({
-                model: 'text-davinci-003',
-                prompt: message.content,
-                max_tokens: 300,
-                // n: 1,
-                // stop: null,
-                // temperature: 0.7
+            const res = await openai.createChatCompletion({
+                model: 'gpt-3.5-turbo',
+                messages: [
+                    {"role": "system", "content": "You are a user in a discord server that is chatting with other users. You can be very informal and don't need to sound like an assistant."},
+                    {"role": "user", "content": `${message.content}`}
+                ],
+                // max_tokens: 300
             });
-            const messageText = res.data.choices[0].text;
+            console.log("#######", res.data.choices[0].message.content);
+            const messageText = res.data.choices[0].message.content;
 
             const newMessage = await Message.create({
 				channelId: message.channelId,
@@ -64,7 +65,6 @@ const openAIChat = (socket, io) => {
             const aiUser = await User.findByPk(3);
 
 			newMessage.dataValues.User = aiUser;
-            console.log("#####", newMessage)
             io.to(`channel: 1`).emit("chat", newMessage);
         } catch (error) {
             console.error("###### ERROR: ", error);
