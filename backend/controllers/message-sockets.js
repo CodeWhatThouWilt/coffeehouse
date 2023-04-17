@@ -1,7 +1,10 @@
-const { Server, Channel, Member, Message } = require("../db/models");
-const openai = require('openai');
-
-openai.apiKey = process.env.OPENAI_KEY
+const { Server, Channel, Member, Message, User } = require("../db/models");
+require("dotenv").config();
+const { Configuration, OpenAIApi} = require('openai');
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY
+});
+const openai = new OpenAIApi(configuration);
 
 const chatSubscribe = (socket, io) => {
     socket.on("join_room", (channelId) => {
@@ -39,15 +42,30 @@ const emitEditMessage = (socket, io) => {
 const openAIChat = (socket, io) => {
     socket.on("openAI", async (message) => {
         try {
-            const res = await openai.Completion.create({
-                engine: 'text-davinci-002',
-                prompt: message,
-                max_tokens: 100,
-                n: 1,
-                stop: null,
-                temperature: 0.7
+            console.log("### MESSAGE:", message)
+            // console.log("PROCESS: ", configuration);
+            const res = await openai.createCompletion({
+                model: 'text-davinci-003',
+                prompt: message.content,
+                max_tokens: 300,
+                // n: 1,
+                // stop: null,
+                // temperature: 0.7
             });
-            console.log(res.choices);
+            const messageText = res.data.choices[0].text;
+
+            const newMessage = await Message.create({
+				channelId: message.channelId,
+				serverId: message.serverId,
+				userId: 3,
+				content: messageText,
+			});
+
+            const aiUser = await User.findByPk(3);
+
+			newMessage.dataValues.User = aiUser;
+            console.log("#####", newMessage)
+            io.to(`channel: 1`).emit("chat", newMessage);
         } catch (error) {
             console.error("###### ERROR: ", error);
             // io.to(`channel: openai`).emit("chat",)

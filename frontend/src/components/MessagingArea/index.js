@@ -27,6 +27,7 @@ const MessagingArea = ({ channel, showMembers }) => {
 		socket = io();
 		socket.emit("join_room", channelId);
 		socket.on("chat", (chat) => {
+			console.log("CHAT HERE:", chat)
 			dispatch(addMessage(chat));
 		});
 
@@ -47,7 +48,12 @@ const MessagingArea = ({ channel, showMembers }) => {
 			channelId,
 			content: message,
 		};
-		await socket.emit(`chat`, payload);
+		if (serverId !== '1') {
+			await socket.emit(`chat`, payload);
+		} else {
+			await socket.emit(`chat`, payload); 
+			await socket.emit(`openAI`, payload);
+		}
 		setContent("");
 	};
 

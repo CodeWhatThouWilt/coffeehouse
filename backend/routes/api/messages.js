@@ -21,6 +21,9 @@ router.get(
                 serverId
 			},
 			include: User,
+			order: [
+				["id", "ASC"]
+			]
 		});
 
 		return res.json(channelMessages);
