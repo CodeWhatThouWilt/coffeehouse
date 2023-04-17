@@ -21,7 +21,7 @@ module.exports = {
 			const createdAt = new Date();
 			const updatedAt = new Date();
 
-			serverId !== 4 &&
+			serverId !== 4 && serverId !== 1 &&
 				channelsArr.push({
 					name,
 					serverId,
@@ -34,55 +34,43 @@ module.exports = {
 			options,
 			[
 				{
-					name: "general",
+					name: "openai-chat",
 					serverId: 1,
+					createdAt: new Date(),
+					updatedAt: new Date()
+				},
+				{
+					name: "general",
+					serverId: 2,
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
 				{
 					name: "coffee-talk",
-					serverId: 1,
+					serverId: 2,
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
 				{
 					name: "espresso-talk",
-					serverId: 1,
+					serverId: 2,
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
 				{
 					name: "general",
-					serverId: 2,
+					serverId: 3,
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
 				{
 					name: "caffeinated",
-					serverId: 2,
+					serverId: 3,
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
 				{
 					name: "brew-talk",
-					serverId: 2,
-					createdAt: new Date(),
-					updatedAt: new Date(),
-				},
-				{
-					name: "general",
-					serverId: 3,
-					createdAt: new Date(),
-					updatedAt: new Date(),
-				},
-				{
-					name: "chill-talk",
-					serverId: 3,
-					createdAt: new Date(),
-					updatedAt: new Date(),
-				},
-				{
-					name: "Just chat",
 					serverId: 3,
 					createdAt: new Date(),
 					updatedAt: new Date(),
@@ -90,6 +78,24 @@ module.exports = {
 				{
 					name: "general",
 					serverId: 4,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					name: "chill-talk",
+					serverId: 4,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					name: "Just chat",
+					serverId: 4,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					name: "general",
+					serverId: 5,
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},

@@ -39,7 +39,8 @@ const Message = ({ message, emitEditMessage, user }) => {
         emitEditMessage(payload);
         setIsEditing(false);
     }
-
+    // TODO add styling for editing
+    // TODO add edited text if a message has been edited
 	return !isEditing ? (
 		<div
 			ref={divRef}

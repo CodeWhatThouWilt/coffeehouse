@@ -33,6 +33,13 @@ module.exports = {
 
     return queryInterface.bulkInsert(options, [
       {
+        name: "openAI",
+        ownerId: 3,
+        iconURL: "https://ph-files.imgix.net/b739ac93-2899-4cc1-a893-40ea8afde77e.png?auto=format",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
         name: "Yoffee",
         ownerId: 1,
         iconURL: "https://i.pinimg.com/550x/a8/ca/23/a8ca239dd1fd32e11e5ae709d9504229.jpg",

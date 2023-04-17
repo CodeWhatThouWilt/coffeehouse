@@ -15,6 +15,7 @@ const SidebarChannelPanel = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false)
 
+	const user = useSelector((state) => state.session.user);
 	const { byId: serversById } = useSelector((state) => state.servers);
 	const server = serversById[serverId];
 
@@ -43,12 +44,12 @@ const SidebarChannelPanel = () => {
 						<div className="channel-panel-category-header">
 							TEXT CHANNELS
 						</div>
-						<div
+						{user.id === server.ownerId && <div
 							onClick={() => setShowModal(true)}
 							className="add-channel-icon"
 						>
 							<i className="fa-solid fa-plus"></i>
-						</div>
+						</div>}
 					</div>
 					<div className="channel-panel-channel-list">
 						{channels.map((channel) => (
