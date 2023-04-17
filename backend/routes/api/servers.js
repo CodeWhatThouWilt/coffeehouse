@@ -25,7 +25,10 @@ router.get('/', requireAuth, asyncHandler(async (req, res) => {
                 userId
             },
             attributes: []
-        }]
+        }],
+        order: [
+            ['id', 'ASC']
+        ]
     })
 
     return res.json(userServers);

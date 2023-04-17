@@ -1,7 +1,7 @@
 const { Server, Channel, Member, Message } = require("../db/models");
-// const openai = require('openai');
+const openai = require('openai');
 
-// openai.apiKey = process.env.OPENAI_KEY
+openai.apiKey = process.env.OPENAI_KEY
 
 const chatSubscribe = (socket, io) => {
     socket.on("join_room", (channelId) => {
@@ -36,28 +36,28 @@ const emitEditMessage = (socket, io) => {
     });    
 }
 
-// const openAIChat = (socket, io) => {
-//     socket.on("openAI", async (message) => {
-//         try {
-//             const res = await openai.Completion.create({
-//                 engine: 'text-davinci-002',
-//                 prompt: message,
-//                 max_tokens: 100,
-//                 n: 1,
-//                 stop: null,
-//                 temperature: 0.7
-//             });
-//             console.log(res.choices);
-//         } catch (error) {
-//             console.error("###### ERROR: ", error);
-//             // io.to(`channel: openai`).emit("chat",)
-//         }
-//     })
-// }
+const openAIChat = (socket, io) => {
+    socket.on("openAI", async (message) => {
+        try {
+            const res = await openai.Completion.create({
+                engine: 'text-davinci-002',
+                prompt: message,
+                max_tokens: 100,
+                n: 1,
+                stop: null,
+                temperature: 0.7
+            });
+            console.log(res.choices);
+        } catch (error) {
+            console.error("###### ERROR: ", error);
+            // io.to(`channel: openai`).emit("chat",)
+        }
+    })
+}
 
 module.exports = {
     chatSubscribe,
     emitMessage,
     emitEditMessage,
-    // openAIChat
+    openAIChat
 }
