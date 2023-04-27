@@ -13,7 +13,7 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
 	const [password, setPassword] = useState("");
 	const [errors, setErrors] = useState([]);
 
-	if (sessionUser && !inviteLink) return <Redirect to="/channels" />;
+	if (sessionUser && !inviteLink) return <Redirect to="/@me" />;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -23,7 +23,7 @@ function LoginFormPage({ inviteLink, setForm, setForceRender }) {
 				if (inviteLink) {
 					setForceRender(true);
 				} else {
-					return history.push("/channels");
+					return history.push("/@me");
 				}
 			})
 			.catch(async (res) => {
