@@ -30,15 +30,19 @@ function App() {
 			{/* <Navigation isLoaded={isLoaded} /> */}
 			{isLoaded && (
 				<Switch>
-					<Route path="/login">
+					<Route exact path="/login">
 						<LoginFormPage />
 					</Route>
 
-					<Route path="/signup">
+					<Route exact path="/signup">
 						<SignupFormPage />
 					</Route>
 
-					<Route path="/:serverId(\d+)?/:channelId(\d+)?">
+					<Route exact path="/">
+						<SplashPage />
+					</Route>
+
+					<Route exact path="/:serverId(\d+)?/:channelId(\d+)?">
 						<UserApplication />
 					</Route>
 
@@ -46,12 +50,8 @@ function App() {
 						<UserApplication />
 					</Route>
 
-					<Route path={`/inv` + ":invite"}>
+					<Route exact path={`/inv` + ":invite"}>
 						<InviteHandling />
-					</Route>
-
-					<Route path="/">
-						<SplashPage />
 					</Route>
 				</Switch>
 			)}

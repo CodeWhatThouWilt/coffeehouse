@@ -43,16 +43,16 @@ const openAIChat = (socket, io) => {
     socket.on("openAI", async (message) => {
         try {
             console.log("### MESSAGE:", message)
-            // console.log("PROCESS: ", configuration);
+            
+            // TODO implement replies
             const res = await openai.createChatCompletion({
                 model: 'gpt-3.5-turbo',
                 messages: [
                     {"role": "system", "content": "You are a user in a discord server that is chatting with other users. You can be very informal and don't need to sound like an assistant."},
                     {"role": "user", "content": `${message.content}`}
                 ],
-                // max_tokens: 300
             });
-            console.log("#######", res.data.choices[0].message.content);
+            
             const messageText = res.data.choices[0].message.content;
 
             const newMessage = await Message.create({
