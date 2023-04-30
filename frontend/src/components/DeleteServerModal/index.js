@@ -10,7 +10,7 @@ const DeleteServerModal = ({ server, setShowDeleteModal }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         setErrors([]);
         if (serverName === server.name) {

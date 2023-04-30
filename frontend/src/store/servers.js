@@ -78,7 +78,7 @@ export const editServer = (form, serverId) => async(dispatch) => {
     return res;
 };
 
-export const deleteServer = (serverId) => async(dispatch) => {
+export const deleteServer = (serverId) => async (dispatch) => {
     const res = await csrfFetch(`/api/servers/${serverId}`, {
         method: "DELETE"
     });
@@ -132,14 +132,14 @@ const serversReducer = (state = initialState, action) => {
         }
         case REMOVE_SERVER: {
             const { serverId } = action.payload;
-
+            console.log("ServerId:", serverId)
             const remainingServersById = { ...state.byId };
             delete remainingServersById[serverId];
 
             const remainingServersAllIds = state.allIds.filter((id) => {
                 return id !== serverId
             })
-
+            console.log("THISSSSS", remainingServersAllIds);
             return {
                 byId: remainingServersById,
                 allIds: remainingServersAllIds

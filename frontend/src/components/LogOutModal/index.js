@@ -2,13 +2,15 @@ import './LogOutModal.css';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../store/session';
+import { resetState } from '../../store';
 
 const LogOutModal = ({ setShowLogOutModal }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
     const clickHandler = () => {
-        dispatch(logout());
+        dispatch(logout())
+        dispatch(resetState());
         history.push('/login');
     };
 

@@ -115,7 +115,7 @@ router.delete('/:serverId(\\d+)', requireAuth, asyncHandler(async (req, res) => 
     const server = await Server.findByPk(serverId);
     if (server.ownerId === userId) {
         await server.destroy();
-        return res.json(serverId);
+        return res.json(server.id);
     };
 
     const err = new Error('Unauthorized');
