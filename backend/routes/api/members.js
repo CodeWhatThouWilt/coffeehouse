@@ -41,7 +41,7 @@ router.delete(
 
 		const serverOwner = member.dataValues.Server.dataValues.ownerId;
 
-		if (userId !== serverOwner) {
+		if (userId === serverOwner && member.userId !== userId) {
 			await member.destroy();
 			return res.json({ serverId: member.serverId, memberId: member.id });
 		}

@@ -39,9 +39,24 @@ export const deleteMember = (payload) => async (dispatch) => {
 	if (res.ok) {
 		const { serverId, memberId } = await res.json();
 		dispatch(removeMember(serverId, memberId));
-		dispatch(removeServer(serverId));
 	}
 };
+
+export const leaveServer = (payload) => async (dispatch) => {
+    const { serverId, memberId } = payload;
+	const res = await csrfFetch(
+		`/api/servers/${serverId}/members/${memberId}`,
+		{
+			method: "DELETE",
+		}
+	);
+
+	if (res.ok) {
+		const { serverId, memberId } = await res.json();
+		dispatch(removeMember(serverId, memberId));
+		dispatch(removeServer(serverId));
+	}
+}
 
 const initialState = {
 	byId: {},
@@ -88,7 +103,6 @@ const membersReducer = (state = initialState, action) => {
 					(id) => id !== memberId
 				),
 			};
-			delete remainingMembersByServerId[serverId];
 
 			return {
 				byId: remainingMembersById,

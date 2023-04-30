@@ -1,5 +1,5 @@
 import "./LeaveServerModal.css";
-import { deleteMember } from "../../store/members";
+import { leaveServer } from "../../store/members";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getCurrentUserMemberId } from "../../store/selectors/members";
@@ -15,7 +15,7 @@ const LeaveServerModal = ({ server, setShowLeaveModal }) => {
 	console.log("MEMBERID HERE: ", memberId)
 
 	const clickHandler = () => {
-		dispatch(deleteMember({ serverId: server.id, memberId }));
+		dispatch(leaveServer({ serverId: server.id, memberId }));
 		history.push("/@me");
 		// socket = io();
 		// socket.emit("member-leave", member);
