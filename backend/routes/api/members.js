@@ -1,13 +1,22 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router({ mergeParams: true });
-const asyncHandler = require('express-async-handler');
-const { Server, Channel, Member, Message, User, ServerInvite } = require('../../db/models');
-const { Op } = require('sequelize');
-const { requireAuth } = require('../../utils/auth');
-const { handleValidationErrors } = require('../../utils/validation');
-const { check } = require('express-validator');
-const { singleMulterUpload, singlePublicFileUpload } = require('../../utils/awss3');
-
+const asyncHandler = require("express-async-handler");
+const {
+	Server,
+	Channel,
+	Member,
+	Message,
+	User,
+	ServerInvite,
+} = require("../../db/models");
+const { Op } = require("sequelize");
+const { requireAuth } = require("../../utils/auth");
+const { handleValidationErrors } = require("../../utils/validation");
+const { check } = require("express-validator");
+const {
+	singleMulterUpload,
+	singlePublicFileUpload,
+} = require("../../utils/awss3");
 
 // Get all members for a server
 router.get(
@@ -41,11 +50,15 @@ router.delete(
 
 		const serverOwner = member.dataValues.Server.dataValues.ownerId;
 
-		if (userId === serverOwner && member.userId !== userId) {
+		if (
+			// TODO maybe use ^ comparison operator instead of ||
+			(userId === serverOwner && member.userId !== userId) ||
+			(userId !== serverOwner && userId === member.userId)
+		) {
 			await member.destroy();
 			return res.json({ serverId: member.serverId, memberId: member.id });
 		}
 	})
 );
 
-module.exports = router
+module.exports = router;
