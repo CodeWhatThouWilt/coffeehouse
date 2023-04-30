@@ -23,7 +23,7 @@ const CreateServerForm = ({ setShowModal }) => {
         formData.append('name', name.trim());
         formData.append('image', image);
         dispatch(createServer(formData))
-            .then(res => history.push(`/${res.id}/${Object.values(res.Channels)[0].id}`))
+            .then(res => history.push(`/${res.id}`))
             .then(() => setShowModal(false))
             .catch(async res => {
                 const data = await res.json();

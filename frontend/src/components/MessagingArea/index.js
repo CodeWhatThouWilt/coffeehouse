@@ -27,7 +27,6 @@ const MessagingArea = ({ channel, showMembers }) => {
 		socket = io();
 		socket.emit("join_room", channelId);
 		socket.on("chat", (chat) => {
-			console.log("CHAT HERE:", chat)
 			dispatch(addMessage(chat));
 		});
 

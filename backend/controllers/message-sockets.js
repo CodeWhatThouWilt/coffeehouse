@@ -29,7 +29,6 @@ const emitMessage = (socket, io) => {
 
 const emitEditMessage = (socket, io) => {
     socket.on("chat edit", async (message) => {
-        console.log(message)
         const editedMessage = await Message.findByPk(message.messageId);
         editedMessage.content = message.content;
         editedMessage.updatedAt = Date.now();
@@ -42,7 +41,6 @@ const emitEditMessage = (socket, io) => {
 const openAIChat = (socket, io) => {
     socket.on("openAI", async (message) => {
         try {
-            console.log("### MESSAGE:", message)
             
             // TODO implement replies
             const res = await openai.createChatCompletion({

@@ -85,7 +85,8 @@ router.post('/', requireAuth, singleMulterUpload('image'), validateServer, async
         userId
     })
 
-    return res.json({ server, channel, member });
+    // return res.json({ server, channel, member });
+    return res.json(server);
 }));
 
 // Edit a server

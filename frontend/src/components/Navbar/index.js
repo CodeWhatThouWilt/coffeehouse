@@ -15,7 +15,7 @@ const Navbar = () => {
     // const [currentServer, setCurrentServer] = useState(serverId);
     // const [currentChannel, setCurrentChannel] = useState(channelId);
     // const channels = useSelector(state => state.channels);
-    console.log(servers);
+
 
     // useEffect(() => {
     //     setCurrentChannel(channelId);

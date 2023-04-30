@@ -8,7 +8,6 @@ export const getMembersByServer = createSelector(
     [getMembersById, getMembersByServerId, getServerId],
     (byId, byServerId, serverId) => {
         const memberIds = byServerId[serverId] || [];
-        console.log("MEMBERIDS",memberIds)
         return memberIds.map((id) => byId[id])
     }
 );

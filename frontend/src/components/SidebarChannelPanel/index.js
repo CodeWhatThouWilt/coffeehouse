@@ -24,7 +24,6 @@ const SidebarChannelPanel = () => {
 	useEffect(() => {
 		dispatch(getServerChannels(serverId))
 		.then((channelsArr) => {
-			console.log("channels: ",channels)
 			if (!channelId) {
 				history.push(`/${serverId}/${channelsArr[0].id}`)
 			}
