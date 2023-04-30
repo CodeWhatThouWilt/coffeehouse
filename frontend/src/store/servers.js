@@ -27,7 +27,7 @@ const updateServer = (server) => {
     };
 };
 
-const removeServer = (serverId) => {
+export const removeServer = (serverId) => {
     return {
         type: REMOVE_SERVER,
         payload: { serverId }

@@ -43,7 +43,7 @@ router.delete(
 
 		if (userId !== serverOwner) {
 			await member.destroy();
-			return res.json({ serverId, memberId: member.id });
+			return res.json({ serverId: member.serverId, memberId: member.id });
 		}
 	})
 );
