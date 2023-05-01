@@ -8,12 +8,18 @@ const ServerSettingsOverview = ({ server }) => {
     const dispatch = useDispatch();
     const [newServerIcon, setNewServerIcon] = useState(server.iconURL);
     const [newServerName, setNewServerName] = useState(server.name);
-    const [isLoading, setisLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [emptyFile, setEmptyFile] = useState('');
     const [errors, setErrors] = useState([]);
     const defaultServerIcon = 'https://coffeehouse-app.s3.amazonaws.com/default-icons/coffeehouse-default-server+(512+%C3%97+512+px).svg'
-    const showIcon = newServerIcon === defaultServerIcon || newServerIcon === server.iconURL ? newServerIcon : URL.createObjectURL(newServerIcon);
 
+    const showIcon = () => {
+        if (newServerIcon === defaultServerIcon || newServerIcon === server.iconURL) {
+            return newServerIcon;
+        } else {
+            return URL.createObjectURL(newServerIcon);
+        }
+    }
 
     const buttonDisabler = () => {
         return newServerName.length > 1 && newServerName.length <= 100 ? false : true;
@@ -26,15 +32,15 @@ const ServerSettingsOverview = ({ server }) => {
         formData.append('image', newServerIcon);
         formData.append('name', newServerName);
 
-        setisLoading(true);
+        setIsLoading(true);
 
         dispatch(editServer(formData, server.id))
-            .then(() => setisLoading(false))
-            .then(() => setNewServerIcon(server.iconURL))
+        .then((res) => setNewServerIcon(res.iconURL))
+            .then(() => setIsLoading(false))
             .catch(async res => {
                 const data = await res.json();
                 data.errors && setErrors(data.errors);
-                setisLoading(false);
+                setIsLoading(false);
             });
     };
 
@@ -85,7 +91,7 @@ const ServerSettingsOverview = ({ server }) => {
                                     <div className='server-settings-image-circle'>
                                         <i className="fa-solid fa-image server-settings-icon-circle" />
                                     </div>
-                                    <img src={showIcon} alt='server icon' className="server-settings-upload-image" />
+                                    <img src={showIcon()} alt='server icon' className="server-settings-upload-image" />
                                 </div>
                             </label>
                             {newServerIcon !== defaultServerIcon &&

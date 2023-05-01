@@ -10,7 +10,7 @@ const ServerSettingsSidebar = ({ server }) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
-
+    
     // const deleteHandler = async (e) => {
     //     dispatch(deleteServer(server.id))
     //     history.push('/channels');

@@ -74,6 +74,7 @@ export const editServer = (form, serverId) => async(dispatch) => {
     if (res.ok) {
         const server = await res.json();
         dispatch(updateServer(server));
+        return server;
     };
     return res;
 };
@@ -110,9 +111,13 @@ const serversReducer = (state = initialState, action) => {
             const serversIds = servers.map((server) => server.id);
 
             return {
-                byId: { ...state.byId, ...serversByIds },
-                allIds: [...state.allIds, ...serversIds]
-            };
+				byId: serversByIds,
+				allIds: serversIds,
+			};
+            // return {
+            //     byId: { ...state.byId, ...serversByIds },
+            //     allIds: [...state.allIds, ...serversIds]
+            // };
         }
         case ADD_SERVER: {
             const { server } = action.payload;
@@ -124,7 +129,7 @@ const serversReducer = (state = initialState, action) => {
         }
         case UPDATE_SERVER: {
             const { server } = action.payload;
-
+            
             return {
                 byId: { ...state.byId, [server.id]: server },
                 allIds: [...state.allIds]

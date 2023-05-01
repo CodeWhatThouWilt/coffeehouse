@@ -6,13 +6,10 @@ import { deleteMember } from '../../store/members';
 const KickMemberModal = ({ member, setShowKickModal }) => {
     const [kickReason, setKickReason] = useState('');
     const dispatch = useDispatch();
-    console.log("I AM HERE NOW")
 
     const clickHandler = () => {
         const memberId = member.id;
-        console.log(memberId);
         const serverId = member.serverId;
-        console.log(serverId);
         dispatch(deleteMember({ memberId, serverId }))
         .then(() => setShowKickModal(false));
     };

@@ -12,7 +12,6 @@ const LeaveServerModal = ({ server, setShowLeaveModal }) => {
 	const session = useSelector((state) => state.session);
 	const memberId = useSelector((state) => getCurrentUserMemberId(state, server.id));
 	const user = session.user;
-	console.log("MEMBERID HERE: ", memberId)
 
 	const clickHandler = () => {
 		dispatch(leaveServer({ serverId: server.id, memberId }));
