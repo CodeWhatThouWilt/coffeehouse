@@ -33,6 +33,11 @@ const Message = ({ message, emitEditMessage, user }) => {
 		setShowHover(false);
 	};
 
+	const cancelEdit = () => {
+		setIsEditing(false);
+		setContent(message.content);
+	}
+
     const editMessage = (e) => {
         e.preventDefault();
         const payload = { id: message.id, content }
@@ -64,7 +69,7 @@ const Message = ({ message, emitEditMessage, user }) => {
 	) : (
 		<div
 			ref={divRef}
-			className="message-container"
+			className={`message-container editing-message`}
 			onMouseEnter={() => setShowHover(true)}
 			onMouseLeave={() => setShowHover(false)}
 		>
@@ -79,9 +84,9 @@ const Message = ({ message, emitEditMessage, user }) => {
 						onChange={(e) => setContent(e.target.value)}
 					/>
 				</form>
-                <div>
-                    escape to cancel • enter to save
-                </div>
+				<div className="edit-message-footer">
+					escape to <span onClick={cancelEdit}>cancel</span> • enter to <span onClick={editMessage}>save</span>
+				</div>
 			</div>
 		</div>
 	);

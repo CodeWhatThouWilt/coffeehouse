@@ -8,6 +8,10 @@
     padding: 2px 48px 2px 72px;
 }
 
+.editing-message {
+    background-color: rgba(43, 43, 44, 0.204);
+}
+
 .message-container:hover {
     background-color: rgba(43, 43, 44, 0.204);
 }
@@ -50,8 +54,40 @@
 .message-container img {
     position: absolute;
     left: 16px;
+    top: 4px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+/* Edit message styling */
+
+.message-container form {
+    background-color: rgb(56, 58, 64);
+    height: 44px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.message-container span {
+    color: #53A8FC;
+    cursor: pointer;
+}
+
+.message-text-container input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: white;
+    height: 100%;
+    width: 100%;
+    padding: 11px 10px 11px 16px;
+    font-size: 16px;
+}
+
+.edit-message-footer {
+    font-size: 12px;
+    padding: 7px 0px;
 }
